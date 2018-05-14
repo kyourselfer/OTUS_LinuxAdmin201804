@@ -1,3 +1,8 @@
-watchdog/watchdog.sh с перезагрузкой процесса/сервиса
-watchdog/watchdog.sh с отсылкой емэйла
-watchdog/watchdog.sh скрипт с защитой от мультизапуска
+### 
+# watchdog/main.sh: 1) с перезагрузкой процесса/сервиса
+# watchdog/main.sh: 2) с отсылкой емэйла
+# watchdog/main.sh: 4) скрипт с защитой от мультизапуска
+###
+# find_BOTsIP/main.sh: 3) анализ логов веб сервера на взлом и кол-ва запросов от них
+###
+# backup_DBs/main.sh: 5) любой скрипт на ваше усмотрение
