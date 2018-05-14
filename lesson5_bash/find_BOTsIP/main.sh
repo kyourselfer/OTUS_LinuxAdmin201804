@@ -4,16 +4,16 @@ req1="libraries/import.core.php|mail.php|jcache.php|templates/jblank/start.php|/
 #
 cd /home/kisl/RUN/
 # Запишем найденые ip
-/usr/bin/find /usr/local/www/apache24/ -type f -name 'access.log' | xargs egrep -i "$req1" > find_access2_email.tmp
+find /usr/local/www/apache24/ -type f -name 'access.log' | xargs egrep -i "$req1" > find_access2_email.tmp
 numIp=`cat find_access2_email.tmp | wc -l`
 # Выведем найденые ip
 echo "Found ip: $numIp"
 for i in `seq 1 \$numIp`
 do
-    site1=`cat find_access2_email.tmp | /usr/bin/awk NR=="$i" | awk -F"/" '{ print $6 }'`
-    ip1=`cat find_access2_email.tmp | /usr/bin/awk NR=="$i" | awk -F":" '{ print $2 }' | cut -f 1 -d  - -s`
-    url1=`cat find_access2_email.tmp | /usr/bin/awk NR=="$i" | awk -F" " '{ print $7 }'`
-    code1=`cat find_access2_email.tmp | /usr/bin/awk NR=="$i" | awk -F" " '{ print $9 }'`
+    site1=`cat find_access2_email.tmp | awk NR=="$i" | awk -F"/" '{ print $6 }'`
+    ip1=`cat find_access2_email.tmp | awk NR=="$i" | awk -F":" '{ print $2 }' | cut -f 1 -d  - -s`
+    url1=`cat find_access2_email.tmp | awk NR=="$i" | awk -F" " '{ print $7 }'`
+    code1=`cat find_access2_email.tmp | awk NR=="$i" | awk -F" " '{ print $9 }'`
     echo -e "$site1 \t $ip1 \t $url1 \t $code1"
 done
 # Добавляем ip в базу PacketFilter_BSD
