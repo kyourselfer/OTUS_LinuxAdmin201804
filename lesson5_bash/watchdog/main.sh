@@ -4,7 +4,7 @@
 #
 # Function searching over list of processes | Поиск $arg1 среди процессов
 function fcheck {
-    r=`ps -eo pid,comm|grep $proc`
+    r=`ps -eo pid,comm|grep $1`
     return $?
 }
 #
@@ -37,18 +37,17 @@ trap 'echo "$0 is closing ..."; exit 3' 15
 trap -- 1 3 17 18
 #
 ##### It follows to $arg1 if stop then mailing to $arg2 | Следим за процессом $arg1 если исчезает отправляем оповещение на почту $arg2 и запускаем
-fcheck
+fcheck $proc
 while [ $? = 0 ]
 do
     sleep 5
-    fcheck
+    fcheck $proc
     if [ $? = 1 ]
     then
         clogs=`journalctl -n 5 -u $proc`
         cinfo=`uptime | awk -Fe: '{print "avg:" $2}'; date; echo $clogs`
-        `echo $cinfo | mail -s "$proc was restarted" $email`
-	`systemctl start $proc`
+	`echo $cinfo | mail -s "$proc was restarted" $email`
+        `systemctl start $proc`
     fi
 done
-
 
