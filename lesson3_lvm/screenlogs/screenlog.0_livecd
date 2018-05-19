@@ -875,49 +875,74 @@ UUID=a9953552-87ca-4e1c-972e-fb484ce749fe /boot[19Cxfs     defaults[8C0 0
 /dev/mapper/VolGroup00-LogVol01 swap                    swap    defaults        0 0[13;84H[K[11;1H[?12l[?25h[?25l/dev/mapper/VG--home-LV--home[?12l[?25h[?25lome-LV--home [11;17H[?12l[?25h[?25lme-LV--home [11;17H[?12l[?25h[?25le-LV--home [11;17H[?12l[?25h[?25l-LV--home [11;17H[?12l[?25h[?25lm-LV--home[11;18H[?12l[?25h[?25li-LV--home[11;19H[?12l[?25h[?25lr-LV--home[11;20H[?12l[?25h[?25lr-LV--home[11;21H[?12l[?25h[?25lo-LV--home[11;22H[?12l[?25h[?25lr-LV--home[11;23H[?12l[?25h[?25l1-LV--home[11;24H[?12l[?25h1-LV--h[?25lome [?12l[?25h[?25lme [?12l[?25h[?25le [?12l[?25h[?25l [?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25l r[?12l[?25h[?25lr [?12l[?25hr[?25l [?12l[?25h[?25l/[?12l[?25h[10;40H[10;32H[?25l /[?12l[?25h[11;32H /[?25l[7C[?12l[?25h[?25l[8C[?12l[?25h[?25l[8C[?12l[?25h[?25lx[?12l[?25h[?25lf[?12l[?25h[?25ls[?12l[?25h[?25l [?12l[?25h[?25l[?12l[?25h[?25l     [?12l[?25h[?25lf[?12l[?25h[?25l[?12l[?25h[?25ld[?12l[?25h[?25le[?12l[?25h[?25lf[?12l[?25h[?25la[?12l[?25h[?25lu[?12l[?25h[?25ll[?12l[?25h[?25lt[?12l[?25h[?25ls[?12l[?25h[?25l[8C[?12l[?25h[?25l0[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25l[28;1H"/mnt/root/etc/fstab" 13 lines, 588 characters written
 [?1l>[?12l[?25h[?1049lroot@debian:/home/user# ls /dev/mapper/VG--mirror1-LV--var
 /dev/mapper/VG--mirror1-LV--var
-root@debian:/home/user# [H[2Jroot@debian:/home/user# lsblk
-NAME                             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-loop0                              7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
-sda                                8:0    0    1G  0 disk 
-└─sda1                             8:1    0 1023M  0 part 
-  └─VG--mirror1-LV--var_mimage_0 254:2    0  900M  0 lvm  
-    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  /mnt/var
-sdb                                8:16   0    1G  0 disk 
-└─sdb1                             8:17   0 1023M  0 part 
-  └─VG--mirror1-LV--var_mimage_1 254:3    0  900M  0 lvm  
-    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  /mnt/var
-sdc                                8:32   0    1G  0 disk 
-└─sdc1                             8:33   0 1023M  0 part 
-  └─VG--home-LV--home            254:5    0  508M  0 lvm  /mnt/home
-sdd                                8:48   0    1G  0 disk 
-sde                                8:64   0   40G  0 disk 
-├─sde1                             8:65   0    1M  0 part 
-├─sde2                             8:66   0    1G  0 part 
-└─sde3                             8:67   0   39G  0 part 
-  ├─VolGroup00-LogVol00          254:0    0    8G  0 lvm  /mnt/root
-  └─VolGroup00-LogVol01          254:1    0  1.5G  0 lvm  
-sr0                               11:0    1  2.2G  0 rom  /lib/live/mount/medium
-root@debian:/home/user# umount /mnt [K/*
-root@debian:/home/user# umount /mnt/*[8Plsblk
-NAME                             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-loop0                              7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
-sda                                8:0    0    1G  0 disk 
-└─sda1                             8:1    0 1023M  0 part 
-  └─VG--mirror1-LV--var_mimage_0 254:2    0  900M  0 lvm  
-    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  
-sdb                                8:16   0    1G  0 disk 
-└─sdb1                             8:17   0 1023M  0 part 
-  └─VG--mirror1-LV--var_mimage_1 254:3    0  900M  0 lvm  
-    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  
-sdc                                8:32   0    1G  0 disk 
-└─sdc1                             8:33   0 1023M  0 part 
-  └─VG--home-LV--home            254:5    0  508M  0 lvm  
-sdd                                8:48   0    1G  0 disk 
-sde                                8:64   0   40G  0 disk 
-├─sde1                             8:65   0    1M  0 part 
-├─sde2                             8:66   0    1G  0 part 
-└─sde3                             8:67   0   39G  0 part 
-  ├─VolGroup00-LogVol00          254:0    0    8G  0 lvm  
-  └─VolGroup00-LogVol01          254:1    0  1.5G  0 lvm  
-sr0                               11:0    1  2.2G  0 rom  /lib/live/mount/medium
-root@debian:/home/user# [H[2Jroot@debian:/home/user# 
+root@debian:/home/user# LS
+bash: LS: command not found
+root@debian:/home/user# ls
+Desktop  Documents  Downloads  Music  Pictures	Public	screenlog.0  Templates	Videos
+root@debian:/home/user# 
+root@debian:/home/user# less /mnt/
+home/ root/ var/  
+root@debian:/home/user# less /mnt/root/
+bin/        etc/        lib64/      mnt/        root/       srv/        usr/        
+boot/       home/       lost+found/ opt/        run/        sys/        vagrant/    
+dev/        lib/        media/      proc/       sbin/       tmp/        var/        
+root@debian:/home/user# less /mnt/root/etc/fstab 
+[?1049h[?1h=
+#
+# /etc/fstab
+# Created by anaconda on Tue Apr  3 21:42:15 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VolGroup00-LogVol00 /                       xfs     defaults        0 0
+/dev/mapper/VG--home-LV--home   /                       xfs     defaults        0 0
+/dev/mapper/VG--mirror1-LV--var /                       xfs     defaults        0 0 
+UUID=a9953552-87ca-4e1c-972e-fb484ce749fe /boot                   xfs     defaults        0 0
+/dev/mapper/VolGroup00-LogVol01 swap                    swap    defaults        0 0
+[7m/mnt/root/etc/fstab (END)[27m[K[K [KESCESC[KOO[KBB[K[K[7m(END)[27m[K[K [KESCESC[KOO[KBB[K[K[7m(END)[27m[K[K [KESCESC[KOO[KBB[K[K[7m(END)[27m[K[K [KESCESC[KOO[KBB[K[K[7m(END)[27m[K[K [KESCESC[KOO[KBB[K[K[7m(END)[27m[K[K [KZZ[KQQ[K[7m(END)[27m[K[K[7m(END)[27m[K[K[?1l>[?1049lroot@debian:/home/user# [H[2Jroot@debian:/home/user# mv /mnt/root/[K[K[Kdf -Th
+Filesystem                      Type      Size  Used Avail Use% Mounted on
+udev                            devtmpfs  989M     0  989M   0% /dev
+tmpfs                           tmpfs     201M  6.0M  195M   3% /run
+/dev/sr0                        iso9660   2.3G  2.3G     0 100% /lib/live/mount/medium
+/dev/loop0                      squashfs  2.1G  2.1G     0 100% /lib/live/mount/rootfs/filesystem.squashfs
+tmpfs                           tmpfs    1003M     0 1003M   0% /lib/live/mount/overlay
+overlay                         overlay  1003M  175M  828M  18% /
+tmpfs                           tmpfs    1003M     0 1003M   0% /dev/shm
+tmpfs                           tmpfs     5.0M  4.0K  5.0M   1% /run/lock
+tmpfs                           tmpfs    1003M     0 1003M   0% /sys/fs/cgroup
+tmpfs                           tmpfs    1003M     0 1003M   0% /tmp
+tmpfs                           tmpfs     201M   36K  201M   1% /run/user/1000
+/dev/mapper/VolGroup00-LogVol00 xfs       8.0G  617M  7.4G   8% /mnt/root
+/dev/mapper/VG--home-LV--home   xfs       505M   27M  479M   6% /mnt/home
+/dev/mapper/VG--mirror1-LV--var xfs       897M   90M  808M  10% /mnt/var
+root@debian:/home/user# mv /mnt/root/va
+vagrant/ var/     
+root@debian:/home/user# mv /mnt/root/var /mnt/root/[K[K[K[][K[K{}[Cv}a}r} }[1P},} }[1P}v}a}r}_}o}l}d}
+root@debian:/home/user# ls /[Kmv /mnt/root/va
+vagrant/ var_old/ 
+root@debian:/home/user# mv /mnt/root/va[K[K{}[K[Khome/[K}_}o}l}d}[Chome_old}ohome_old}me/home_old}[1Phome_old},home_old}[C[C{home,home_old}
+root@debian:/home/user# mkdir -p /mnt/root/home_old/[K[K[K[K[K{home[C[C[C[C,var}
+root@debian:/home/user# cd /
+root@debian:/# umount /mnt/[K[Kls /mnt/{}v}a}r},}h}o}m}e}
+/mnt/home:
+vagrant
+
+/mnt/var:
+adm    db     games   kerberos	local  log   nis  preserve  spool  yp
+cache  empty  gopher  lib	lock   mail  opt  run	    tmp
+root@debian:/# umount /mnt/*
+root@debian:/# df -Th
+Filesystem     Type      Size  Used Avail Use% Mounted on
+udev           devtmpfs  989M     0  989M   0% /dev
+tmpfs          tmpfs     201M  6.0M  195M   3% /run
+/dev/sr0       iso9660   2.3G  2.3G     0 100% /lib/live/mount/medium
+/dev/loop0     squashfs  2.1G  2.1G     0 100% /lib/live/mount/rootfs/filesystem.squashfs
+tmpfs          tmpfs    1003M     0 1003M   0% /lib/live/mount/overlay
+overlay        overlay  1003M  175M  828M  18% /
+tmpfs          tmpfs    1003M     0 1003M   0% /dev/shm
+tmpfs          tmpfs     5.0M  4.0K  5.0M   1% /run/lock
+tmpfs          tmpfs    1003M     0 1003M   0% /sys/fs/cgroup
+tmpfs          tmpfs    1003M     0 1003M   0% /tmp
+tmpfs          tmpfs     201M   36K  201M   1% /run/user/1000
+root@debian:/# 
