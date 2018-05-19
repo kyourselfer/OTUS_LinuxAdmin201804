@@ -1,0 +1,923 @@
+[01;32muser@debian[00m:[01;34m~[00m$ ls
+[0m[01;34mDesktop[0m    [01;34mDownloads[0m  [01;34mPictures[0m  screenlog.0  [01;34mVideos[0m
+[01;34mDocuments[0m  [01;34mMusic[0m      [01;34mPublic[0m    [01;34mTemplates[0m
+[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [K[01;32muser@debian[00m:[01;34m~[00m$ [H[2J[01;32muser@debian[00m:[01;34m~[00m$ si[Kudo -s
+root@debian:/home/user# apt update && apt install xfsprogs lvm2 fstransform
+[33m0% [Working][0m            Ign:1 http://deb.debian.org/debian stretch InRelease
+[33m0% [Working][0m            Hit:2 http://deb.debian.org/debian stretch Release
+[33m0% [Working][0m[33m0% [Release.gpg gpgv 118 kB][0m[33m                            20% [Working][0m             Reading package lists... 0%Reading package lists... 0%Reading package lists... 1%Reading package lists... 47%Reading package lists... 57%Reading package lists... 57%Reading package lists... 96%Reading package lists... 96%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 1%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree       
+Reading state information... 0%Reading state information... 0%Reading state information... Done
+All packages are up to date.
+Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree       
+Reading state information... 0%Reading state information... 0%Reading state information... Done
+The following additional packages will be installed:
+  dmeventd libdevmapper-event1.02.1 liblvm2app2.2 liblvm2cmd2.02 libreadline5
+Suggested packages:
+  thin-provisioning-tools xfsdump attr quota
+The following NEW packages will be installed:
+  dmeventd fstransform libdevmapper-event1.02.1 liblvm2app2.2 liblvm2cmd2.02 libreadline5 lvm2 xfsprogs
+0 upgraded, 8 newly installed, 0 to remove and 0 not upgraded.
+Need to get 3,310 kB of archives.
+After this operation, 11.0 MB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m[33m0% [Working][0m            Get:1 http://deb.debian.org/debian stretch/main amd64 libdevmapper-event1.02.1 amd64 2:1.02.137-2 [41.6 kB]
+[33m0% [1 libdevmapper-event1.02.1 0 B/41.6 kB 0%][0m[33m                                              4% [Working][0m            Get:2 http://deb.debian.org/debian stretch/main amd64 liblvm2cmd2.02 amd64 2.02.168-2 [683 kB]
+[33m4% [2 liblvm2cmd2.02 4,212 B/683 kB 1%][0m[33m                                       23% [Working][0m             Get:3 http://deb.debian.org/debian stretch/main amd64 dmeventd amd64 2:1.02.137-2 [59.5 kB]
+[33m23% [3 dmeventd 0 B/59.5 kB 0%][0m[33m                               26% [Waiting for headers][0m                         Get:4 http://deb.debian.org/debian stretch/main amd64 liblvm2app2.2 amd64 2.02.168-2 [554 kB]
+[33m27% [4 liblvm2app2.2 7,364 B/554 kB 1%][0m[33m42% [Working]                                                                                      221 kB/s 8s[0m                                                                                                              Get:5 http://deb.debian.org/debian stretch/main amd64 libreadline5 amd64 5.2+dfsg-3+b1 [119 kB]
+[33m42% [5 libreadline5 0 B/119 kB 0%]                                                                 221 kB/s 8s[0m[33m48% [Working]                                                                                      221 kB/s 8s[0m                                                                                                              Get:6 http://deb.debian.org/debian stretch/main amd64 lvm2 amd64 2.02.168-2 [933 kB]
+[33m48% [6 lvm2 0 B/933 kB 0%]                                                                         221 kB/s 8s[0m[33m73% [Working]                                                                                      221 kB/s 4s[0m                                                                                                              Get:7 http://deb.debian.org/debian stretch/main amd64 xfsprogs amd64 4.9.0+nmu1 [811 kB]
+[33m73% [7 xfsprogs 0 B/811 kB 0%]                                                                     221 kB/s 4s[0m[33m95% [Working]                                                                                      221 kB/s 0s[0m                                                                                                              Get:8 http://deb.debian.org/debian stretch/main amd64 fstransform amd64 0.9.3-2 [108 kB]
+[33m95% [8 fstransform 0 B/108 kB 0%]                                                                  221 kB/s 0s[0m[33m100% [Working]                                                                                     221 kB/s 0s[0m                                                                                                              Fetched 3,310 kB in 6s (493 kB/s)
+
+7[0;23r8[1ASelecting previously unselected package libdevmapper-event1.02.1:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 175652 files and directories currently installed.)
+Preparing to unpack .../0-libdevmapper-event1.02.1_2%3a1.02.137-2_amd64.deb ...
+7[24;0f[42m[30mProgress: [  0%][49m[39m [.........................................................................................] 87[24;0f[42m[30mProgress: [  2%][49m[39m [##.......................................................................................] 8Unpacking libdevmapper-event1.02.1:amd64 (2:1.02.137-2) ...
+7[24;0f[42m[30mProgress: [  4%][49m[39m [####.....................................................................................] 87[24;0f[42m[30mProgress: [  7%][49m[39m [######...................................................................................] 8Selecting previously unselected package liblvm2cmd2.02:amd64.
+Preparing to unpack .../1-liblvm2cmd2.02_2.02.168-2_amd64.deb ...
+7[24;0f[42m[30mProgress: [  9%][49m[39m [########.................................................................................] 8Unpacking liblvm2cmd2.02:amd64 (2.02.168-2) ...
+7[24;0f[42m[30mProgress: [ 12%][49m[39m [##########...............................................................................] 87[24;0f[42m[30mProgress: [ 14%][49m[39m [#############............................................................................] 8Selecting previously unselected package dmeventd.
+Preparing to unpack .../2-dmeventd_2%3a1.02.137-2_amd64.deb ...
+Unpacking dmeventd (2:1.02.137-2) ...
+7[24;0f[42m[30mProgress: [ 17%][49m[39m [###############..........................................................................] 87[24;0f[42m[30mProgress: [ 19%][49m[39m [#################........................................................................] 87[24;0f[42m[30mProgress: [ 21%][49m[39m [###################......................................................................] 8Selecting previously unselected package liblvm2app2.2:amd64.
+Preparing to unpack .../3-liblvm2app2.2_2.02.168-2_amd64.deb ...
+7[24;0f[42m[30mProgress: [ 24%][49m[39m [#####################....................................................................] 8Unpacking liblvm2app2.2:amd64 (2.02.168-2) ...
+7[24;0f[42m[30mProgress: [ 26%][49m[39m [#######################..................................................................] 87[24;0f[42m[30mProgress: [ 29%][49m[39m [##########################...............................................................] 8Selecting previously unselected package libreadline5:amd64.
+Preparing to unpack .../4-libreadline5_5.2+dfsg-3+b1_amd64.deb ...
+7[24;0f[42m[30mProgress: [ 31%][49m[39m [############################.............................................................] 8Unpacking libreadline5:amd64 (5.2+dfsg-3+b1) ...
+7[24;0f[42m[30mProgress: [ 34%][49m[39m [##############################...........................................................] 87[24;0f[42m[30mProgress: [ 36%][49m[39m [################################.........................................................] 8Selecting previously unselected package lvm2.
+Preparing to unpack .../5-lvm2_2.02.168-2_amd64.deb ...
+7[24;0f[42m[30mProgress: [ 39%][49m[39m [##################################.......................................................] 8Unpacking lvm2 (2.02.168-2) ...
+7[24;0f[42m[30mProgress: [ 41%][49m[39m [####################################.....................................................] 87[24;0f[42m[30mProgress: [ 43%][49m[39m [#######################################..................................................] 8Selecting previously unselected package xfsprogs.
+Preparing to unpack .../6-xfsprogs_4.9.0+nmu1_amd64.deb ...
+7[24;0f[42m[30mProgress: [ 46%][49m[39m [#########################################................................................] 8Unpacking xfsprogs (4.9.0+nmu1) ...
+7[24;0f[42m[30mProgress: [ 48%][49m[39m [###########################################..............................................] 87[24;0f[42m[30mProgress: [ 51%][49m[39m [#############################################............................................] 8Selecting previously unselected package fstransform.
+Preparing to unpack .../7-fstransform_0.9.3-2_amd64.deb ...
+7[24;0f[42m[30mProgress: [ 53%][49m[39m [###############################################..........................................] 8Unpacking fstransform (0.9.3-2) ...
+7[24;0f[42m[30mProgress: [ 56%][49m[39m [#################################################........................................] 87[24;0f[42m[30mProgress: [ 58%][49m[39m [####################################################.....................................] 8Setting up libdevmapper-event1.02.1:amd64 (2:1.02.137-2) ...
+7[24;0f[42m[30mProgress: [ 60%][49m[39m [######################################################...................................] 87[24;0f[42m[30mProgress: [ 63%][49m[39m [########################################################.................................] 8Setting up fstransform (0.9.3-2) ...
+7[24;0f[42m[30mProgress: [ 65%][49m[39m [##########################################################...............................] 87[24;0f[42m[30mProgress: [ 68%][49m[39m [############################################################.............................] 8Processing triggers for libc-bin (2.24-11+deb9u3) ...
+
+7[0;24r8[1A7[25;0f[42m[30mProgress: [ 68%][49m[39m [############################################################.............................] 8
+7[0;25r8[1A7[26;0f[42m[30mProgress: [ 68%][49m[39m [############################################################.............................] 8
+7[0;26r8[1A7[27;0f[42m[30mProgress: [ 68%][49m[39m [############################################################.............................] 8
+7[0;27r8[1A7[28;0f[42m[30mProgress: [ 68%][49m[39m [############################################################.............................] 8Processing triggers for systemd (232-25+deb9u2) ...
+Setting up liblvm2app2.2:amd64 (2.02.168-2) ...
+7[28;0f[42m[30mProgress: [ 70%][49m[39m [##############################################################...........................] 87[28;0f[42m[30mProgress: [ 73%][49m[39m [#################################################################........................] 8Processing triggers for man-db (2.7.6.1-2) ...
+Setting up libreadline5:amd64 (5.2+dfsg-3+b1) ...
+7[28;0f[42m[30mProgress: [ 75%][49m[39m [###################################################################......................] 87[28;0f[42m[30mProgress: [ 78%][49m[39m [#####################################################################....................] 8Setting up xfsprogs (4.9.0+nmu1) ...
+7[28;0f[42m[30mProgress: [ 80%][49m[39m [#######################################################################..................] 8I: update-initramfs is disabled (live system is running on read-only media).
+7[28;0f[42m[30mProgress: [ 82%][49m[39m [#########################################################################................] 8Setting up liblvm2cmd2.02:amd64 (2.02.168-2) ...
+7[28;0f[42m[30mProgress: [ 85%][49m[39m [###########################################################################..............] 87[28;0f[42m[30mProgress: [ 87%][49m[39m [##############################################################################...........] 8Setting up dmeventd (2:1.02.137-2) ...
+7[28;0f[42m[30mProgress: [ 90%][49m[39m [################################################################################.........] 8Created symlink /etc/systemd/system/sockets.target.wants/dm-event.socket → /lib/systemd/system/dm-event.socket.
+/usr/sbin/policy-rc.d returned 101, not running 'start dm-event.socket'
+7[28;0f[42m[30mProgress: [ 92%][49m[39m [##################################################################################.......] 8Setting up lvm2 (2.02.168-2) ...
+7[28;0f[42m[30mProgress: [ 95%][49m[39m [####################################################################################.....] 8invoke-rc.d: policy-rc.d denied execution of start.
+I: update-initramfs is disabled (live system is running on read-only media).
+invoke-rc.d: policy-rc.d denied execution of start.
+invoke-rc.d: policy-rc.d denied execution of start.
+Created symlink /etc/systemd/system/sysinit.target.wants/lvm2-lvmetad.socket → /lib/systemd/system/lvm2-lvmetad.socket.
+Created symlink /etc/systemd/system/sysinit.target.wants/lvm2-lvmpolld.socket → /lib/systemd/system/lvm2-lvmpolld.socket.
+Created symlink /etc/systemd/system/sysinit.target.wants/lvm2-monitor.service → /lib/systemd/system/lvm2-monitor.service.
+7[28;0f[42m[30mProgress: [ 97%][49m[39m [######################################################################################...] 8Processing triggers for libc-bin (2.24-11+deb9u3) ...
+Processing triggers for systemd (232-25+deb9u2) ...
+
+7[0;28r8[1A[Jroot@debian:/home/user# lvs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi------- 37.47g                                                    
+  LogVol01 VolGroup00 -wi-------  1.50g                                                    
+root@debian:/home/user# vgchange -a y
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  2 logical volume(s) in volume group "VolGroup00" now active
+root@debian:/home/user# fstransform /dev/mapper/q[KVolGroup00-LogVol00 ext4
+fstransform: starting version 0.9.3, checking environment
+fstransform: checking for which... 	'/usr/bin/which'
+fstransform: checking for expr... 	'/usr/bin/expr'
+fstransform: checking for id... 	'/usr/bin/id'
+fstransform: parsing command line arguments
+fstransform: checking for stat... 	'/usr/bin/stat'
+fstransform: checking for mkfifo... 	'/usr/bin/mkfifo'
+fstransform: checking for blockdev... 	'/sbin/blockdev'
+fstransform: checking for losetup... 	'/sbin/losetup'
+fstransform: checking for fsck... 	'/sbin/fsck'
+fstransform: checking for mkfs... 	'/sbin/mkfs'
+fstransform: checking for mount... 	'/bin/mount'
+fstransform: checking for umount... 	'/bin/umount'
+fstransform: checking for mkdir... 	'/bin/mkdir'
+fstransform: checking for rmdir... 	'/bin/rmdir'
+fstransform: checking for rm... 	'/bin/rm'
+fstransform: checking for dd... 	'/bin/dd'
+fstransform: checking for sync... 	'/bin/sync'
+fstransform: checking for fsmove... 	'/usr/sbin/fsmove'
+fstransform: checking for fsremap... 	'/usr/sbin/fsremap'
+fstransform: checking for fsck(source file-system)...	'/sbin/fsck'
+fstransform: checking for fsck(target file-system)...	'/sbin/fsck'
+fstransform: looking for optional commands
+fstransform: checking for sleep... 	'/bin/sleep'
+fstransform: checking for date... 	'/bin/date'
+19:25:24 fstransform: environment check passed.
+19:25:24 fstransform: saving output of this execution into /var/tmp/fstransform/fstransform.log.16379
+19:25:24 fstransform: preparing to transform device '/dev/mapper/VolGroup00-LogVol00' to file-system type 'ext4'
+19:25:24 fstransform: device '/dev/mapper/VolGroup00-LogVol00' not found in the output of command /bin/mount, assuming it is not mounted
+19:25:24 fstransform: device is now mounted at '/tmp/fstransform.mount.16379' with file-system type 'xfs'
+19:25:24 fstransform: device raw size = 40231763968 bytes
+19:25:24 fstransform: creating sparse loop file '/tmp/fstransform.mount.16379/.fstransform.loop.16379' inside device '/dev/mapper/VolGroup00-LogVol00'...
+19:25:24 dd: 1+0 records in
+19:25:24 dd: 1+0 records out
+19:25:24 dd: 1 byte copied, 0.000574324 s, 1.7 kB/s
+19:25:24 fstransform: device file-system block size = 4096 bytes
+19:25:24 fstransform: device usable size = 40231763968 bytes
+19:25:24 dd: 1+0 records in
+19:25:24 dd: 1+0 records out
+19:25:24 dd: 1 byte copied, 0.000709997 s, 1.4 kB/s
+19:25:24 fstransform: connected loop device '/dev/loop1' to file '/tmp/fstransform.mount.16379/.fstransform.loop.16379'
+19:25:24 fstransform: formatting loop device '/dev/loop1' with file-system type 'ext4'...
+19:25:26 fstransform: mounting loop device '/dev/loop1' on '/tmp/fstransform.loop.16379' ...
+19:25:27 fstransform: loop device '/dev/loop1' mounted successfully.
+19:25:27 fstransform: preliminary steps completed, now comes the delicate part:
+19:25:27 fstransform: fstransform will move '/dev/mapper/VolGroup00-LogVol00' contents into the loop file.
+         
+19:25:27 fstransform: WARNING: THIS IS IMPORTANT! if either the original device '/dev/mapper/VolGroup00-LogVol00'
+                      or the loop device '/dev/loop1' become FULL,
+                      
+                       YOU  WILL  LOSE  YOUR  DATA !
+                      
+                      fstransform checks for enough available space,
+                      in any case it is recommended to open another terminal, type
+                        watch df /dev/mapper/VolGroup00-LogVol00 /dev/loop1
+                      and check that both the original device '/dev/mapper/VolGroup00-LogVol00'
+                      and the loop device '/dev/loop1' are NOT becoming full.
+                      if one of them is becoming full (or both),
+                      you MUST stop fstransform with CTRL+C or equivalent.
+                      
+                      this is your chance to quit.
+                      press ENTER to continue, or CTRL+C to quit: 
+19:25:28 fstransform: moving '/dev/mapper/VolGroup00-LogVol00' contents into the loop file.
+19:25:28 fstransform: this may take a long time, please be patient...
+19:25:30 fsmove: progress: 5.0% done, 787.6 megabytes still to move
+19:25:31 fsmove: progress: 10.0% done, 746.2 megabytes still to move, estimated 25 seconds left
+19:25:31 fsmove: progress: 15.0% done, 704.7 megabytes still to move, estimated 25 seconds left
+19:25:32 fsmove: progress: 20.0% done, 663.2 megabytes still to move, estimated 20 seconds left
+19:25:35 fsmove: progress: 25.0% done, 621.7 megabytes still to move, estimated 20 seconds left
+19:25:37 fsmove: progress: 30.0% done, 580.2 megabytes still to move, estimated 20 seconds left
+19:25:37 fsmove: progress: 35.0% done, 538.8 megabytes still to move, estimated 20 seconds left
+19:25:40 fsmove: progress: 40.0% done, 497.3 megabytes still to move, estimated 20 seconds left
+19:25:42 fsmove: progress: 45.0% done, 455.8 megabytes still to move, estimated 15 seconds left
+19:25:44 fsmove: progress: 50.0% done, 414.3 megabytes still to move, estimated 15 seconds left
+19:25:45 fsmove: progress: 55.0% done, 372.8 megabytes still to move, estimated 15 seconds left
+19:25:50 fsmove: progress: 60.0% done, 331.4 megabytes still to move, estimated  7 seconds left
+19:25:51 fsmove: move() skipped `/tmp/fstransform.mount.16379/.fstransform.loop.16379', matches exclude list
+19:25:51 fsmove: job completed.
+19:25:51 fstransform: unmounting and running '/sbin/fsck' (disk check) on loop file '/tmp/fstransform.mount.16379/.fstransform.loop.16379'
+19:25:52 fsck: fsck from util-linux 2.29.2
+19:25:53 fsck: /dev/loop1: 19262/2457600 files (1.4% non-contiguous), 378226/9822208 blocks
+19:25:53 fstransform: disconnected loop device '/dev/loop1' from file '/tmp/fstransform.mount.16379/.fstransform.loop.16379'
+19:25:53 fstransform: unmounting device '/dev/mapper/VolGroup00-LogVol00' before disk check
+19:25:53 fstransform: running '/sbin/fsck' (disk check) on device '/dev/mapper/VolGroup00-LogVol00'
+19:25:53 fsck: fsck from util-linux 2.29.2
+19:25:53 fsck: /sbin/fsck.xfs: XFS file system.
+19:25:53 fstransform: mounting again device '/dev/mapper/VolGroup00-LogVol00' read-only
+19:25:53 fstransform: launching '/usr/sbin/fsremap' in simulated mode
+19:25:53 fsremap: starting job 1, persistence data and logs are in '/var/tmp/fstransform/fsremap.job.1'
+19:25:53 fsremap: if this job is interrupted, for example by a power failure,
+19:25:53 fsremap: you CAN RESUME it with: /usr/sbin/fsremap -n -q --resume-job=1 -- /dev/mapper/VolGroup00-LogVol00
+19:25:53 fsremap: analysis completed: 836.12 megabytes must be relocated
+19:25:54 fsremap: allocated 371.34 megabytes RAM as memory buffer
+19:25:54 fsremap: primary-storage is 105.00 megabytes, initialized and mmapped() to contiguous RAM
+19:25:54 fsremap: (simulated) starting in-place remapping. this may take a LONG time ...
+19:25:54 fsremap: (simulated) progress:  6.3% done, 836.1 megabytes still to relocate
+19:25:54 fsremap: (simulated) progress: 93.9% done, 102.4 megabytes still to relocate
+19:25:54 fsremap: (simulated) clearing 36.65 gigabytes free-space from device ...
+19:25:54 fsremap: (simulated) job completed.
+19:25:54 fstransform: launching '/usr/sbin/fsremap' in REAL mode to perform in-place remapping.
+19:25:54 fsremap: starting job 2, persistence data and logs are in '/var/tmp/fstransform/fsremap.job.2'
+19:25:54 fsremap: if this job is interrupted, for example by a power failure,
+19:25:54 fsremap: you CAN RESUME it with: /usr/sbin/fsremap -q --resume-job=2 -- /dev/mapper/VolGroup00-LogVol00
+19:25:54 fsremap: analysis completed: 836.12 megabytes must be relocated
+19:25:54 fsremap: allocated 371.35 megabytes RAM as memory buffer
+19:25:54 fsremap: primary-storage is 105.00 megabytes, initialized and mmapped() to contiguous RAM
+19:25:54 fsremap: successfully unmounted device '/dev/mapper/VolGroup00-LogVol00'
+19:25:54 fsremap: everything ready for in-place remapping, this is your LAST chance to quit.
+19:25:54 fsremap: WARN: press ENTER to proceed, or CTRL+C to quit
+
+19:25:57 fsremap: starting in-place remapping. this may take a LONG time ...
+19:25:58 fsremap: progress: 6.3% done, 836.1 megabytes still to relocate
+19:26:12 fsremap: progress: 93.9% done, 102.4 megabytes still to relocate, estimated  1 second left
+19:26:14 fsremap: clearing 36.65 gigabytes free-space from device ...
+19:30:38 fsremap: job completed.
+19:30:38 fstransform: running again '/sbin/fsck' (disk check) on device '/dev/mapper/VolGroup00-LogVol00'
+19:30:38 fsck: fsck from util-linux 2.29.2
+19:30:39 fsck: /dev/mapper/VolGroup00-LogVol00: 19262/2457600 files (1.4% non-contiguous), 378226/9822208 blocks
+19:30:39 fstransform: completed successfully. device '/dev/mapper/VolGroup00-LogVol00' now contains 'ext4' file-system
+root@debian:/home/user# fstransform /dev/mapper/VolGroup00-LogVol00 ext4[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ke2fsck -p [K[Kf -y /dev/mapper/VolGroup00-LogVol00
+e2fsck 1.43.4 (31-Jan-2017)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/mapper/VolGroup00-LogVol00: 19262/2457600 files (1.4% non-contiguous), 378226/9822208 blocks
+root@debian:/home/user# e2fsck -f -y /dev/mapper/VolGroup00-LogVol00
+e2fsck 1.43.4 (31-Jan-2017)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/mapper/VolGroup00-LogVol00: 19262/2457600 files (1.4% non-contiguous), 378226/9822208 blocks
+root@debian:/home/user# e2fsck -f -y /dev/mapper/VolGroup00-LogVol00
+e2fsck 1.43.4 (31-Jan-2017)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/mapper/VolGroup00-LogVol00: 19262/2457600 files (1.4% non-contiguous), 378226/9822208 blocks
+root@debian:/home/user# e2fsck -f -y /dev/mapper/VolGroup00-LogVol00[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[H[2Jroot@debian:/home/user# l[Klvs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi-a----- 37.47g                                                    
+  LogVol01 VolGroup00 -wi-a-----  1.50g                                                    
+root@debian:/home/user# resize2fs /dev/mapper/Vg[KolGroup00-LogVol00 9[K8G[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@-[1@p[1@ 
+resize2fs 1.43.4 (31-Jan-2017)
+Resizing the filesystem on /dev/mapper/VolGroup00-LogVol00 to 2097152 (4k) blocks.
+Begin pass 2 (max = 172144)
+Relocating blocks             ----------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Begin pass 3 (max = 300)
+Scanning inode table          ----------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Begin pass 4 (max = 2648)
+Updating inode references     ----------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+The filesystem on /dev/mapper/VolGroup00-LogVol00 is now 2097152 (4k) blocks long.
+
+root@debian:/home/user# resize2fs -p /dev/mapper/VolGroup00-LogVol00 8G[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Klvresize -L 8G /dev/va[K[Kmapper/VolGroup00-LogVol00
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  WARNING: Reducing active logical volume to 8.00 GiB.
+  THIS MAY DESTROY YOUR DATA (filesystem etc.)
+Do you really want to reduce VolGroup00/LogVol00? [y/n]: y
+  Size of logical volume VolGroup00/LogVol00 changed from 37.47 GiB (1199 extents) to 8.00 GiB (256 extents).
+  Logical volume VolGroup00/LogVol00 successfully resized.
+root@debian:/home/user# lvresize -L 8G /dev/mapper/VolGroup00-LogVol00[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cresize2fs -p /dev/mapper/VolGroup00-LogVol00 8G[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clvs[Ke2fsck -f -y /dev/mapper/VolGroup00-LogVol00[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clvs[K
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi-a----- 8.00g                                                    
+  LogVol01 VolGroup00 -wi-a----- 1.50g                                                    
+root@debian:/home/user# lvsresize -L 8G /dev/mapper/VolGroup00-LogVol00[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cresize2fs -p /dev/mapper/VolGroup00-LogVol00 8G[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clvs[Ke2fsck -f -y /dev/mapper/VolGroup00-LogVol00
+e2fsck 1.43.4 (31-Jan-2017)
+Pass 1: Checking inodes, blocks, and sizes
+Inode 5594 extent block passes checks, but checksum does not match extent
+	(logical block 233, physical block 62441, len 9)
+Fix? yes
+
+Inode 6119 extent block passes checks, but checksum does not match extent
+	(logical block 996, physical block 65875, len 1)
+Fix? yes
+
+Inode 12708 extent block passes checks, but checksum does not match extent
+	(logical block 707, physical block 73411, len 59)
+Fix? yes
+
+Inode 12818 extent block passes checks, but checksum does not match extent
+	(logical block 193, physical block 73921, len 198)
+Fix? yes
+
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/mapper/VolGroup00-LogVol00: 19262/524288 files (1.4% non-contiguous), 253805/2097152 blocks
+root@debian:/home/user# e2fsck -f -y /dev/mapper/VolGroup00-LogVol00[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kfstransform [K[2P(reverse-i-search)`':[Cf': e2fsck -f -y /dev/mapper/VolGroup00-LogVol00[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@s[C[C[C[C[C[C[8@failed reverse-i-search)`fsr[C[C[C[C[C[C[5Preverse-i-search)`fs': resize2fs -p /dev/mapper/VolGroup00-LogVol00 8G[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct': fstransform /dev/mapper/VolGroup00-LogVol00 ext4[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@r[C[C[C[1@a[C[C[C[3Proot@debian:/home/user#[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[Kxfs
+fstransform: starting version 0.9.3, checking environment
+fstransform: checking for which... 	'/usr/bin/which'
+fstransform: checking for expr... 	'/usr/bin/expr'
+fstransform: checking for id... 	'/usr/bin/id'
+fstransform: parsing command line arguments
+fstransform: checking for stat... 	'/usr/bin/stat'
+fstransform: checking for mkfifo... 	'/usr/bin/mkfifo'
+fstransform: checking for blockdev... 	'/sbin/blockdev'
+fstransform: checking for losetup... 	'/sbin/losetup'
+fstransform: checking for fsck... 	'/sbin/fsck'
+fstransform: checking for mkfs... 	'/sbin/mkfs'
+fstransform: checking for mount... 	'/bin/mount'
+fstransform: checking for umount... 	'/bin/umount'
+fstransform: checking for mkdir... 	'/bin/mkdir'
+fstransform: checking for rmdir... 	'/bin/rmdir'
+fstransform: checking for rm... 	'/bin/rm'
+fstransform: checking for dd... 	'/bin/dd'
+fstransform: checking for sync... 	'/bin/sync'
+fstransform: checking for fsmove... 	'/usr/sbin/fsmove'
+fstransform: checking for fsremap... 	'/usr/sbin/fsremap'
+fstransform: checking for fsck(source file-system)...	'/sbin/fsck'
+fstransform: checking for fsck(target file-system)...	'/sbin/fsck'
+fstransform: looking for optional commands
+fstransform: checking for sleep... 	'/bin/sleep'
+fstransform: checking for date... 	'/bin/date'
+19:38:27 fstransform: environment check passed.
+19:38:27 fstransform: saving output of this execution into /var/tmp/fstransform/fstransform.log.16819
+19:38:27 fstransform: preparing to transform device '/dev/mapper/VolGroup00-LogVol00' to file-system type 'xfs'
+19:38:27 fstransform: device '/dev/mapper/VolGroup00-LogVol00' not found in the output of command /bin/mount, assuming it is not mounted
+19:38:28 fstransform: device is now mounted at '/tmp/fstransform.mount.16819' with file-system type 'ext4'
+19:38:28 fstransform: device raw size = 8589934592 bytes
+19:38:28 fstransform: creating sparse loop file '/tmp/fstransform.mount.16819/.fstransform.loop.16819' inside device '/dev/mapper/VolGroup00-LogVol00'...
+19:38:28 dd: 1+0 records in
+19:38:28 dd: 1+0 records out
+19:38:28 dd: 1 byte copied, 0.00168504 s, 0.6 kB/s
+19:38:28 fstransform: device file-system block size = 4096 bytes
+19:38:28 fstransform: device usable size = 8589934592 bytes
+19:38:28 dd: 1+0 records in
+19:38:28 dd: 1+0 records out
+19:38:28 dd: 1 byte copied, 0.000679477 s, 1.5 kB/s
+19:38:28 fstransform: connected loop device '/dev/loop1' to file '/tmp/fstransform.mount.16819/.fstransform.loop.16819'
+19:38:28 fstransform: formatting loop device '/dev/loop1' with file-system type 'xfs'...
+19:38:28 fstransform: mounting loop device '/dev/loop1' on '/tmp/fstransform.loop.16819' ...
+19:38:28 fstransform: loop device '/dev/loop1' mounted successfully.
+19:38:28 fstransform: preliminary steps completed, now comes the delicate part:
+19:38:28 fstransform: fstransform will move '/dev/mapper/VolGroup00-LogVol00' contents into the loop file.
+         
+19:38:28 fstransform: WARNING: THIS IS IMPORTANT! if either the original device '/dev/mapper/VolGroup00-LogVol00'
+                      or the loop device '/dev/loop1' become FULL,
+                      
+                       YOU  WILL  LOSE  YOUR  DATA !
+                      
+                      fstransform checks for enough available space,
+                      in any case it is recommended to open another terminal, type
+                        watch df /dev/mapper/VolGroup00-LogVol00 /dev/loop1
+                      and check that both the original device '/dev/mapper/VolGroup00-LogVol00'
+                      and the loop device '/dev/loop1' are NOT becoming full.
+                      if one of them is becoming full (or both),
+                      you MUST stop fstransform with CTRL+C or equivalent.
+                      
+                      this is your chance to quit.
+                      press ENTER to continue, or CTRL+C to quit: 
+19:38:30 fstransform: moving '/dev/mapper/VolGroup00-LogVol00' contents into the loop file.
+19:38:30 fstransform: this may take a long time, please be patient...
+19:38:31 fsmove: progress: 5.0% done, 547.9 megabytes still to move
+19:38:33 fsmove: progress: 10.0% done, 519.0 megabytes still to move, estimated 25 seconds left
+19:38:33 fsmove: move() skipped `/tmp/fstransform.mount.16819/.fstransform.loop.16819', matches exclude list
+19:38:33 fsmove: progress: 15.0% done, 490.1 megabytes still to move, estimated 20 seconds left
+19:38:34 fsmove: progress: 20.0% done, 461.3 megabytes still to move, estimated 20 seconds left
+19:38:35 fsmove: progress: 25.0% done, 432.4 megabytes still to move, estimated 20 seconds left
+19:38:36 fsmove: progress: 30.0% done, 403.6 megabytes still to move, estimated 15 seconds left
+19:38:37 fsmove: progress: 35.0% done, 374.8 megabytes still to move, estimated 15 seconds left
+19:38:38 fsmove: progress: 40.0% done, 345.9 megabytes still to move, estimated 15 seconds left
+19:38:39 fsmove: progress: 45.0% done, 317.0 megabytes still to move, estimated 15 seconds left
+19:38:41 fsmove: progress: 50.0% done, 288.2 megabytes still to move, estimated 10 seconds left
+19:38:44 fsmove: progress: 55.0% done, 259.3 megabytes still to move, estimated 10 seconds left
+19:38:45 fsmove: progress: 60.0% done, 230.5 megabytes still to move, estimated 10 seconds left
+19:38:46 fsmove: progress: 65.0% done, 201.6 megabytes still to move, estimated  7 seconds left
+19:38:47 fsmove: progress: 70.0% done, 172.7 megabytes still to move, estimated  5 seconds left
+19:38:49 fsmove: progress: 75.1% done, 143.9 megabytes still to move, estimated  6 seconds left
+19:38:51 fsmove: progress: 80.1% done, 115.1 megabytes still to move, estimated  6 seconds left
+19:38:52 fsmove: progress: 85.1% done,  86.2 megabytes still to move, estimated  4 seconds left
+19:38:53 fsmove: progress: 90.1% done,  57.3 megabytes still to move, estimated  2 seconds left
+19:38:53 fsmove: job completed.
+19:38:53 fstransform: unmounting and running '/sbin/fsck' (disk check) on loop file '/tmp/fstransform.mount.16819/.fstransform.loop.16819'
+19:38:56 fsck: fsck from util-linux 2.29.2
+19:38:56 fsck: /sbin/fsck.xfs: XFS file system.
+19:38:56 fstransform: disconnected loop device '/dev/loop1' from file '/tmp/fstransform.mount.16819/.fstransform.loop.16819'
+19:38:56 fstransform: unmounting device '/dev/mapper/VolGroup00-LogVol00' before disk check
+19:38:56 fstransform: running '/sbin/fsck' (disk check) on device '/dev/mapper/VolGroup00-LogVol00'
+19:38:56 fsck: fsck from util-linux 2.29.2
+19:38:56 fsck: /dev/mapper/VolGroup00-LogVol00: 12/524288 files (0.0% non-contiguous), 257783/2097152 blocks
+19:38:56 fstransform: mounting again device '/dev/mapper/VolGroup00-LogVol00' read-only
+19:38:57 fstransform: launching '/usr/sbin/fsremap' in simulated mode
+19:38:57 fsremap: starting job 3, persistence data and logs are in '/var/tmp/fstransform/fsremap.job.3'
+19:38:57 fsremap: if this job is interrupted, for example by a power failure,
+19:38:57 fsremap: you CAN RESUME it with: /usr/sbin/fsremap -n -q --resume-job=3 -- /dev/mapper/VolGroup00-LogVol00
+19:38:57 fsremap: analysis completed: 586.36 megabytes must be relocated
+19:38:57 fsremap: allocated 381.87 megabytes RAM as memory buffer
+19:38:57 fsremap: primary-storage is 74.00 megabytes, initialized and mmapped() to contiguous RAM
+19:38:57 fsremap: (simulated) starting in-place remapping. this may take a LONG time ...
+19:38:57 fsremap: (simulated) progress:  6.3% done, 586.4 megabytes still to relocate
+19:38:57 fsremap: (simulated) clearing 7.43 gigabytes free-space from device ...
+19:38:57 fsremap: (simulated) job completed.
+19:38:57 fstransform: launching '/usr/sbin/fsremap' in REAL mode to perform in-place remapping.
+19:38:57 fsremap: starting job 4, persistence data and logs are in '/var/tmp/fstransform/fsremap.job.4'
+19:38:57 fsremap: if this job is interrupted, for example by a power failure,
+19:38:57 fsremap: you CAN RESUME it with: /usr/sbin/fsremap -q --resume-job=4 -- /dev/mapper/VolGroup00-LogVol00
+19:38:57 fsremap: analysis completed: 586.36 megabytes must be relocated
+19:38:57 fsremap: allocated 382.04 megabytes RAM as memory buffer
+19:38:58 fsremap: primary-storage is 74.00 megabytes, initialized and mmapped() to contiguous RAM
+19:38:58 fsremap: successfully unmounted device '/dev/mapper/VolGroup00-LogVol00'
+19:38:58 fsremap: everything ready for in-place remapping, this is your LAST chance to quit.
+19:38:58 fsremap: WARN: press ENTER to proceed, or CTRL+C to quit
+
+19:39:02 fsremap: starting in-place remapping. this may take a LONG time ...
+19:39:03 fsremap: progress: 6.3% done, 586.4 megabytes still to relocate
+19:39:13 fsremap: clearing 7.43 gigabytes free-space from device ...
+19:39:39 fsremap: job completed.
+19:39:39 fstransform: running again '/sbin/fsck' (disk check) on device '/dev/mapper/VolGroup00-LogVol00'
+19:39:39 fsck: fsck from util-linux 2.29.2
+19:39:39 fsck: /sbin/fsck.xfs: XFS file system.
+19:39:39 fstransform: completed successfully. device '/dev/mapper/VolGroup00-LogVol00' now contains 'xfs' file-system
+root@debian:/home/user# ls
+Desktop  Documents  Downloads  Music  Pictures	Public	screenlog.0  Templates	Videos
+root@debian:/home/user# [H[2Jroot@debian:/home/user# lvs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi-a----- 8.00g                                                    
+  LogVol01 VolGroup00 -wi-a----- 1.50g                                                    
+root@debian:/home/user# bl[K[Kblkid[Klsblk 
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                     7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                       8:0    0    1G  0 disk 
+sdb                       8:16   0    1G  0 disk 
+sdc                       8:32   0    1G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0   40G  0 disk 
+├─sde1                    8:65   0    1M  0 part 
+├─sde2                    8:66   0    1G  0 part 
+└─sde3                    8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00 254:0    0    8G  0 lvm  
+  └─VolGroup00-LogVol01 254:1    0  1.5G  0 lvm  
+sr0                      11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# pvchange [Kv[Kpvcreate /dev/sd{}a}[C[K[K[K[Kp[Kfdisk /dev/sda
+[32m
+Welcome to fdisk (util-linux 2.29.2).
+[0mChanges will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0xcac8eed1.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (1-4, default 1): 1
+First sector (2048-2097151, default 2048): 2048
+Last sector, +sectors or +size{K,M,G,T,P} (2048-2097151, default 2097151): 
+
+Created a new partition 1 of type 'Linux' and of size 1023 MiB.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+root@debian:/home/user# fdisk /dev/sda[Kb
+[32m
+Welcome to fdisk (util-linux 2.29.2).
+[0mChanges will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0xb103422a.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): 
+
+Using default response p.
+Partition number (1-4, default 1): 
+First sector (2048-2097151, default 2048): 
+Last sector, +sectors or +size{K,M,G,T,P} (2048-2097151, default 2097151): 
+
+Created a new partition 1 of type 'Linux' and of size 1023 MiB.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+root@debian:/home/user# fdisk /dev/sdb[Ke
+[32m
+Welcome to fdisk (util-linux 2.29.2).
+[0mChanges will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): n
+All space for primary partitions is in use.
+
+Command (m for help): p
+[1mDisk /dev/sde: 40 GiB, 42949672960 bytes, 83886080 sectors
+[0mUnits: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x000a218d
+
+[1mDevice[0m     [1mBoot[0m [1m  Start[0m [1m     End[0m [1m Sectors[0m [1mSize[0m [1mId[0m [1mType[0m
+/dev/sde1          2048     4095     2048   1M 83 Linux
+/dev/sde2  *       4096  2101247  2097152   1G 83 Linux
+/dev/sde3       2101248 83886079 81784832  39G 8e Linux LVM
+
+Command (m for help): q
+
+root@debian:/home/user# fdisk /dev/sde[Klsblk 
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                     7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                       8:0    0    1G  0 disk 
+└─sda1                    8:1    0 1023M  0 part 
+sdb                       8:16   0    1G  0 disk 
+└─sdb1                    8:17   0 1023M  0 part 
+sdc                       8:32   0    1G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0   40G  0 disk 
+├─sde1                    8:65   0    1M  0 part 
+├─sde2                    8:66   0    1G  0 part 
+└─sde3                    8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00 254:0    0    8G  0 lvm  
+  └─VolGroup00-LogVol01 254:1    0  1.5G  0 lvm  
+sr0                      11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# lsblk fdisk /dev/sde[Kc
+[32m
+Welcome to fdisk (util-linux 2.29.2).
+[0mChanges will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0x8eab9a22.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): 
+
+Using default response p.
+Partition number (1-4, default 1): 
+First sector (2048-2097151, default 2048): 
+Last sector, +sectors or +size{K,M,G,T,P} (2048-2097151, default 2097151): 
+
+Created a new partition 1 of type 'Linux' and of size 1023 MiB.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+root@debian:/home/user# lsblk 
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                     7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                       8:0    0    1G  0 disk 
+└─sda1                    8:1    0 1023M  0 part 
+sdb                       8:16   0    1G  0 disk 
+└─sdb1                    8:17   0 1023M  0 part 
+sdc                       8:32   0    1G  0 disk 
+└─sdc1                    8:33   0 1023M  0 part 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0   40G  0 disk 
+├─sde1                    8:65   0    1M  0 part 
+├─sde2                    8:66   0    1G  0 part 
+└─sde3                    8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00 254:0    0    8G  0 lvm  
+  └─VolGroup00-LogVol01 254:1    0  1.5G  0 lvm  
+sr0                      11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# pvcreate /dev/sd{}a},}b},}c}
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Device /dev/sda not found (or ignored by filtering).
+  Device /dev/sdb not found (or ignored by filtering).
+  Device /dev/sdc not found (or ignored by filtering).
+root@debian:/home/user# pvcreate /dev/sd{a,b,c}1
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Physical volume "/dev/sda1" successfully created.
+  Physical volume "/dev/sdb1" successfully created.
+  Physical volume "/dev/sdc1" successfully created.
+root@debian:/home/user# [H[2Jroot@debian:/home/user# vgcreate VG-var [K /dev/sda[K{}a},}b}[C1 && vga=[K[Kcreate VG-home[1P[1P[1P[1@m[1@i[1@r[1@r[1@o[1@r[1@1[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C /dev/sdc
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Volume group "VG-mirror1" successfully created
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Device /dev/sdc not found (or ignored by filtering).
+root@debian:/home/user# vgs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  VG         #PV #LV #SN Attr   VSize  VFree 
+  VG-mirror1   2   0   0 wz--n-  1.99g  1.99g
+  VolGroup00   1   2   0 wz--n- 38.97g 29.47g
+root@debian:/home/user# vgscreate VG-mirror1 /dev/sd{a,b}1 && vgcreate VG-home /dev/sdc[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C1[5P[2P[2P[3P[4P[9P[3P[9P
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Volume group "VG-home" successfully created
+root@debian:/home/user# lvcreate -n l[KLV-var -m[K-m[Ktype mirror -m 1 -L 900M[K VG-var[K[K[Kmirror1
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Logical volume "LV-var" created.
+root@debian:/home/user# lvs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log           Cpy%Sync Convert
+  LV-var   VG-mirror1 mwi-a-m--- 900.00m                                [LV-var_mlog] 33.33           
+  LogVol00 VolGroup00 -wi-a-----   8.00g                                                              
+  LogVol01 VolGroup00 -wi-a-----   1.50g                                                              
+root@debian:/home/user# lvs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log           Cpy%Sync Convert
+  LV-var   VG-mirror1 mwi-a-m--- 900.00m                                [LV-var_mlog] 69.33           
+  LogVol00 VolGroup00 -wi-a-----   8.00g                                                              
+  LogVol01 VolGroup00 -wi-a-----   1.50g                                                              
+root@debian:/home/user# lvs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log           Cpy%Sync Convert
+  LV-var   VG-mirror1 mwi-a-m--- 900.00m                                [LV-var_mlog] 100.00          
+  LogVol00 VolGroup00 -wi-a-----   8.00g                                                              
+  LogVol01 VolGroup00 -wi-a-----   1.50g                                                              
+root@debian:/home/user# lvs[K[K[Klvscreate -n LV-var --type mirror -m 1 -L 900 VG-mirror1[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kblkid
+/dev/sr0: UUID="2018-03-10-11-40-06-00" LABEL="d-live 9.4.0 gn amd64" TYPE="iso9660" PTUUID="55c3dcb6" PTTYPE="dos"
+/dev/sdc1: UUID="L4otyC-Ze03-JOPF-bLiK-ZDo2-ep4a-tWchod" TYPE="LVM2_member" PARTUUID="8eab9a22-01"
+/dev/sde1: PARTUUID="000a218d-01"
+/dev/sde2: UUID="a9953552-87ca-4e1c-972e-fb484ce749fe" TYPE="xfs" PARTUUID="000a218d-02"
+/dev/sde3: UUID="StnCI5-rd4r-8PPk-FAdf-Y5n1-HMHk-0ic6Sf" TYPE="LVM2_member" PARTUUID="000a218d-03"
+/dev/sda1: UUID="qYgWe3-ORsv-tRIz-ptM1-614b-OhN5-m3M9cS" TYPE="LVM2_member" PARTUUID="cac8eed1-01"
+/dev/sdb1: UUID="3051xx-c4Oc-gYlf-m6SI-B71x-6Nmx-1BR9Qa" TYPE="LVM2_member" PARTUUID="b103422a-01"
+/dev/loop0: TYPE="squashfs"
+/dev/mapper/VolGroup00-LogVol00: UUID="99e9d17f-ade9-4424-9dc8-df0104f366d4" TYPE="xfs"
+/dev/mapper/VolGroup00-LogVol01: UUID="63974128-1f7b-4926-860f-e75b056c4d72" TYPE="swap"
+root@debian:/home/user# lsblk 
+NAME                             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                              7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                                8:0    0    1G  0 disk 
+└─sda1                             8:1    0 1023M  0 part 
+  └─VG--mirror1-LV--var_mimage_0 254:3    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:5    0  900M  0 lvm  
+sdb                                8:16   0    1G  0 disk 
+└─sdb1                             8:17   0 1023M  0 part 
+  ├─VG--mirror1-LV--var_mlog     254:2    0    4M  0 lvm  
+  │ └─VG--mirror1-LV--var        254:5    0  900M  0 lvm  
+  └─VG--mirror1-LV--var_mimage_1 254:4    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:5    0  900M  0 lvm  
+sdc                                8:32   0    1G  0 disk 
+└─sdc1                             8:33   0 1023M  0 part 
+sdd                                8:48   0    1G  0 disk 
+sde                                8:64   0   40G  0 disk 
+├─sde1                             8:65   0    1M  0 part 
+├─sde2                             8:66   0    1G  0 part 
+└─sde3                             8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00          254:0    0    8G  0 lvm  
+  └─VolGroup00-LogVol01          254:1    0  1.5G  0 lvm  
+sr0                               11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# lvremove /dev/mapper/VG--mirror1-LV--var
+VG--mirror1-LV--var           VG--mirror1-LV--var_mimage_1  
+VG--mirror1-LV--var_mimage_0  VG--mirror1-LV--var_mlog      
+root@debian:/home/user# lvremove /dev/mapper/VG--mirror1-LV--var
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+Do you really want to remove active logical volume VG-mirror1/LV-var? [y/n]: y
+  Logical volume "LV-var" successfully removed
+root@debian:/home/user# lvremove /dev/mapper/VG--mirror1-LV--var[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csblk [K[1Pblkid[2Plvs[Klvs[Klvsblkidlsblk 
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                     7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                       8:0    0    1G  0 disk 
+└─sda1                    8:1    0 1023M  0 part 
+sdb                       8:16   0    1G  0 disk 
+└─sdb1                    8:17   0 1023M  0 part 
+sdc                       8:32   0    1G  0 disk 
+└─sdc1                    8:33   0 1023M  0 part 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0   40G  0 disk 
+├─sde1                    8:65   0    1M  0 part 
+├─sde2                    8:66   0    1G  0 part 
+└─sde3                    8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00 254:0    0    8G  0 lvm  
+  └─VolGroup00-LogVol01 254:1    0  1.5G  0 lvm  
+sr0                      11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# [2P(reverse-i-search)`':[C[7@l': lsblkv': lvremove /dev/mapper/VG--mirror1-LV--var[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cc': lvcreate -n LV-var --type mirror -m 1 -L 900 VG-mirror1[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@r[C[C[C[1@e[C[C[C[3Proot@debian:/home/user#[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C-VG-mirror1-VG-mirror1mVG-mirror1iVG-mirror1rVG-mirror1rVG-mirror1iVG-mirror1[1PVG-mirror1oVG-mirror1rVG-mirror1lVG-mirror1oVG-mirror1gVG-mirror1 VG-mirror1cVG-mirror1oVG-mirror1rVG-mirror1eVG-mirror1 VG-mirror1
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Logical volume "LV-var" created.
+root@debian:/home/user# lsblk 
+NAME                             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                              7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                                8:0    0    1G  0 disk 
+└─sda1                             8:1    0 1023M  0 part 
+  └─VG--mirror1-LV--var_mimage_0 254:2    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  
+sdb                                8:16   0    1G  0 disk 
+└─sdb1                             8:17   0 1023M  0 part 
+  └─VG--mirror1-LV--var_mimage_1 254:3    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  
+sdc                                8:32   0    1G  0 disk 
+└─sdc1                             8:33   0 1023M  0 part 
+sdd                                8:48   0    1G  0 disk 
+sde                                8:64   0   40G  0 disk 
+├─sde1                             8:65   0    1M  0 part 
+├─sde2                             8:66   0    1G  0 part 
+└─sde3                             8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00          254:0    0    8G  0 lvm  
+  └─VolGroup00-LogVol01          254:1    0  1.5G  0 lvm  
+sr0                               11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# lvcreate --[K[K-n LV-home -L 5[K[K[Kl 500[K%FREE VG-home
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  Logical volume "LV-home" created.
+root@debian:/home/user# lvcreate -n LV-home -l 50%FREE VG-home[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kmkfs -t xfs /dev/mapper/VG--home-LV--home /dev/mapper/--[K[KVG--va[K[KL[K
+VG--home-LV--home             VG--mirror1-LV--var_mimage_0  
+VG--mirror1-LV--var           VG--mirror1-LV--var_mimage_1  
+root@debian:/home/user# mkfs -t xfs /dev/mapper/VG--home-LV--home /dev/mapper/VG--home-LV--home 
+extra arguments
+Usage: mkfs.xfs
+/* blocksize */		[-b log=n|size=num]
+/* metadata */		[-m crc=0|1,finobt=0|1,uuid=xxx,rmapbt=0|1,reflink=0|1]
+/* data subvol */	[-d agcount=n,agsize=n,file,name=xxx,size=num,
+			    (sunit=value,swidth=value|su=num,sw=num|noalign),
+			    sectlog=n|sectsize=num
+/* force overwrite */	[-f]
+/* inode size */	[-i log=n|perblock=n|size=num,maxpct=n,attr=0|1|2,
+			    projid32bit=0|1,sparse=0|1]
+/* no discard */	[-K]
+/* log subvol */	[-l agnum=n,internal,size=num,logdev=xxx,version=n
+			    sunit=value|su=num,sectlog=n|sectsize=num,
+			    lazy-count=0|1]
+/* label */		[-L label (maximum 12 characters)]
+/* naming */		[-n log=n|size=num,version=2|ci,ftype=0|1]
+/* no-op info only */	[-N]
+/* prototype file */	[-p fname]
+/* quiet */		[-q]
+/* realtime subvol */	[-r extsize=num,size=num,rtdev=xxx]
+/* sectorsize */	[-s log=n|size=num]
+/* version */		[-V]
+			devicename
+<devicename> is required unless -d name=xxx is given.
+<num> is xxx (bytes), xxxs (sectors), xxxb (fs blocks), xxxk (xxx KiB),
+      xxxm (xxx MiB), xxxg (xxx GiB), xxxt (xxx TiB) or xxxp (xxx PiB).
+<value> is xxx (512 byte blocks).
+root@debian:/home/user# mkfs -t xfs /dev/mapper/VG--home-LV--home /dev/mapper/VG--home-LV--home [K}[1P/dev/mapper/VG--home-LV--home},/dev/mapper/VG--home-LV--home}{/dev/mapper/VG--home-LV--home,/dev/mapper/VG--home-LV--home}[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+extra arguments
+Usage: mkfs.xfs
+/* blocksize */		[-b log=n|size=num]
+/* metadata */		[-m crc=0|1,finobt=0|1,uuid=xxx,rmapbt=0|1,reflink=0|1]
+/* data subvol */	[-d agcount=n,agsize=n,file,name=xxx,size=num,
+			    (sunit=value,swidth=value|su=num,sw=num|noalign),
+			    sectlog=n|sectsize=num
+/* force overwrite */	[-f]
+/* inode size */	[-i log=n|perblock=n|size=num,maxpct=n,attr=0|1|2,
+			    projid32bit=0|1,sparse=0|1]
+/* no discard */	[-K]
+/* log subvol */	[-l agnum=n,internal,size=num,logdev=xxx,version=n
+			    sunit=value|su=num,sectlog=n|sectsize=num,
+			    lazy-count=0|1]
+/* label */		[-L label (maximum 12 characters)]
+/* naming */		[-n log=n|size=num,version=2|ci,ftype=0|1]
+/* no-op info only */	[-N]
+/* prototype file */	[-p fname]
+/* quiet */		[-q]
+/* realtime subvol */	[-r extsize=num,size=num,rtdev=xxx]
+/* sectorsize */	[-s log=n|size=num]
+/* version */		[-V]
+			devicename
+<devicename> is required unless -d name=xxx is given.
+<num> is xxx (bytes), xxxs (sectors), xxxb (fs blocks), xxxk (xxx KiB),
+      xxxm (xxx MiB), xxxg (xxx GiB), xxxt (xxx TiB) or xxxp (xxx PiB).
+<value> is xxx (512 byte blocks).
+root@debian:/home/user# mkfs -t xfs {/dev/mapper/VG--home-LV--home,/dev/mapper/VG--home-LV--home}'}[C'/dev/mapper/VG--home-LV--home'}[C','/dev/mapper/VG--home-LV--home'}'/dev/mapper/VG--home-LV--home','/dev/mapper/VG--home-LV--home'}[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+extra arguments
+Usage: mkfs.xfs
+/* blocksize */		[-b log=n|size=num]
+/* metadata */		[-m crc=0|1,finobt=0|1,uuid=xxx,rmapbt=0|1,reflink=0|1]
+/* data subvol */	[-d agcount=n,agsize=n,file,name=xxx,size=num,
+			    (sunit=value,swidth=value|su=num,sw=num|noalign),
+			    sectlog=n|sectsize=num
+/* force overwrite */	[-f]
+/* inode size */	[-i log=n|perblock=n|size=num,maxpct=n,attr=0|1|2,
+			    projid32bit=0|1,sparse=0|1]
+/* no discard */	[-K]
+/* log subvol */	[-l agnum=n,internal,size=num,logdev=xxx,version=n
+			    sunit=value|su=num,sectlog=n|sectsize=num,
+			    lazy-count=0|1]
+/* label */		[-L label (maximum 12 characters)]
+/* naming */		[-n log=n|size=num,version=2|ci,ftype=0|1]
+/* no-op info only */	[-N]
+/* prototype file */	[-p fname]
+/* quiet */		[-q]
+/* realtime subvol */	[-r extsize=num,size=num,rtdev=xxx]
+/* sectorsize */	[-s log=n|size=num]
+/* version */		[-V]
+			devicename
+<devicename> is required unless -d name=xxx is given.
+<num> is xxx (bytes), xxxs (sectors), xxxb (fs blocks), xxxk (xxx KiB),
+      xxxm (xxx MiB), xxxg (xxx GiB), xxxt (xxx TiB) or xxxp (xxx PiB).
+<value> is xxx (512 byte blocks).
+root@debian:/home/user# mkfs -t xfs {'/dev/mapper/VG--home-LV--home','/dev/mapper/VG--home-LV--home'}[K[K[K[K[K[K[K[6P/dev/mapper/VG--home-LV--x/dev/mapper/VG--home-LV--f/dev/mapper/VG--home-LV--s/dev/mapper/VG--home-LV-- /dev/mapper/VG--home-LV--[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K-home 
+meta-data=/dev/mapper/VG--home-LV--home isize=512    agcount=4, agsize=32512 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=0, rmapbt=0, reflink=0
+data     =                       bsize=4096   blocks=130048, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+root@debian:/home/user# mkfs -t xfs /dev/mapper/VG--home-LV--home [K[K[Kva[K[Kmirror1-LV--var
+meta-data=/dev/mapper/VG--mirror1-LV--var isize=512    agcount=4, agsize=57600 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=0, rmapbt=0, reflink=0
+data     =                       bsize=4096   blocks=230400, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+root@debian:/home/user# mv[K[Kmount [K[K[K[K[K[Kmkdir -p /home/{}[Kmnt/{}h}o}m}e},}r}o}o}t}/}[1P},}v}a}r}
+root@debian:/home/user# mount /[Klvs
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LV-home  VG-home    -wi-a----- 508.00m                                                    
+  LV-var   VG-mirror1 mwi-a-m--- 900.00m                                    100.00          
+  LogVol00 VolGroup00 -wi-a-----   8.00g                                                    
+  LogVol01 VolGroup00 -wi-a-----   1.50g                                                    
+root@debian:/home/user# mount /de[K[Kvgchange -a y
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  2 logical volume(s) in volume group "VolGroup00" now active
+  1 logical volume(s) in volume group "VG-home" now active
+  1 logical volume(s) in volume group "VG-mirror1" now active
+root@debian:/home/user# mount /dev/mapper/VolGroup00-LogVol00 /mnt/root/
+root@debian:/home/user# mount /dev/mapper/VolGroup00-LogVol00 /mnt/root/[Khome/[8P /mnt/home/[11P /mnt/home/V /mnt/home/G /mnt/home/-- /mnt/home/h /mnt/home/ome-LV--home /mnt/home/
+root@debian:/home/user# mount /dev/mapper/VG--home-LV--home /mnt/home/[Kvar/[5P/mnt/var/[4P/mnt/var/[5P/mnt/var/v/mnt/var/[1P/mnt/var/m/mnt/var/irror1-LV--var/mnt/var/ /mnt/var/
+root@debian:/home/user# rsun[K[Kync -uxa[K[K[Kaxu /mnt/root/var/ /mnt/r[Kvar/
+root@debian:/home/user# rsync -axu /mnt/root/var/ /mnt/var/[Khome/[4P /mnt/home/h /mnt/home/o /mnt/home/me/ /mnt/home/
+root@debian:/home/user# ls /mnt/{}[C[K[Khome/
+vagrant
+root@debian:/home/user# ls /mnt/home/[Kvar
+adm    db     games   kerberos	local  log   nis  preserve  spool  yp
+cache  empty  gopher  lib	lock   mail  opt  run	    tmp
+root@debian:/home/user# [H[2Jroot@debian:/home/user# ls /dev/mapper/
+control		   VG--mirror1-LV--var		 VG--mirror1-LV--var_mimage_1  VolGroup00-LogVol01
+VG--home-LV--home  VG--mirror1-LV--var_mimage_0  VolGroup00-LogVol00
+root@debian:/home/user# ls /dev/mapper/[C[C[C /dev/mapper/- /dev/mapper/1 /dev/mapper/
+control
+VG--home-LV--home
+VG--mirror1-LV--var
+VG--mirror1-LV--var_mimage_0
+VG--mirror1-LV--var_mimage_1
+VolGroup00-LogVol00
+VolGroup00-LogVol01
+root@debian:/home/user# vi /etc/fstab 
+[?1049h[?1h=[1;28r[?12;25h[?12l[?25h[27m[24m[0m[H[2J[?25l[28;1H"/etc/fstab" 4 lines, 127 characters[1;1Hproc /proc proc defaults 0 0
+/dev/sda1 / ext4 errors=remount-ro 0 1
+overlay / overlay rw 0 0
+tmpfs /tmp tmpfs nosuid,nodev 0 0
+[94m~                                                                                                              [6;1H~                                                                                                              [7;1H~                                                                                                              [8;1H~                                                                                                              [9;1H~                                                                                                              [10;1H~                                                                                                              [11;1H~                                                                                                              [12;1H~                                                                                                              [13;1H~                                                                                                              [14;1H~                                                                                                              [15;1H~                                                                                                              [16;1H~                                                                                                              [17;1H~                                                                                                              [18;1H~                                                                                                              [19;1H~                                                                                                              [20;1H~                                                                                                              [21;1H~                                                                                                              [22;1H~                                                                                                              [23;1H~                                                                                                              [24;1H~                                                                                                              [25;1H~                                                                                                              [26;1H~                                                                                                              [27;1H~                                                                                                              [1;1H[?12l[?25h[28;1H[0m[28;1H[K[28;1H[?1l>[?1049lroot@debian:/home/user# vi /etc/fstab [K[Kmnt/rpo[K[Koot/etc/fstab 
+[?1049h[?1h=[1;28r[?12;25h[?12l[?25h[27m[24m[0m[H[2J[?25l[28;1H"/mnt/root/etc/fstab" 11 lines, 481 characters[2;1H#
+# /etc/fstab
+# Created by anaconda on Tue Apr  3 21:42:15 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VolGroup00-LogVol00 /[23Cxfs     defaults[8C0 0
+UUID=a9953552-87ca-4e1c-972e-fb484ce749fe /boot[19Cxfs     defaults[8C0 0
+/dev/mapper/VolGroup00-LogVol01 swap[20Cswap    defaults[8C0 0
+[94m~                                                                                                              [13;1H~                                                                                                              [14;1H~                                                                                                              [15;1H~                                                                                                              [16;1H~                                                                                                              [17;1H~                                                                                                              [18;1H~                                                                                                              [19;1H~                                                                                                              [20;1H~                                                                                                              [21;1H~                                                                                                              [22;1H~                                                                                                              [23;1H~                                                                                                              [24;1H~                                                                                                              [25;1H~                                                                                                              [26;1H~                                                                                                              [27;1H~                                                                                                              [1;1H[?12l[?25h
+
+
+
+
+
+
+
+
+[?25l[11;27r[0m[11;1H[L[1;28r[10;1H[K[11;1HUUID=a9953552-87ca-4e1c-972e-fb484ce749fe /boot[19Cxfs     defaults[8C0 0[28;1H[K[11;1H[?12l[?25h[?25l[11;27r[11;1H[L[1;28r[11;1HA[?12l[?25h[?25l[11;27r[27;1H
+[1;28r[27;1H[94m~                                                                                                              [11;1H[?12l[?25h[10;1H[?25l[0mVG--home-LV--home[?12l[?25h[?25lE[?12l[?25h[?25leE[?12l[?25h[?25lE[10;18H[K[10;17H[?12l[?25h[?25l[10;17H[K[10;16H[?12l[?25h[?25lmm[?12l[?25h[?25lem[?12l[?25he[?25l[10;18H[K[10;17H[?12l[?25h[?25l/VG--home-LV--home/[?12l[?25h[?25ldVG--home-LV--home/d[?12l[?25h[?25leVG--home-LV--home/de[?12l[?25h[?25lvVG--home-LV--home/dev[?12l[?25h[?25l/VG--home-LV--home/dev/[?12l[?25h[?25lmVG--home-LV--home[10;7H[?12l[?25h[?25laVG--home-LV--home[10;8H[?12l[?25h[?25lpVG--home-LV--home[10;9H[?12l[?25h[?25lpVG--home-LV--home[10;10H[?12l[?25h[?25leVG--home-LV--home[10;11H[?12l[?25h[?25lrVG--home-LV--home[10;12H[?12l[?25h[?25l/VG--home-LV--home[10;13H[?12l[?25h[?25l[10;27r[10;1H[L[1;28r[10;1HC[?12l[?25h[?25l[10;27r[27;1H
+[1;28r[27;1H[94m~                                                                                                              [10;1H[?12l[?25h[28C[0mm[?25lee[?12l[?25h[?25l e[?12l[?25h[?25l/e[?12l[?25h/[?25l[10;32H[K[10;31H[?12l[?25h[?25l[28;1H/[?12l[?25h
+[?25l[97m[41mE35: No previous regular expression[0m
+[32mPress ENTER or type command to continue[0m[1;1H[2L[2;1H#[28;1H[K[10;31H[?12l[?25h[?25l[10;31H[K[10;30H[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l/[?12l[?25h[?25l[8C[?12l[?25h[?25l[8C[?12l[?25h[?25l[8C[?12l[?25h[?25lx[?12l[?25h[?25lf[?12l[?25h[?25ls[?12l[?25h[?25l [?12l[?25h[?25l[?12l[?25h[?25l     [?12l[?25h[?25ld[?12l[?25h[?25le[?12l[?25h[?25lf[?12l[?25h[?25lu[?12l[?25h[?25l[?12l[?25h[?25la[?12l[?25h[?25lu[?12l[?25h[?25ll[?12l[?25h[?25lt[?12l[?25h[?25ls[?12l[?25h[?25l[8C[?12l[?25h[?25l[8C[?12l[?25h[?25l[10;81H[?12l[?25h[?25l0[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25l
+ [11;2H[K[12;1HUUID=a9953552-87ca-4e1c-972e-fb484ce749fe /boot[9C          xfs     defaults [7C0 0
+/dev/mapper/VolGroup00-LogVol01 swap                    swap    defaults        0 0[13;84H[K[11;1H[?12l[?25h[?25l/dev/mapper/VG--home-LV--home[?12l[?25h[?25lome-LV--home [11;17H[?12l[?25h[?25lme-LV--home [11;17H[?12l[?25h[?25le-LV--home [11;17H[?12l[?25h[?25l-LV--home [11;17H[?12l[?25h[?25lm-LV--home[11;18H[?12l[?25h[?25li-LV--home[11;19H[?12l[?25h[?25lr-LV--home[11;20H[?12l[?25h[?25lr-LV--home[11;21H[?12l[?25h[?25lo-LV--home[11;22H[?12l[?25h[?25lr-LV--home[11;23H[?12l[?25h[?25l1-LV--home[11;24H[?12l[?25h1-LV--h[?25lome [?12l[?25h[?25lme [?12l[?25h[?25le [?12l[?25h[?25l [?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25l r[?12l[?25h[?25lr [?12l[?25hr[?25l [?12l[?25h[?25l/[?12l[?25h[10;40H[10;32H[?25l /[?12l[?25h[11;32H /[?25l[7C[?12l[?25h[?25l[8C[?12l[?25h[?25l[8C[?12l[?25h[?25lx[?12l[?25h[?25lf[?12l[?25h[?25ls[?12l[?25h[?25l [?12l[?25h[?25l[?12l[?25h[?25l     [?12l[?25h[?25lf[?12l[?25h[?25l[?12l[?25h[?25ld[?12l[?25h[?25le[?12l[?25h[?25lf[?12l[?25h[?25la[?12l[?25h[?25lu[?12l[?25h[?25ll[?12l[?25h[?25lt[?12l[?25h[?25ls[?12l[?25h[?25l[8C[?12l[?25h[?25l0[?12l[?25h[?25l [?12l[?25h[?25l0[?12l[?25h[?25l[28;1H"/mnt/root/etc/fstab" 13 lines, 588 characters written
+[?1l>[?12l[?25h[?1049lroot@debian:/home/user# ls /dev/mapper/VG--mirror1-LV--var
+/dev/mapper/VG--mirror1-LV--var
+root@debian:/home/user# [H[2Jroot@debian:/home/user# lsblk
+NAME                             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                              7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                                8:0    0    1G  0 disk 
+└─sda1                             8:1    0 1023M  0 part 
+  └─VG--mirror1-LV--var_mimage_0 254:2    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  /mnt/var
+sdb                                8:16   0    1G  0 disk 
+└─sdb1                             8:17   0 1023M  0 part 
+  └─VG--mirror1-LV--var_mimage_1 254:3    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  /mnt/var
+sdc                                8:32   0    1G  0 disk 
+└─sdc1                             8:33   0 1023M  0 part 
+  └─VG--home-LV--home            254:5    0  508M  0 lvm  /mnt/home
+sdd                                8:48   0    1G  0 disk 
+sde                                8:64   0   40G  0 disk 
+├─sde1                             8:65   0    1M  0 part 
+├─sde2                             8:66   0    1G  0 part 
+└─sde3                             8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00          254:0    0    8G  0 lvm  /mnt/root
+  └─VolGroup00-LogVol01          254:1    0  1.5G  0 lvm  
+sr0                               11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# umount /mnt [K/*
+root@debian:/home/user# umount /mnt/*[8Plsblk
+NAME                             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0                              7:0    0    2G  1 loop /lib/live/mount/rootfs/filesystem.squashfs
+sda                                8:0    0    1G  0 disk 
+└─sda1                             8:1    0 1023M  0 part 
+  └─VG--mirror1-LV--var_mimage_0 254:2    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  
+sdb                                8:16   0    1G  0 disk 
+└─sdb1                             8:17   0 1023M  0 part 
+  └─VG--mirror1-LV--var_mimage_1 254:3    0  900M  0 lvm  
+    └─VG--mirror1-LV--var        254:4    0  900M  0 lvm  
+sdc                                8:32   0    1G  0 disk 
+└─sdc1                             8:33   0 1023M  0 part 
+  └─VG--home-LV--home            254:5    0  508M  0 lvm  
+sdd                                8:48   0    1G  0 disk 
+sde                                8:64   0   40G  0 disk 
+├─sde1                             8:65   0    1M  0 part 
+├─sde2                             8:66   0    1G  0 part 
+└─sde3                             8:67   0   39G  0 part 
+  ├─VolGroup00-LogVol00          254:0    0    8G  0 lvm  
+  └─VolGroup00-LogVol01          254:1    0  1.5G  0 lvm  
+sr0                               11:0    1  2.2G  0 rom  /lib/live/mount/medium
+root@debian:/home/user# [H[2Jroot@debian:/home/user# 
