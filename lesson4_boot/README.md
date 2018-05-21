@@ -2,6 +2,7 @@
 Д.З. Работа с загрузчиком
 -----------------------------------
 ### 1. Попасть в систему без пароля несколькими способами 1
+#### debian 8
 * Дописываем в загрузчике grub2 в строке linux16 `init=/bin/sh`
 * `mount -o remount, rw /`
 * `passwd root`
@@ -16,4 +17,9 @@
 ![debian8_systemd.debug-shell](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/debian8_systemd.debug-shell.jpeg)
 ![debian8_systemd.debug-shell_sys](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/debian8_systemd.debug-shell_sys.jpeg)
 
+#### centos 7
+* Дописываем в загрузчике grub2 в строке linux16 `systemd.debug-shell=1 selinux=0`
+* `passwd root`
+![debian8_systemd.debug-shell_sys](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/)
+![debian8_systemd.debug-shell_sys](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/)
 ### 2. Установить систему с LVM, после чего переименовать VG 2
