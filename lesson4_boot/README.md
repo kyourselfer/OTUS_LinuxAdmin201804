@@ -1,6 +1,6 @@
 
-***
-- Дописываем в строке linux16 "init=/bin/sh"
+h2  Попасть в систему без пароля несколькими способами
+- Дописываем в загрузчике grub2 в строке linux16 "init=/bin/sh"
 - mount -o remount, rw /
 - passwd root
 - exec /sbin/init
