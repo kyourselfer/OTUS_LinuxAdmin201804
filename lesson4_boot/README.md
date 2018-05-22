@@ -3,7 +3,7 @@
 -----------------------------------
 ### 1. Попасть в систему без пароля несколькими способами 1
 #### debian 8
-* Дописываем в загрузчике grub2 в строке linux16 `init=/bin/sh`
+* Дописываем в загрузчике grub2 в строке linux16 `init=/bin/sh` данное выражение (`init=/sysroot/bin/sh`) не заработало на centos 7 
 * `mount -o remount, rw /`
 * `passwd root`
 * `exec /sbin/init`
