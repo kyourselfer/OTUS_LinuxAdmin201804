@@ -28,5 +28,5 @@
 
 ### 3.
 
-### 4. 
-[Extra](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson4_boot/extra)
+### 4(*). Сконфигурировать систему без отдельного раздела с /boot, а только с LVM
+[Extra h.w.](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson4_boot/extra)
