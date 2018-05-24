@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/rootadmin/Vagrant/OTUS/git/OTUS_LinuxAdmin201804/lesson2_mdraid","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
