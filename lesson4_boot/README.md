@@ -24,7 +24,7 @@
 ![centos7_systemd.debug-shell](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/centos7_systemd.debug-shell.jpeg)
 ![centos7_systemd.debug-shell_sys](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/centos7_systemd.debug-shell_sys.jpeg)
 
-### 2. Установить систему с LVM, после чего переименовать VG 2
+### [2. Установить систему с LVM, после чего переименовать VG 2](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson4_boot/vgrename)
 
 ### 3.
 
