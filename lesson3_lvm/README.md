@@ -15,5 +15,6 @@
 ##### - залоггировать работу можно с помощью утилиты screen
 
 ### * на нашей куче дисков попробовать поставить btrfs/zfs - с кешем, снэпшотами - разметить здесь каталог /opt
+[screen logs](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson3_lvm/screenlogs)
 
 ![lvm_zfs](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson3_lvm/lvm_zfs.jpeg)
