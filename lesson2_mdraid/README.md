@@ -11,6 +11,6 @@
 
 ##### В Vagrantfle область для подключения скрипта `box.vm.provision "shell", path: "./SCRIPTS/init.sh"`
 ##### и сам скрипт автоматизации создания mdraid5 
-##### [init.sh]  (https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson2_mdraid/SCRIPTS/init.sh)
+##### [init.sh](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson2_mdraid/SCRIPTS/init.sh)
 
 ![lsblk](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson2_mdraid/lsblk.jpeg)
