@@ -9,42 +9,23 @@ LetterOfException=`lsblk | grep sd | grep -E "sd(a|b|c|d|e)(1|2|3)" | cut -c5 | 
 LettersOfMDRaid=`lsblk | grep sd | grep -vE "sd(a|b|c|d|e)(1|2|3)" | cut -c3 | grep -v $LetterOfException`
 SortLettersOfMDRaid=`echo $LettersOfMDRaid | sort | xargs echo | tr ' ' ,`
 # concatenation
-eval "mdadm --zero-superblock /dev/sd{$SortLettersOfMDRaid}"
 eval "echo y | mdadm --create /dev/md0 --level=5 --raid-devices=4 /dev/sd{$SortLettersOfMDRaid}"
 mdadm --detail --scan > /etc/mdadm.conf
 
-# creat GPT and partitions
-fdisk /dev/md0 << EOF
-g
-n
-1
-3072
-+256M
-n
-2
-527360
-+256M
-n
-3
-1051648 
-+256M
-n
-4
-1575936
-+256M
-n
-5
-2100224
-+256M
-w
-EOF
+# creat gpt slices
+parted -s /dev/md0 mklabel gpt
+parted -s /dev/md0 mkpart 1 ext4 1.54MB 258MB
+parted -s /dev/md0 mkpart 2 ext4 258MB 514MB
+parted -s /dev/md0 mkpart 3 ext4 514MB 770MB
+parted -s /dev/md0 mkpart 4 ext4 771MB 1027MB
+parted -s /dev/md0 mkpart 5 ext4 1027MB 1283MB
 
 # make fs, create catalogs and add in fstab
-for VAL in 1 2 3 4 5
+for i in 1 2 3 4 5
 do
-	mkfs -t xfs -f /dev/md0p$VAL
-	mkdir -p /raid5/slice$VAL
-	echo "/dev/md0p$VAL          /raid5/slice$VAL        xfs     defaults        0 0" >> /etc/fstab
+	mkfs -t ext4 /dev/md0p$i
+	mkdir -p /raid5/slice$i
+	echo "/dev/md0p$i          /raid5/slice$i        ext4     defaults        0 0" >> /etc/fstab
 done
 
 # mounting 
