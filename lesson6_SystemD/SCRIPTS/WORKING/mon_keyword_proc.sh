@@ -1,4 +1,5 @@
 #!/bin/bash
+#
 # This script is following for Logfile and looking for Keyword every 30 seconds.
 #
 ## Function searching Keyword in Logfile 
@@ -7,7 +8,7 @@ function fcheck {
     return $?
 }
 
-### It checks quantity of arguments
+### It checks quantity of arguments | Проверка на кол-во аргументов
 if [ $# -ne 2 ]
 then
     echo -e "$0: Give me two arguments 1st is Keyword and 2nd is Logfile,\n\n\tExample: $0 \$arg1 \$arg2\n"
@@ -17,7 +18,6 @@ fi
 # Values
 Keyword=$1
 Logfile=$2
-echo "proc: $Keyword $Logfile"
 #
 while true
 do
@@ -28,7 +28,7 @@ do
         echo "Event has come!"
         exit 0
     else
-#        echo "Event hasn\'t come yet!"
+        echo "Event hasn\'t come yet!"
 	continue
     fi
 done
