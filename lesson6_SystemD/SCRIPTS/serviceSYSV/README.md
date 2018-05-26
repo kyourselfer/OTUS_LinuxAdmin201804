@@ -2,5 +2,5 @@
 -------------------------------
 ##### Сервис SYSV формата `mon_keyword_serviceSysV`:
 * mon_keyword_proc.sh # Процесс принимает 3 аргумента `ключевую фразу`, `файл лога для поиска`, `интервал проверки`. Набюдает за изменением числа строк в файле лога. В случае сработки условия пишет в `/var/log/mon_keyword_serviceSysV/security.log` и `/var/log/messeges`;
-* mon_keyword_serviceSysV # Файл сервиса SYSV передающий три агрумента в `/etc/sysconfig/mon_keyword_serviceSysV.conf` пишит файл лога запуска и остановки `/var/log/mon_keyword_serviceSysV/daemon.log`;
+* mon_keyword_serviceSysV # Файл сервиса SYSV передающий три агрумента в `/etc/sysconfig/mon_keyword_serviceSysV.conf` пишет файл лога запуска и остановки `/var/log/mon_keyword_serviceSysV/daemon.log`;
 * mon_keyword_serviceSysV.conf # Конфигурационный файл.
