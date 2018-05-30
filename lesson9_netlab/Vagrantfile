@@ -1,10 +1,8 @@
 # -*- mode: ruby -*-
 # vim: set ft=ruby :
-# -*- mode: ruby -*-
-# vim: set ft=ruby :
 
 MACHINES = {
-:inetRouter => {
+  :inetRouter => {
         :box_name => "centos/7",
         #:public => {:ip => '10.10.10.1', :adapter => 1},
         :net => [
@@ -18,9 +16,10 @@ MACHINES = {
                    {ip: '192.168.0.1', adapter: 3, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"},
                    {ip: '192.168.0.33', adapter: 4, netmask: "255.255.255.240", virtualbox__intnet: "hw-net"},
                    {ip: '192.168.0.65', adapter: 5, netmask: "255.255.255.192", virtualbox__intnet: "mgt-net"},
+		   {ip: '192.168.255.5', adapter: 6, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
+		   {ip: '192.168.255.9', adapter: 7, netmask: "255.255.255.252", virtualbox__intnet: "router-net"}
                 ]
   },
-  
   :centralServer => {
         :box_name => "centos/7",
         :net => [
@@ -29,7 +28,27 @@ MACHINES = {
                    {adapter: 4, auto_config: false, virtualbox__intnet: true},
                 ]
   },
-  
+  :office1Router => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.2.1', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "office1-net"},
+                   {ip: '192.168.255.6', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
+                ]
+  },
+  :office1Server => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.2.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "office1-net"},
+                ]
+  },
+  :office2Router => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.1.1', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "office2-net"},
+                   {ip: '192.168.255.10', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
+                ]
+  },
+
 }
 
 Vagrant.configure("2") do |config|
@@ -57,28 +76,51 @@ Vagrant.configure("2") do |config|
         case boxname.to_s
         when "inetRouter"
           box.vm.provision "shell", run: "always", inline: <<-SHELL
+            yum -y install iptables-services && systemctl enable iptables && systemctl start iptables
             sysctl net.ipv4.conf.all.forwarding=1
             iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
             SHELL
         when "centralRouter"
-          box.vm.provision "shell", run: "always", inline: <<-SHELL
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end  
+	  box.vm.provision "shell", run: "always", inline: <<-SHELL
             sysctl net.ipv4.conf.all.forwarding=1
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
             echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
-            SHELL
+          SHELL
         when "centralServer"
+	  box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
+#            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
             echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
             SHELL
+	when "office1Server"
+	  box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+	  end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+#            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            echo "GATEWAY=192.168.2.65" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            systemctl restart network
+          SHELL
+	when "office2Router"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            sysctl net.ipv4.conf.all.forwarding=1
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            echo "GATEWAY=192.168.255.9" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            systemctl restart network
+          SHELL
+
         end
-
       end
-
   end
-  
-  
 end
 
