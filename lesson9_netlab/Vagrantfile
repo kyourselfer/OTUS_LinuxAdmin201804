@@ -38,17 +38,22 @@ MACHINES = {
   :office1Server => {
         :box_name => "centos/7",
         :net => [
-                   {ip: '192.168.2.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "office1-net"},
+                   {ip: '192.168.2.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "office1-net"}
                 ]
   },
   :office2Router => {
         :box_name => "centos/7",
         :net => [
-                   {ip: '192.168.1.1', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "office2-net"},
-                   {ip: '192.168.255.10', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
+                   {ip: '192.168.1.1', adapter: 2, netmask: "255.255.255.128", virtualbox__intnet: "office2-net"},
+                   {ip: '192.168.255.10', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "router-net"}
                 ]
   },
-
+  :office2Server => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.1.130', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "office2-net"}
+                ]
+  },
 }
 
 Vagrant.configure("2") do |config|
@@ -75,6 +80,9 @@ Vagrant.configure("2") do |config|
         
         case boxname.to_s
         when "inetRouter"
+	  box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
             yum -y install iptables-services && systemctl enable iptables && systemctl start iptables
             sysctl net.ipv4.conf.all.forwarding=1
@@ -99,6 +107,17 @@ Vagrant.configure("2") do |config|
             echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
             SHELL
+	when "office1Router"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            sysctl net.ipv4.conf.all.forwarding=1
+            iptables -t nat -A POSTROUTING ! -d 192.168.2.0/24 -o eth1 -j MASQUERADE
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            echo "GATEWAY=192.168.255.5" >> /etc/sysconfig/network-scripts/ifcfg-eth2
+            systemctl restart network
+          SHELL
 	when "office1Server"
 	  box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
@@ -114,11 +133,20 @@ Vagrant.configure("2") do |config|
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
             sysctl net.ipv4.conf.all.forwarding=1
+	    iptables -t nat -A POSTROUTING ! -d 192.168.1.0/24 -o eth2 -j MASQUERADE
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-            echo "GATEWAY=192.168.255.9" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            echo "GATEWAY=192.168.255.9" >> /etc/sysconfig/network-scripts/ifcfg-eth2
             systemctl restart network
           SHELL
-
+	when "office2Server"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            echo "GATEWAY=192.168.1.129" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            systemctl restart network
+          SHELL
         end
       end
   end
