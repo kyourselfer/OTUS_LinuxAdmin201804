@@ -1,0 +1,61 @@
+H.W.:
+   * Найти свободные подсети
+   * Посчитать сколько узлов в каждой подсети, включая свободные
+   * Указать broadcast адрес для каждой подсети
+
+
+
+192.168.0.0/16 (255.255.0.0):
+    65534 hosts
+    192.168.255.255 = BROADCAST
+
+
+    Занятые SubNet:
+
+	Сеть central - 192.168.0.0/24 (b_0.255):
+            192.168.0.0/28 - directors
+                14 hosts 
+                0.15 = BROADCAST
+            ------------------------------
+            192.168.0.16/28 - FREE SUBNET
+                14 hosts
+                0.31 = BROADCAST
+            ------------------------------
+            192.168.0.32/28 - office hardware
+                14 hosts 
+                0.47 = BROADCAST
+            192.168.0.64/26 - wifi
+                62 hosts
+                0.127 = BROADCAST
+            -----------------------------
+
+	Сеть office2 - 192.168.1.0/24 (b_1.255):
+            192.168.1.0/25 - dev
+                126 hosts 
+                1.127 = BROADCAST
+            192.168.1.128/26 - test servers
+                62 hosts 
+                1.191 = BROADCAST
+            192.168.1.192/26 - office hardware
+                62 hosts 
+                1.255 = BROADCAST
+
+        Сеть office1 - 192.168.2.0/24 (b_2.255):
+            192.168.2.0/26 - dev
+		62 hosts
+		2.63 = BROADCAST
+            192.168.2.64/26 - test servers
+		62 hosts
+		2.127 = BROADCAST
+            192.168.2.128/26 - managers
+		62 hosts
+		2.191 = BROADCAST
+            192.168.2.192/26 - office hardware
+		62 hosts
+		2.255 = BROADCAST
+
+
+    Свободные SubNet:
+	Сеть free - 192.168.3.0/24|  /23 = 510
+		    192.168.4.0/24|
+
