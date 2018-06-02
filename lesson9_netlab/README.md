@@ -1,4 +1,5 @@
-#  Home work:
+Home work:
+---------------------------------
 Vagrantfile с начальным  построением сети
 inetRouter
 centralRouter
