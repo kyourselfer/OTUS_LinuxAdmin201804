@@ -82,6 +82,4 @@ office2Server
 
 ![office1Server](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/office2Server.gif)
 
-
-
-https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/subneting.txt
+* [SubNeting](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/subneting.txt)
