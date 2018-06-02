@@ -87,6 +87,10 @@ Vagrant.configure("2") do |config|
             yum -y install iptables-services && systemctl enable iptables && systemctl start iptables
             sysctl net.ipv4.conf.all.forwarding=1
             iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
+            iptables -D FORWARD 1
+	    iptables-save > /etc/firewall.conf
+	    echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf
             SHELL
         when "centralRouter"
           box.vm.provider :virtualbox do |vb|
