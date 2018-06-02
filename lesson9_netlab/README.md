@@ -54,8 +54,20 @@ Office2----/
 
 The solution
 --------------------------------------
-
+inetRouter
 ![inetRouter](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/inetRouter.gif)
+centralRouter
+![centralRouter](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/centralRouter.gif)
+office1Router
+![office1Router](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/office1Router.gif)
+office2Router
+![office2Router](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/office2Router.gif)
+centralServer
+![centralServer](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/centralServer.gif)
+office1Server
+![office1Server](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/office1Server.gif)
+office2Server
+![office1Server](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/img/office2Server.gif)
 
 
 https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson9_netlab/subneting.txt
