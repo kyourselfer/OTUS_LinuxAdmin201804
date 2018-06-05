@@ -1,4 +1,4 @@
-Строим бонды и вланы
+Д.З. - Строим бонды и вланы
 ----------------------
 в Office1 в тестовой подсети появляется сервера с доп интерфесами и адресами
 во internal сети testLAN
@@ -17,3 +17,21 @@ testClient2 <-> testServer2
 
 для сдачи - вагрант файл с требуемой конфигурацией
 идеально если с клиента можно попасть ssh на сервер без пароля
+
+Решение
+------------------------
+* Соединили testClient1, testClient2, testServer1, testServer2 в свитч testLAN с тегированными интерфейсами eth1.1 и eth1.2
+на testServer можно попасть через ssh на testClient по связке ключей.
+
+* Создан сетевой интерфейс bond0 в режиме бондинга mode=1 (active-backup):
+если активный  eth1, то выключаем для проверки
+`ifdown eth1`
+перезапускаем bond0 чтобы вошел в ожидание slave интерфейса
+`ifdown bond0 && ifup bond0`
+подключаем не упавший интерфейс
+`ifdown eth2 && ifup eth2`
+и линк сново возобновлен.
+
+для получения мониторинга:
+`while true; do ifconfig |grep -i -E '(slave|master)' && echo -e "\n" && sleep 1; done`
+`while true; do cat /proc/net/bonding/bond0 && sleep 1; done`
