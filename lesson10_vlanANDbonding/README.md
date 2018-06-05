@@ -33,5 +33,12 @@ testClient2 <-> testServer2
 и линк сново возобновлен.
 
 для получения мониторинга:
+
+![ifconfig](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson10_vlanANDbonding/ifconfig.gif)
+
 `while true; do ifconfig |grep -i -E '(slave|master)' && echo -e "\n" && sleep 1; done`
+
+![procfs](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson10_vlanANDbonding/procfs.gif)
+
 `while true; do cat /proc/net/bonding/bond0 && sleep 1; done`
+
