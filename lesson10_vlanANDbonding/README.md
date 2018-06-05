@@ -23,7 +23,7 @@ testClient2 <-> testServer2
 * Соединили testClient1, testClient2, testServer1, testServer2 в свитч testLAN с тегированными интерфейсами eth1.1 и eth1.2
 на testServer можно попасть через ssh на testClient по связке ключей.
 
-# [Vagrantfile](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson10_vlanANDbonding/Vagrantfile)
+##### [Vagrantfile](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson10_vlanANDbonding/Vagrantfile)
 
 * Создан сетевой интерфейс bond0 в режиме бондинга mode=1 (active-backup):
 если активный  eth1, то выключаем для проверки
