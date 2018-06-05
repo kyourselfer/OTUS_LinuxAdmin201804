@@ -42,7 +42,7 @@ MACHINES = {
                    {ip: '192.168.2.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "office1-net"}
                 ]
   },
-### created Servers (VlansANDBonding) ->
+### created Servers (Vlans) ->
   :testClient1 => {
         :box_name => "centos/7",
         :net => [
@@ -67,7 +67,7 @@ MACHINES = {
 		  {adapter: 2, auto_config: false, virtualbox__intnet: "test-LAN"}
                 ]
   },
-### created Servers (VlansANDBonding) <-
+### created Servers (Vlans) <-
   :office2Router => {
         :box_name => "centos/7",
         :net => [
@@ -106,24 +106,33 @@ Vagrant.configure("2") do |config|
         SHELL
         
         case boxname.to_s
+### created Servers (Bonding) ->
         when "inetRouter"
 	  box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            sysctl net.ipv4.conf.all.forwarding=1
+	    echo -e "DEVICE=bond0\nONBOOT=yes\nTYPE=Bond\nBONDING_MASTER=yes\nIPADDR=192.168.255.1\nPREFIX=30\nBOOTPROTO=static\nBONDING_OPTS=\"mode=1 miimon=100\"" > /etc/sysconfig/network-scripts/ifcfg-bond0
+	    echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth1\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth1
+	    echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth2\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth2
+	    echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
             iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
+	    systemctl restart network
           SHELL
         when "centralRouter"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end  
 	  box.vm.provision "shell", run: "always", inline: <<-SHELL
-#            sysctl net.ipv4.conf.all.forwarding=1
-            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
-#            echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+	    echo -e "DEVICE=bond0\nONBOOT=yes\nTYPE=Bond\nBONDING_MASTER=yes\nIPADDR=192.168.255.2\nPREFIX=30\nBOOTPROTO=static\nBONDING_OPTS=\"mode=1 miimon=100\"\nGATEWAY=192.168.255.1" > /etc/sysconfig/network-scripts/ifcfg-bond0
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth1\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth1
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth7\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth7
+            echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
+            iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
             systemctl restart network
           SHELL
+### created Servers (Bonding) <-
         when "centralServer"
 	  box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
@@ -138,7 +147,7 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            sysctl net.ipv4.conf.all.forwarding=1
+            echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
             iptables -t nat -A POSTROUTING ! -d 192.168.2.0/24 -o eth1 -j MASQUERADE
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             echo "GATEWAY=192.168.255.5" >> /etc/sysconfig/network-scripts/ifcfg-eth2
@@ -153,7 +162,7 @@ Vagrant.configure("2") do |config|
             echo "GATEWAY=192.168.2.65" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
           SHELL
-### created Servers (VlansANDBonding) ->
+### created Servers (Vlans + sshkeys_access) ->
 	when "testClient1"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
@@ -162,10 +171,7 @@ Vagrant.configure("2") do |config|
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             echo -e "ONBOOT=yes\nVLAN=yes\nBOOTPROTO=static\nTYPE=Ethernet\nDEVICE=eth1.1\nNM_CONTROLLED=no\nIPADDR=10.10.10.254\nPREFIX=24" > /etc/sysconfig/network-scripts/ifcfg-eth1.1
 	    systemctl restart network
-	    ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N pass1
-	    sudo -s
-	    sed 's/PasswordAuthentication\ no/PasswordAuthentication\ yes/g' /etc/ssh/sshd_config > /etc/ssh/sshd_config_tmp && echo y | mv /etc/ssh/sshd_config_tmp /etc/ssh/sshd_config
-	    systemctl restart sshd
+	    cp -a /vagrant/id_rsa /home/vagrant/.ssh/
           SHELL
 	when "testServer1"
           box.vm.provider :virtualbox do |vb|
@@ -175,7 +181,7 @@ Vagrant.configure("2") do |config|
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 	    echo -e "ONBOOT=yes\nVLAN=yes\nBOOTPROTO=static\nTYPE=Ethernet\nDEVICE=eth1.1\nNM_CONTROLLED=no\nIPADDR=10.10.10.1\nPREFIX=24" > /etc/sysconfig/network-scripts/ifcfg-eth1.1
             systemctl restart network
-	    scp 10.10.10.254:~/.ssh/id_rsa.pub ~/.ssh/####################################
+	    cat /vagrant/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
           SHELL
 	when "testClient2"
           box.vm.provider :virtualbox do |vb|
@@ -201,7 +207,7 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            sysctl net.ipv4.conf.all.forwarding=1
+            echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
 	    iptables -t nat -A POSTROUTING ! -d 192.168.1.0/24 -o eth2 -j MASQUERADE
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             echo "GATEWAY=192.168.255.9" >> /etc/sysconfig/network-scripts/ifcfg-eth2
