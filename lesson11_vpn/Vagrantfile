@@ -1,0 +1,106 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :inetRouterA => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.100.9', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "inet"},
+		   {ip: '192.168.1.1', adapter: 3, netmask: "255.255.255.248", virtualbox__intnet: "lanA"},
+                ]
+  },
+  :inetRouterB => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.100.10', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "inet"},
+		   {ip: '192.168.2.1', adapter: 3, netmask: "255.255.255.248", virtualbox__intnet: "lanB"},
+                ]
+  },
+  :buh1 => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.1.2', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "lanA"},
+                ]
+  },
+  :buh2 => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.2.2', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "lanB"},
+                ]
+  },
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.host_name = boxname.to_s
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+        
+        if boxconfig.key?(:public)
+          box.vm.network "public_network", boxconfig[:public]
+        end
+
+        box.vm.provision "shell", inline: <<-SHELL
+          mkdir -p ~root/.ssh
+                cp ~vagrant/.ssh/auth* ~root/.ssh
+        SHELL
+        
+        case boxname.to_s
+        when "inetRouterA"
+	  box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+	    yum -y install epel-release net-tools openvpn
+            iptables -t nat -A POSTROUTING ! -d 192.168.1.0/248 -o eth1 -j MASQUERADE
+	    iptables-save > /etc/firewall.conf
+	    echo "/sbin/iptables-restore < /etc/firewall.conf" > /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            echo net.ipv4.conf.all.forwarding=1 > /etc/sysctl.d/99-sysctl.conf && sysctl -p
+	    echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+#            echo "GATEWAY=192.168.100.10" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+	    systemctl restart network
+          SHELL
+	when "buh1"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            echo "GATEWAY=192.168.1.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            systemctl restart network
+          SHELL
+	when "inetRouterB"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+	    yum -y install epel-release net-tools openvpn
+            iptables -t nat -A POSTROUTING ! -d 192.168.2.0/248 -o eth1 -j MASQUERADE
+            iptables-save > /etc/firewall.conf
+            echo "/sbin/iptables-restore < /etc/firewall.conf" > /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            echo net.ipv4.conf.all.forwarding=1 > /etc/sysctl.d/99-sysctl.conf && sysctl -p
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+#            echo "GATEWAY=192.168.100.9" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            systemctl restart network
+          SHELL
+        when "buh2"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            echo "GATEWAY=192.168.2.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            systemctl restart network
+          SHELL
+        end
+      end
+  end
+end
+
