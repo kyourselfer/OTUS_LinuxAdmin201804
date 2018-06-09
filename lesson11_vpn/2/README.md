@@ -1,4 +1,6 @@
 ### 2. Поднять RAS на базе OpenVPN с клиентскими сертификатами, подключиться с локальной машины на виртуалку
+Посредствов  OpenSSL были сгенерированы закрытый privkey.pem и открытый|публичный ключ CA-cert.pem которым подписали сертификаты сервера и клиента server|client.crt(открытый|публичный).
+При генерации request-файла server.csr(файл запроса) подписываем его server.key(приватный|закрытый) и затем на выходе получаем server|client.crt(открытый|публичный).
 
 ![Scheme](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/schem.jpeg)
                                                            
