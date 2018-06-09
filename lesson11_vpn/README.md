@@ -13,7 +13,7 @@ VPN
 
 Решение
 ---------------------
-# 1.
+##### 1.
 драйвер tun(L2-L3) используем при обьединении сетей с разной адресацией в одну (OpenVPN сервер может кидать маршруты для клиентов и также маршрутизировать на сети клиентов - iroute)
 
 ![openvpn_server](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/ovpn_server.gif)
