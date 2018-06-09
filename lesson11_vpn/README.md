@@ -23,19 +23,24 @@ VPN
 Драйвер tap(L2) используем при подключании клиента в режиме моста (пропускает broadcast) при адресации используем не пересекающиеся адреса из одной подсети
 ##### 2.
 
-111.2/29   111.1/29   200.9/30    200.10/30   112.1/29     112.2/29
-  buh1 ---------- ovpn1 ----------------- ovpn2 ---------- buh2
-                          10.0.0.0/24      |2.100/24
-                                           |
-                                           |-------------- local_machine ------------- root_switch
-                                                           2.3/24                      2.1/24
+![Scheme](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/schem.jpeg)
+                                                           
 OpenVPN Server
+
 ![OpenVPN Server](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/ovpn_server.gif)
+
 OpenVPN Client
+
 ![OpenVPN Client](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/ovpn_client.gif)
+
 Buh1
+
 ![buh1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/buh1.gif)
+
 Buh2
+
 ![buh2](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/buh2.gif)
+
 Local machine
+
 ![local_machine](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/local_machine.gif)
