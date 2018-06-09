@@ -1,4 +1,4 @@
-##### 2.
+##### 2. Поднять RAS на базе OpenVPN с клиентскими сертификатами, подключиться с локальной машины на виртуалку
 
 ![Scheme](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/2/schem.jpeg)
                                                            
