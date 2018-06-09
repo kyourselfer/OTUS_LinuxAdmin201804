@@ -5,27 +5,28 @@ MACHINES = {
   :inetRouterA => {
         :box_name => "centos/7",
         :net => [
-                   {ip: '192.168.100.9', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "inet"},
-		   {ip: '192.168.1.1', adapter: 3, netmask: "255.255.255.248", virtualbox__intnet: "lanA"},
+                   {ip: '192.168.200.9', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "inet"},
+		   {ip: '192.168.111.1', adapter: 3, netmask: "255.255.255.248", virtualbox__intnet: "lanA"},
                 ]
   },
   :inetRouterB => {
         :box_name => "centos/7",
         :net => [
-                   {ip: '192.168.100.10', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "inet"},
-		   {ip: '192.168.2.1', adapter: 3, netmask: "255.255.255.248", virtualbox__intnet: "lanB"},
+                   {ip: '192.168.200.10', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "inet"},
+		   {ip: '192.168.112.1', adapter: 3, netmask: "255.255.255.248", virtualbox__intnet: "lanB"},
+		   {ip: '192.168.2.100', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "TMPswitch"},
                 ]
   },
   :buh1 => {
         :box_name => "centos/7",
         :net => [
-                   {ip: '192.168.1.2', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "lanA"},
+                   {ip: '192.168.111.2', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "lanA"},
                 ]
   },
   :buh2 => {
         :box_name => "centos/7",
         :net => [
-                   {ip: '192.168.2.2', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "lanB"},
+                   {ip: '192.168.112.2', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "lanB"},
                 ]
   },
 }
@@ -46,7 +47,7 @@ Vagrant.configure("2") do |config|
         if boxconfig.key?(:public)
           box.vm.network "public_network", boxconfig[:public]
         end
-
+	
         box.vm.provision "shell", inline: <<-SHELL
           mkdir -p ~root/.ssh
                 cp ~vagrant/.ssh/auth* ~root/.ssh
@@ -64,7 +65,6 @@ Vagrant.configure("2") do |config|
 	    echo "/sbin/iptables-restore < /etc/firewall.conf" > /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
             echo net.ipv4.conf.all.forwarding=1 > /etc/sysctl.d/99-sysctl.conf && sysctl -p
 	    echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-#            echo "GATEWAY=192.168.100.10" >> /etc/sysconfig/network-scripts/ifcfg-eth1
 	    systemctl restart network
           SHELL
 	when "buh1"
@@ -73,7 +73,7 @@ Vagrant.configure("2") do |config|
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-            echo "GATEWAY=192.168.1.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+            echo "GATEWAY=192.168.111.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
           SHELL
 	when "inetRouterB"
@@ -87,7 +87,6 @@ Vagrant.configure("2") do |config|
             echo "/sbin/iptables-restore < /etc/firewall.conf" > /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
             echo net.ipv4.conf.all.forwarding=1 > /etc/sysctl.d/99-sysctl.conf && sysctl -p
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-#            echo "GATEWAY=192.168.100.9" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
           SHELL
         when "buh2"
@@ -96,7 +95,7 @@ Vagrant.configure("2") do |config|
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-            echo "GATEWAY=192.168.2.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+	    echo "GATEWAY=192.168.112.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
           SHELL
         end
