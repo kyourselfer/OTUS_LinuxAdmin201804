@@ -1,7 +1,7 @@
 Домашнее задание
 ----------------------
 VPN
-1. Между двумя виртуалками поднять vpn в режимах
+[1. Между двумя виртуалками поднять vpn в режимах](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson11_vpn/1)
 - tun
 - tap
 
@@ -10,15 +10,4 @@ VPN
 [2. Поднять RAS на базе OpenVPN с клиентскими сертификатами, подключиться с локальной машины на виртуалку](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson11_vpn/2)
 
 3*. Самостоятельно изучить, поднять ocserv и подключиться с хоста к виртуалке
-
-Решение
----------------------
-##### 1.
-Драйвер tun(L2-L3) используем при обьединении сетей с разной адресацией в одну (OpenVPN сервер может кидать маршруты для клиентов и также маршрутизировать на сети клиентов - iroute)
-
-![openvpn_server](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/ovpn_server.gif)
-
-![openvpn_client](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/ovpn_client.gif)
-
-Драйвер tap(L2) используем при подключании клиента в режиме моста (пропускает broadcast) при адресации используем не пересекающиеся адреса из одной подсети
 
