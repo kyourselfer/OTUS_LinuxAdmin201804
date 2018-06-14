@@ -1,0 +1,22 @@
+[Unit]
+Description=Spawns FastCGI processes
+After=network.target remote-fs.target nss-lookup.target httpd.service
+Documentation=man:spawn-fcgi(1)
+[Service]
+User=apache
+Group=apache
+SOCKET=/var/run/php-fcgi.sock
+PID=/var/run/spawn-fcgi.pid
+SOURCE=/usr/bin/php-cgi
+Options="-u $User -g Group -s $SOCKET -S -M 0600 -C 32 -F 1 -P $PID -- $SOURCE"
+#
+Type=simple
+EnvironmentFile=/etc/sysconfig/spawn-fcgi
+ExecStart=/bin/spawn-fcgi $Options
+ExecReload=/bin/kill -15 ${PID} && /bin/spawn-fcgi $Options
+ExecStop=/bin/kill -15 ${PID}
+#KillSignal=SIGCONT WHAT IS IT???
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target
+
