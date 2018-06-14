@@ -12,21 +12,20 @@ MACHINES = {
   :centralRouter => {
         :box_name => "centos/7",
         :net => [
-		   {adapter: 2, auto_config: false, virtualbox__intnet: "router-net"},
-		   {ip: '192.168.0.1', adapter: 3, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"},
-                   {ip: '192.168.0.33', adapter: 4, netmask: "255.255.255.240", virtualbox__intnet: "hw-net"},
-                   {ip: '192.168.0.65', adapter: 5, netmask: "255.255.255.192", virtualbox__intnet: "mgt-net"},
-		   {ip: '192.168.255.5', adapter: 6, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
-		   {ip: '192.168.255.9', adapter: 7, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
-	           {adapter: 8, auto_config: false, virtualbox__intnet: "router-net"},
+		   {ip: '192.168.0.1', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"},
+                   {ip: '192.168.0.33', adapter: 3, netmask: "255.255.255.240", virtualbox__intnet: "hw-net"},
+                   {ip: '192.168.0.65', adapter: 4, netmask: "255.255.255.192", virtualbox__intnet: "mgt-net"},
+		   {ip: '192.168.255.5', adapter: 5, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
+		   {ip: '192.168.255.9', adapter: 6, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
+		   # interfaces by bond0
+                   {adapter: 7, auto_config: false, virtualbox__intnet: "router-net"},
+		   {adapter: 8, auto_config: false, virtualbox__intnet: "router-net"},
                 ]
   },
   :centralServer => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.0.2', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"},
-                   {adapter: 3, auto_config: false, virtualbox__intnet: true},
-                   {adapter: 4, auto_config: false, virtualbox__intnet: true},
                 ]
   },
   :office1Router => {
@@ -86,11 +85,12 @@ MACHINES = {
 Vagrant.configure("2") do |config|
 
   MACHINES.each do |boxname, boxconfig|
-
     config.vm.define boxname do |box|
 
         box.vm.box = boxconfig[:box_name]
         box.vm.host_name = boxname.to_s
+
+	config.vm.box_check_update = false
 
         boxconfig[:net].each do |ipconf|
           box.vm.network "private_network", ipconf
@@ -111,8 +111,9 @@ Vagrant.configure("2") do |config|
 	  box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
+	  #config.vm.network "public_network", bridge: "Intel(R) 82579LM Gigabit Network Connection"
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-	    echo -e 'DEVICE=bond0\nONBOOT=yes\nTYPE=Bond\nBONDING_MASTER=yes\nIPADDR=192.168.255.1\nPREFIX=30\nBOOTPROTO=static\nBONDING_OPTS="mode=1 miimon=100"' > /etc/sysconfig/network-scripts/ifcfg-bond0
+	    echo -e 'DEVICE=bond0\nONBOOT=yes\nTYPE=Bond\nBONDING_MASTER=yes\nIPADDR=192.168.255.1\nPREFIX=30\nBOOTPROTO=static\nBONDING_OPTS="mode=1 miimon=100 fail_over_mac=1"' > /etc/sysconfig/network-scripts/ifcfg-bond0
 	    echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth1\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth1
 	    echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth2\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth2
 	    echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
@@ -125,11 +126,13 @@ Vagrant.configure("2") do |config|
           end  
 	  box.vm.provision "shell", run: "always", inline: <<-SHELL
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-	    echo -e 'DEVICE=bond0\nONBOOT=yes\nTYPE=Bond\nBONDING_MASTER=yes\nIPADDR=192.168.255.2\nPREFIX=30\nBOOTPROTO=static\nBONDING_OPTS="mode=1 miimon=100"\nGATEWAY=192.168.255.1' > /etc/sysconfig/network-scripts/ifcfg-bond0
-            echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth1\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth1
+	    echo -e 'DEVICE=bond0\nONBOOT=yes\nTYPE=Bond\nBONDING_MASTER=yes\nIPADDR=192.168.255.2\nPREFIX=30\nBOOTPROTO=static\nBONDING_OPTS="mode=1 miimon=100 fail_over_mac=1"\nGATEWAY=192.168.255.1' > /etc/sysconfig/network-scripts/ifcfg-bond0
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth6\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth6
             echo -e "BOOTPROTO=none\nONBOOT=yes\nDEVICE=eth7\nMASTER=bond0\nSLAVE=yes" > /etc/sysconfig/network-scripts/ifcfg-eth7
+            echo "192.168.1.0/24 via 192.168.255.10" > /etc/sysconfig/network-scripts/route-eth5
+            echo "192.168.2.0/24 via 192.168.255.6" > /etc/sysconfig/network-scripts/route-eth4
             echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
+            iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o bond0 -j MASQUERADE
             systemctl restart network
           SHELL
 ### created Servers (Bonding) <-
@@ -141,16 +144,21 @@ Vagrant.configure("2") do |config|
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
             echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             systemctl restart network
-            SHELL
+          SHELL
 	when "office1Router"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            iptables -t nat -A POSTROUTING ! -d 192.168.2.0/24 -o eth1 -j MASQUERADE
+	    iptables -t nat -A POSTROUTING ! -d 192.168.2.0/24 -o eth2 -j MASQUERADE
+            iptables-save > /etc/firewall.conf
+            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             echo "GATEWAY=192.168.255.5" >> /etc/sysconfig/network-scripts/ifcfg-eth2
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nIPADDR=192.168.2.65\nNETMASK=255.255.255.192\nDEVICE=eth1:0" > /etc/sysconfig/network-scripts/ifcfg-eth1:0
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nIPADDR=192.168.2.129\nNETMASK=255.255.255.192\nDEVICE=eth1:1" > /etc/sysconfig/network-scripts/ifcfg-eth1:1
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nIPADDR=192.168.2.193\nNETMASK=255.255.255.192\nDEVICE=eth1:2" > /etc/sysconfig/network-scripts/ifcfg-eth1:2
             systemctl restart network
           SHELL
 	when "office1Server"
@@ -209,10 +217,14 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            echo "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
 	    iptables -t nat -A POSTROUTING ! -d 192.168.1.0/24 -o eth2 -j MASQUERADE
+            iptables-save > /etc/firewall.conf
+            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             echo "GATEWAY=192.168.255.9" >> /etc/sysconfig/network-scripts/ifcfg-eth2
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nIPADDR=192.168.1.129\nNETMASK=255.255.255.192\nDEVICE=eth1:0" > /etc/sysconfig/network-scripts/ifcfg-eth1:0
+            echo -e "BOOTPROTO=none\nONBOOT=yes\nIPADDR=192.168.1.193\nNETMASK=255.255.255.192\nDEVICE=eth1:1" > /etc/sysconfig/network-scripts/ifcfg-eth1:1
             systemctl restart network
           SHELL
 	when "office2Server"
@@ -228,4 +240,5 @@ Vagrant.configure("2") do |config|
       end
   end
 end
+
 
