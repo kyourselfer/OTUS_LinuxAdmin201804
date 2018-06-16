@@ -1,0 +1,34 @@
+!
+! Zebra configuration saved from vty
+!   2018/06/16 21:34:36
+!
+hostname ospfd
+log file /var/log/quagga/ospfd.log
+!
+!
+!
+interface eth0
+!
+interface eth1
+!
+interface eth1.1
+!
+interface eth1.2
+!
+interface eth2
+!
+interface eth2.10
+!
+interface eth3
+!
+interface eth3.30
+!
+interface lo
+!
+router ospf
+ network 10.0.1.0/30 area 0.0.0.0
+ network 10.0.3.0/30 area 0.0.0.0
+ network 192.168.11.0/24 area 0.0.0.0
+!
+line vty
+!

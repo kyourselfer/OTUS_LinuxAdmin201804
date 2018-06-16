@@ -1,0 +1,39 @@
+!
+! Zebra configuration saved from vty
+!   2018/06/16 21:34:36
+!
+hostname routerB1
+log file /var/log/quagga/zebra.log
+!
+interface eth0
+ ipv6 nd suppress-ra
+!
+interface eth1
+ ipv6 nd suppress-ra
+!
+interface eth1.1
+ ipv6 nd suppress-ra
+!
+interface eth1.2
+ ipv6 nd suppress-ra
+!
+interface eth2
+ ipv6 nd suppress-ra
+!
+interface eth2.10
+ ipv6 nd suppress-ra
+!
+interface eth3
+ ipv6 nd suppress-ra
+!
+interface eth3.30
+ ipv6 nd suppress-ra
+!
+interface lo
+ ip address 192.168.255.2/32
+!
+ip forwarding
+!
+!
+line vty
+!
