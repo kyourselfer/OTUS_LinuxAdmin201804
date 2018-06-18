@@ -1,0 +1,87 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+# name servers
+  :ns01 => {
+        :box_name => "centos/7",
+        :net => [
+		   {ip: '192.168.50.10', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "dns"}, # master
+                ]
+  },
+  :ns02 => {
+        :box_name => "centos/7",
+        :net => [  
+                   {ip: '192.168.50.11', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "dns"}, # slave
+                ]
+  },
+# DNS clients
+  :client => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.50.15', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "dns"}, # slave
+                ]
+  },
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.host_name = boxname.to_s
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+        
+        if boxconfig.key?(:public)
+          box.vm.network "public_network", boxconfig[:public]
+        end
+	
+        box.vm.provision "shell", inline: <<-SHELL
+          mkdir -p ~root/.ssh
+                cp ~vagrant/.ssh/auth* ~root/.ssh
+        SHELL
+        
+        case boxname.to_s
+
+# routers
+        when "ns01"
+	  box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+	    yum -y install net-tools bind
+	    setenforce 0
+            echo -e "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
+	    echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+	    systemctl restart network
+          SHELL
+	when "ns02"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            yum -y install net-tools bind
+            setenforce 0
+            echo -e "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            systemctl restart network
+          SHELL
+	when "client"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            yum -y install net-tools
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            systemctl restart network
+          SHELL
+	end
+      end
+  end
+end
+
