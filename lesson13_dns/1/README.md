@@ -31,6 +31,10 @@ web2 смотрит на клиент2
 
 www - смотрит на обоих клиентов
 
+Зона newdns.lab.
+
+![newdns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/newdns.lab.gif)
+
 настроить split-dns
 
 клиент1 - видит обе зоны, но в зоне dns.lab только web1
