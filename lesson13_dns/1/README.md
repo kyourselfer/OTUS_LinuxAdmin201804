@@ -30,5 +30,5 @@ send
 
 Обновляем зону ddns.lab
 ```
-bash change_ddnsclient_zone.sh changes
+bash change_ddnsclient_zone.sh changes.txt
 ```
