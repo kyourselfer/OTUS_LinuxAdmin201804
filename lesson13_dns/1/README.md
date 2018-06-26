@@ -16,20 +16,17 @@ Cоздадим сопоставляющий эквивалент для /etc/na
 ![SE Результат](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/se.gif)
 
 * change_ddnsclient_zone.sh
-`#!/bin/bash
 
+`#!/bin/bash
 /usr/bin/nsupdate -k /etc/named/Kkislovodsk01.ddns.lab.+157+12223.private -v $1`
 
 * changes.txt
+
 `server ns1.dns.lab
-
 zone ddns.lab
-
 update add kislovodsk01.ddns.lab 3600 IN A 192.168.50.112
-
 send`
 
 Обновляем зону ddns.lab
 
 `bash change_ddnsclient_zone.sh changes`
-
