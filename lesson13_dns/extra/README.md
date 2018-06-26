@@ -13,7 +13,7 @@ Cоздадим сопоставляющий эквивалент для /etc/na
 
 После этого сможем обновить зону без ошибок
 
-![SE Результат](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/se.gif)
+![SE Результат](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/extra/se.gif)
 
 * change_ddnsclient_zone.sh
 
