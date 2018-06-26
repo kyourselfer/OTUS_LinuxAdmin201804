@@ -6,7 +6,7 @@
 
 Конфиги:
 * [server_master](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/named_master.conf)
-* [server_slave]()
+* [server_slave](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/named_slave.conf)
 * [client_ddns](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/clientddns/)
 
 
