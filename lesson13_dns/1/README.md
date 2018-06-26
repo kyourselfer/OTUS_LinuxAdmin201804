@@ -21,11 +21,12 @@ Cоздадим сопоставляющий эквивалент для /etc/na
 /usr/bin/nsupdate -k /etc/named/Kkislovodsk01.ddns.lab.+157+12223.private -v $1`
 
 * changes.txt
-
-`server ns1.dns.lab\n
+```
+server ns1.dns.lab
 zone ddns.lab
 update add kislovodsk01.ddns.lab 3600 IN A 192.168.50.112
-send`
+send
+```
 
 Обновляем зону ddns.lab
 
