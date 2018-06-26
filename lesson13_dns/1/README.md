@@ -55,7 +55,7 @@ www - смотрит на обоих клиентов
 
 клиент2 видит только dns.lab
 
-![www.newdns.lab]()
+![www.newdns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/check_www.newdns.lab.gif)
 ![web1.dns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/check_web1.dns.lab.gif)
 ![web2.dns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/check_web2.dns.lab.gif)
 
