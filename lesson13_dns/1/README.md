@@ -37,11 +37,13 @@ www - смотрит на обоих клиентов
 
 настроить split-dns
 
+![acl](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/acl_split.gif)
+
 клиент1 - видит обе зоны, но в зоне dns.lab только web1
 
 ![web1.dns.lab.check](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/web1.dns.lab.check.gif)
 
-Зона dns.lab для клиента client1 ![acl](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/acl_split.gif)
+Зона dns.lab для клиента client1
 
 ![dns.lab_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab_client1.gif)
 
