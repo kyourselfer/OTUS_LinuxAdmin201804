@@ -12,7 +12,7 @@
 
 web1 - смотрит на клиент1
 
-web2 смотрит на клиент2
+web2 - смотрит на клиент2
 
 `ls /etc/named`
 ![ls](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/ls_zones.gif)
@@ -37,14 +37,29 @@ www - смотрит на обоих клиентов
 
 настроить split-dns
 
+![acl](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/acl_split.gif)
+
 клиент1 - видит обе зоны, но в зоне dns.lab только web1
 
-Зона dns.lab для клиента client1 ![acl](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/acl_split.gif)
+![web1.dns.lab.check](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/web1.dns.lab.check.gif)
+
+Зона dns.lab для клиента client1
 
 ![dns.lab_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab_client1.gif)
 
-Обратная зона
+Обратная зона для client1
 
 ![dns.lab.rev_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab_client1.rev.gif)
 
+и view для client1
+
+![view_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/named.conf_view.gif)
+
 клиент2 видит только dns.lab
+
+![www.newdns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/check_www.newdns.lab.gif)
+![web1.dns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/check_web1.dns.lab.gif)
+![web2.dns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/check_web2.dns.lab.gif)
+
+
+
