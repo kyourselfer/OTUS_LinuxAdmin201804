@@ -39,9 +39,11 @@ www - смотрит на обоих клиентов
 
 клиент1 - видит обе зоны, но в зоне dns.lab только web1
 
+Зона dns.lab для клиента client1 ![acl](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/acl_split.gif)
+
 ![dns.lab_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab_client1.gif)
 
-Обратная 
+Обратная зона
 
 ![dns.lab.rev_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab_client1.rev.gif)
 
