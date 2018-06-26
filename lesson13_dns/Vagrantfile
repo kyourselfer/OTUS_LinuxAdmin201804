@@ -22,6 +22,12 @@ MACHINES = {
                    {ip: '192.168.50.15', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "dns"}, # slave
                 ]
   },
+  :clientddns => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.50.112', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "dns"}, # slave
+                ]
+  },
 }
 
 Vagrant.configure("2") do |config|
@@ -54,8 +60,7 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-	    yum -y install net-tools bind
-	    setenforce 0
+	    yum -y install bind bind-utils ntp policycoreutils-python
             echo -e "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
 	    echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 	    systemctl restart network
@@ -65,8 +70,7 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            yum -y install net-tools bind
-            setenforce 0
+            yum -y install bind bind-utils ntp policycoreutils-python
             echo -e "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             systemctl restart network
@@ -76,7 +80,18 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
-            yum -y install net-tools
+            yum -y install bind-utils
+            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+            systemctl restart network
+          SHELL
+# ddns client
+	when "clientddns"
+          box.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "256"]
+          end
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            yum -y install bind bind-utils ntp policycoreutils-python
+            echo -e "net.ipv4.conf.all.forwarding=1" > /etc/sysctl.d/99-sysctl.conf && sysctl -p
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             systemctl restart network
           SHELL
