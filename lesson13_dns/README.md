@@ -1,8 +1,14 @@
 Домашнее задание
 ---------------------
-### настраиваем split-dns
+[настраиваем split-dns](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson13_dns/1)
 
-взять стенд https://github.com/erlong15/vagrant-bind
+взять стенд https://github.com/erlong15/vagrant-bind [Vagrantfile_vm](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/Vagrantfile)
+
+Конфиги:
+* [server_master](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/named_master.conf)
+* [server_slave]()
+* [client_ddns](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/clientddns/)
+
 
 добавить еще один сервер client2
 
@@ -26,5 +32,5 @@ www - смотрит на обоих клиентов
 
 клиент2 видит только dns.lab
 
-*) настроить все без выключения selinux
-ddns тоже должен работать без выключения selinux
+*) [настроить все без выключения selinux
+ddns тоже должен работать без выключения selinux](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson13_dns/extra)
