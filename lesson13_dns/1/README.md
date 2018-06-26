@@ -13,7 +13,11 @@
 web1 - смотрит на клиент1
 
 web2 смотрит на клиент2
+
+Зона dns.lab.
 ![dns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab.gif)
+
+Зона dns.lab.rev.
 ![dns.lab.rev](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab.rev.gif)
 
 завести еще одну зону newdns.lab
