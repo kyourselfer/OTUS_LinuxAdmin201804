@@ -22,7 +22,7 @@ Cоздадим сопоставляющий эквивалент для /etc/na
 
 * changes.txt
 
-`server ns1.dns.lab
+`server ns1.dns.lab\n
 zone ddns.lab
 update add kislovodsk01.ddns.lab 3600 IN A 192.168.50.112
 send`
