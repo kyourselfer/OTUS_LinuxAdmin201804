@@ -14,6 +14,14 @@ Cоздадим сопоставляющий эквивалент для /etc/na
 После этого сможем обновить зону без ошибок
 
 ![SE Результат](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/se.gif)
-[change_ddnsclient_zone.sh](https://)
+
+* change_ddnsclient_zone.sh
 `#!/bin/bash
 /usr/bin/nsupdate -k /etc/named/Kkislovodsk01.ddns.lab.+157+12223.private -v $1`
+* changes.txt
+`server ns1.dns.lab
+zone ddns.lab
+update add kislovodsk01.ddns.lab 3600 IN A 192.168.50.112
+send`
+`bash change_ddnsclient_zone.sh changes`
+
