@@ -31,11 +31,18 @@ web2 смотрит на клиент2
 
 www - смотрит на обоих клиентов
 
+Зона newdns.lab.
+
+![newdns.lab](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/newdns.lab.gif)
+
 настроить split-dns
 
 клиент1 - видит обе зоны, но в зоне dns.lab только web1
 
-клиент2 видит только dns.lab
+![dns.lab_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab_client1.gif)
 
-*) настроить все без выключения selinux
-ddns тоже должен работать без выключения selinux
+Обратная 
+
+![dns.lab.rev_client1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson13_dns/1/dns.lab_client1.rev.gif)
+
+клиент2 видит только dns.lab
