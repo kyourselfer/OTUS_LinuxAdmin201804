@@ -28,6 +28,7 @@ iptables -A SSH2-INPUT -m recent --set --name SSH2 --mask 255.255.255.255 --rsou
 ```
 Добавляем правила в цепочку TRAFFIC
 ```
+iptables -A TRAFFIC -j ACCEPT
 # Пропускаем любой тип icmp
 iptables -A TRAFFIC -p icmp -m icmp --icmp-type any -j ACCEPT
 # Используем модуль state, пропускаем только с определенным(conntrack) состоянием RELATED(новое или рожденное соединение от
