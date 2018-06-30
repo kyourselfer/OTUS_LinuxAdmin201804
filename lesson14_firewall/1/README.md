@@ -30,14 +30,32 @@ iptables -A SSH2-INPUT -m recent --set --name SSH2 --mask 255.255.255.255 --rsou
 ```
 # Пропускаем любой тип icmp
 iptables -A TRAFFIC -p icmp -m icmp --icmp-type any -j ACCEPT
-# Используем модуль state, пропускаем только с определенным(conntrack) состоянием RELATED(новое или рожденное соединение от уже установленного) и ESTABLISHED(установленное)
+# Используем модуль state, пропускаем только с определенным(conntrack) состоянием RELATED(новое или рожденное соединение от
+уже установленного) и ESTABLISHED(установленное)
 iptables -A TRAFFIC -m state --state RELATED,ESTABLISHED -j ACCEPT
-# Используем модуль state, tcp, recent пропускаем только с определенным(conntrack) состоянием NEW и открывает 22 tcp в течение 30 сек. если подключающийся IP имеется в списке SSH2(IP адрес источника явл. unicast)
+# Используем модуль state, tcp, recent пропускаем только с определенным(conntrack) состоянием NEW и открывает 22 tcp в
+течение 30 сек. если подключающийся IP имеется в списке SSH2(IP адрес источника явл. unicast)
 iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp --dport 22 -m recent --rcheck --seconds 30 --name SSH2 --mask 255.255.255.255 --rsource -j ACCEPT
 #
 iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp -m recent --remove --name SSH2 --mask 255.255.255.255 --rsource -j DROP
-# Траффик с conntrack = NEW и с портом назначения 9991 сверяется с листом SSH1 (IP адрес источника явл. unicast) и джампиться в цепочку SSH2-INPUT
+# Траффик с conntrack = NEW и с портом назначения 9991 сверяется с листом SSH1 (IP адрес источника явл. unicast) и джампиться
+в цепочку SSH2-INPUT
 iptables -A TRAFFIC -m state --state NEW -m tcp -p tcp --dport 9991 -m recent --rcheck --name SSH1 -j SSH2-INPUT
+# 
+iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp -m recent --remove --name SSH1 --mask 255.255.255.255 --rsource -j DROP
+# 
+iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp --dport 7777 -m recent --rcheck --name SSH0 --mask 255.255.255.255 --rsource -j SSH1-INPUT
+# 
+iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp -m recent --remove --name SSH0 --mask 255.255.255.255 --rsource -j DROP
+# 
+iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp --dport 8881 -m recent --set --name SSH0 --mask 255.255.255.255 --rsource -j DROP
+# Остальное в цепочке TRAFFIC джампим на действие DROP
+iptables -A TRAFFIC -j DROP
+# 
+iptables -t filter -P INPUT DROP
+# маскарадинг на внешнем eth0
+iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
+
 ```
 
 Конфигурационный файл [iptables.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson14_firewall/1/iptables.conf)
