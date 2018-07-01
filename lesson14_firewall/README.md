@@ -9,6 +9,6 @@
 
 3) запустить nginx на centralServer
 
-4) пробросить 80-й порт на inetRouter2:8080
+4) [пробросить 80-й порт на inetRouter2:8080](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/edit/master/lesson14_firewall/2/)
 
 5) дефолт в инет оставить через inetRouter
