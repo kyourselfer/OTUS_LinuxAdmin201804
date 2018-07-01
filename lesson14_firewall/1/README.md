@@ -3,7 +3,9 @@
 * centralRouter может попасть на ssh inetrRouter через [knock скрипт](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson14_firewall/1/scripts)
 
 Конфигурационный файл [iptables.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson14_firewall/1/iptables.conf)
-
+<details>
+<summary>Подробнее ...</summary>
+Тут текст который вы хотим скрыть
 Прописываем правила:
 Создаем доп. цепочки
 ```
@@ -63,3 +65,4 @@ iptables -t filter -P INPUT DROP
 ```
 iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
 ```
+</details>
