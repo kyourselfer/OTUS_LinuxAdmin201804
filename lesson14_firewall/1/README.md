@@ -53,9 +53,12 @@ iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp -m recent --remove --name
 iptables -A TRAFFIC -p tcp -m state --state NEW -m tcp --dport 8881 -m recent --set --name SSH0 --mask 255.255.255.255 --rsource -j DROP
 # Остальное в цепочке TRAFFIC джампим на действие DROP
 iptables -A TRAFFIC -j DROP
-# Меняем политику дропаем все вх. в таблице filter в цепочке INPUT
+```
+Меняем политику дропаем все вх. в таблице filter в цепочке INPUT
+```
 iptables -t filter -P INPUT DROP
-# маскарадинг на внешнем eth0 для 192.168.0.0/16
+```
+Маскарадинг на внешнем eth0 для 192.168.0.0/16
+```
 iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
-
 ```
