@@ -63,7 +63,4 @@ iptables -t filter -P INPUT DROP
 ```
 iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
 ```
-<details>
-<summary>PrintScreens</summary>
-  ![knocking_port](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson14_firewall/1/knocking_port.gif)
-</details>
+![knocking_port](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson14_firewall/1/knocking_port.gif)
