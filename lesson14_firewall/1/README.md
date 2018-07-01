@@ -5,18 +5,19 @@
 Конфигурационный файл [iptables.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson14_firewall/1/iptables.conf)
 
 Прописываем правила:
-Пропускаем весь вх.|исх. трафик с lo, eth0 на рутер
-```
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A INPUT -i eth0 -j ACCEPT
-iptables -A OUTPUT -o lo -j ACCEPT
-iptables -A OUTPUT -o eth0 -j ACCEPT
-```
 Создаем доп. цепочки
 ```
 iptables -N TRAFFIC
 iptables -N SSH1-INPUT
 iptables -N SSH2-INPUT
+```
+Пропускаем весь вх.|исх. трафик с lo, eth0 на рутер
+```
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -i eth0 -j ACCEPT
+iptables -A INPUT -j TRAFFIC
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -A OUTPUT -o eth0 -j ACCEPT
 ```
 Добавляем правила в цепочку SSH1-INPUT (все unicast адреса источника добавляется в список и дропается)
 ```
@@ -24,7 +25,7 @@ iptables -A SSH1-INPUT -m recent --set --name SSH1 --mask 255.255.255.255 --rsou
 
 ```
 Добавляем правила в цепочку SSH2-INPUT
-Настраиваем список для добавления источника адресов SSH2 и формируем список по условию(mod. recent) --mask 255.255.255.255 --rsource с целью сбросить без проверки соединение если он не unicast т.е. имеется в списке(mod. recent).
+Настраиваем список для добавления источника адресов SSH2 и формируем список по условию(mod. recent) --mask 255.255.255.255 --rsource с целью сброса без проверки соединение если unicast и он имеется в списке(mod. recent).
 ```
 iptables -A SSH2-INPUT -m recent --set --name SSH2 --mask 255.255.255.255 --rsource -j DROP
 ```
