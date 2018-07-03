@@ -12,6 +12,8 @@
 login|sshd;*;!admin001;!SaSu0000-2400
 ```
 ##### Для проверки по условию
+
 /etc/pam.d/login|sshd
+
 `auth       required     pam_succeed_if.so debug user ingroup admin`
 
