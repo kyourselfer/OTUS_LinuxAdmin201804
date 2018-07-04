@@ -1,3 +1,6 @@
+#
+# Checked on FreeBSD
+#
 #!/bin/bash
 DATA=`date +%Y.%m.%d--%H`
 #
