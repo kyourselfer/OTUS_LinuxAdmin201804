@@ -3,6 +3,7 @@
 ##### Для лимитирования доступа по времени и дням нидели
 
 /etc/pam.d/login|sshd
+
 `account    requisite    pam_time.so`
 
 /etc/security/time.conf
