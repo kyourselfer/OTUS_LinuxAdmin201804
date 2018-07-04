@@ -5,9 +5,26 @@
 ```
 auth       requisite     pam_listfile.so onerr=fail item=user sense=allow file=/etc/loginANDsshdUsers
 ```
-Запускаем скрипт по крону (в дальнейшем преобразуем в systemd unit) в субботу с аргументов запрета логин для всех пользователей исключая группу "admin", и в понидельник без аргументов для отключения запрета на вход
+Запускаем скрипт по крону (в дальнейшем преобразуем в systemd unit) в субботу с аргументов `./loginANDsshdUsers only_group_admin` запрета логин для всех пользователей исключая группу "admin", и в понидельник без аргументов `./loginANDsshdUsers` для отключения запрета на вход
+`/etc/crontab`
+```
+# All users can't work except users from group "admin"
+00  17  *  *  5 root /usr/local/sbin/loginANDsshdUsers only_group_admin
+# All users can work
+00  08  *  *  1 root /usr/local/sbin/loginANDsshdUsers
 
-
+```
+ Список пользователей /etc/loginANDsshdUsers в будни:
+ ```
+admin001
+root
+vagrant
+ ```
+ и в выходные:
+ ```
+admin001
+root
+ ```
 
 #### Tips
 ##### Для лимитирования доступа по времени и дням нидели
