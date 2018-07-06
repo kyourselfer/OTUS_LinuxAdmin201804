@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Uses to deny access for group admin by PAM modules login, sshd.
+# All users from group admin writes to file '/etc/loginANDsshdUsers'.
+# Uses crontab.
+#
+choice="$1"
+file="/etc/loginANDsshdUsers"
+log="/var/log/loginANDsshdUsers.log"
+
+if [[ $choice == 'only_group_admin' ]]
+    then
+        tmp1=$(getent group admin | cut -d: -f4 | sed 's/,/\n/g')
+    else
+        tmp1=$(users | xargs -n1 | sort -u)
+fi
+echo $tmp1 | xargs -n1 > "$file"
+
+# Write logfile
+echo $0 was run at `date "+%F %H:%M:%S"` >> $log
+exit 0
+
