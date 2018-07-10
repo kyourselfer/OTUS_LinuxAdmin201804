@@ -9,3 +9,4 @@
 
 [server_tap.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/server_tap.conf)
 
+[bridge_up.sh](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/bridge_up.sh)
