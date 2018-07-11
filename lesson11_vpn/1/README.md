@@ -10,3 +10,19 @@
 [server_tap.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/server_tap.conf)
 
 [bridge_up.sh](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/bridge_up.sh)
+
+До обьядинения интерфейсов в bridge
+
+![server_ip_before_BridgeUp](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/tap_ip_a.gif)
+
+запускаем `bash bridge_up.sh`
+
+![server_ip_after_BridgeUp](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/tap_ip_a_bridgeUp.gif)
+
+клиент получает ip из стоки `server-bridge 192.168.111.0 255.255.255.0 192.168.111.10 192.168.111.20` в `server.conf`
+
+![client](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/tap_ip_a_client.gif)
+
+проверяем 
+
+![check](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/tap_ip_a_check.gif)
