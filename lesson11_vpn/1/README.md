@@ -1,8 +1,12 @@
 ##### Драйвер tun(L2-L3) используем при обьединении сетей с разной адресацией в одну (OpenVPN сервер может кидать маршруты для клиентов)
 
+[server_tun.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/server_tun.conf)
+
 ![openvpn_server](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/ovpn_server.gif)
 
 ![openvpn_client](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/ovpn_client.gif)
+
+![tun_check](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson11_vpn/1/tun_check.gif)
 
 
 ##### Драйвер tap(L2) используем при подключании клиента в режиме моста (пропускает broadcast) при адресации используем не пересекающиеся адреса из одной подсети
