@@ -1,0 +1,40 @@
+---
+- hosts: ipr01
+  tasks:
+
+  - name: Copy rules of port knocking and MASQUERADE on eth1
+    copy: src=provisioning/iptables_ipr01.conf dest=/etc/iptables.conf owner=root group=root mode=0640
+
+  - name: Enabled if. forwarding and applied rules of iptables.conf
+    shell: |
+            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
+            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+
+- hosts: ipr02
+  tasks:
+
+  - name: Copy rules of DNAT and SNAT on eth0(ext_if)
+    copy: src=provisioning/iptables_ipr02.conf dest=/etc/iptables.conf owner=root group=root mode=0640
+
+  - name: Enabled if. forwarding and applied rules of iptables.conf
+    shell: |
+            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
+            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+    
+- hosts: centralRouter
+  tasks:
+
+  - name: Upped nf_tables MASQUERADE on eth1
+    copy: src=provisioning/iptables_centralRouter.conf dest=/etc/iptables.conf owner=root group=root mode=0640
+
+  - name: Enabled if. forwarding
+    shell: |
+            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
+            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+
+- hosts: centralServer
+  tasks:
+  
+  # install nginx
+  roles:
+    - { role: nginx }

@@ -1,0 +1,11 @@
+---
+- name: Add nginx repo
+  copy: src=nginx.repo dest=/etc/yum.repos.d/
+
+- name: Install packages
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - nginx
+
+- name: ensure nginx is running and enabled
+  service: name=nginx state=restarted enabled=yes

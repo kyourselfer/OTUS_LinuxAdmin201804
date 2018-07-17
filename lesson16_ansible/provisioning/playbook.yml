@@ -1,0 +1,33 @@
+---
+- hosts: ForefrontRouters 
+  become: yes
+  tasks:
+  - name: install packages
+    yum: name={{ item }} state=latest 
+    with_items:
+      - iptables
+      - iptables-services
+  - name: ensure iptables is running and enabled
+    service: name=iptables state=restarted enabled=yes
+
+- hosts: ipr01
+  become: yes
+  tasks:
+  - name: copy iptables.conf
+    copy: src=iptables_ipr01.conf dest=/etc/iptables.conf owner=root group=root mode=0600
+    
+- hosts: ipr02
+  become: yes
+  tasks:
+  - name: copy iptables.conf
+    copy: src=iptables_ipr02.conf dest=/etc/iptables.conf owner=root group=root mode=0600
+    #  - name: set /etc/iptables.conf permissions
+    #    file: path=/etc/iptables.conf owner=root group=root mode=0600
+    #  - name: ensure iptables is running and enabled
+    #    service: name=iptables state=restarted enabled=yes
+
+- hosts: rootRouters
+  become: yes
+  tasks:
+  - name: copy iptables.conf
+    copy: src=iptables_centralRouter.conf dest=/etc/iptables.conf owner=root group=root mode=0600

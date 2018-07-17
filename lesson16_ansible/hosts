@@ -1,0 +1,9 @@
+#
+# IPRouter01 uses nf_table: maskarading.
+[ForefrontRouters]
+ipr01 ansible_ssh_host=127.0.0.1 ansible_port=2222
+ipr02 ansible_ssh_host=127.0.0.1 ansible_port=2200
+[rootRouters]
+centralRouter ansible_ssh_host=127.0.0.1 ansible_port=2201
+[WebServers]
+centralServer ansible_ssh_host=127.0.0.1 ansible_port=2204

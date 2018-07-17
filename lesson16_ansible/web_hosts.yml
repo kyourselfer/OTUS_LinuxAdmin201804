@@ -1,0 +1,10 @@
+---
+- hosts: WebServers
+
+  # install update of packages
+  tasks:
+    - include: update_pkg.yml
+  
+  # install nginx
+  roles:
+    - { role: nginx }

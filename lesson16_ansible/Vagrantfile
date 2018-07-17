@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "vvv"
+    ansible.playbook = "provisioning/playbook.yml"
+    ansible.become = "true"
+  end
+
+
+  config.vm.provider "virtualbox" do |v|
+	  v.memory = 256
+  end
+  config.vm.define "ipr01" do |ipr01|
+    ipr01.vm.network "private_network", ip: '192.168.255.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "sw_inet255"
+    ipr01.vm.hostname = "ipr01"
+  end
+
+  config.vm.define "ipr02" do |ipr02|
+    ipr02.vm.network "private_network", ip: '192.168.254.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "sw_inet254"
+    ipr02.vm.hostname = "ipr02"
+  end
+
+  config.vm.define "centralRouter" do |centralRouter|
+    centralRouter.vm.network "private_network", ip: '192.168.255.2', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "sw_inet255"
+    centralRouter.vm.network "private_network", ip: '192.168.254.2', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "sw_inet254"
+    centralRouter.vm.network "private_network", ip: '192.168.0.1', adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "sw_web01"
+    centralRouter.vm.hostname = "centralRouter"
+  end
+
+  config.vm.define "centralServer" do |centralServer|
+    centralServer.vm.network "private_network", ip: '192.168.0.2', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "sw_web01"
+    centralServer.vm.hostname = "centralServer"
+  end
+
+end

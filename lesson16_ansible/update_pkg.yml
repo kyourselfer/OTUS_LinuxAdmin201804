@@ -1,0 +1,19 @@
+---
+- hosts: all
+  tasks:
+
+  - name: Update packages
+    yum:
+      name: '*'
+      state: latest
+      security: 1
+      update_cache: 1
+    become: yes
+
+      #  - name: List updates packages and register result to print with debug later.
+      #yum:
+      #list: updates repos
+      #register: result
+
+  - name: Debug
+    debug: msg={{ ansible_os_family, ansible_system }}
