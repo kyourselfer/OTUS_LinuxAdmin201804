@@ -16,7 +16,13 @@ centralServer ansible_ssh_host=127.0.0.1 ansible_port=2204
 Vagrantfile с provisioning на Ansible [playbook]()
 
 Проверим выход в ИНет `ansible all -i hosts -m shell -a 'ping -c1 -s1 ya.ru`
-![ping]()
 
-Постучимся на 
+![ping](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson16_ansible/PrnScr/ping.gif)
+
+Проверим открытость 22/tcp `ansible centralRouter -i hosts -m shell -a 'nc -z -w 1 -v 192.168.255.1 22'` и
+постучимся через centralRouter на 192.168.255.1:22 (ipr01) `ansible centralRouter -i hosts -m shell -a 'bash /vagrant/provisioning/ssh_port_knocking.sh'`, сново проверим открытость 22/tcp
+
+![knocking_to](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson16_ansible/PrnScr/knocking_port.gif)
+
+
 * в рамках ДЗ создать свою роль
