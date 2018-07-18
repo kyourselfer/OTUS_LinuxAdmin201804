@@ -3,7 +3,7 @@
 ### Первые шаги с Ansible.
 Переделать разворачивание файрвалла (ДЗ 14) через ansible
 
-[hosts]() с параметрами
+[hosts](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson16_ansible/hosts) с параметрами
 ```
 [ForefrontRouters]
 ipr01 ansible_ssh_host=127.0.0.1 ansible_port=2222
@@ -13,7 +13,7 @@ centralRouter ansible_ssh_host=127.0.0.1 ansible_port=2201
 [WebServers]
 centralServer ansible_ssh_host=127.0.0.1 ansible_port=2204
 ```
-Vagrantfile с provisioning на Ansible [playbook]()
+[Vagrantfile](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson16_ansible/Vagrantfile) с provisioning на Ansible [playbook](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson16_ansible/Start.yml)
 
 Проверим выход в ИНет `ansible all -i hosts -m shell -a 'ping -c1 -s1 ya.ru`
 
@@ -24,5 +24,6 @@ Vagrantfile с provisioning на Ansible [playbook]()
 
 ![knocking_to](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson16_ansible/PrnScr/knocking_port.gif)
 
-
 * в рамках ДЗ создать свою роль
+
+
