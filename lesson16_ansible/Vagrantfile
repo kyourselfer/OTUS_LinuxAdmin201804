@@ -4,16 +4,13 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "vvv"
-    ansible.playbook = "provisioning/playbook.yml"
-    ansible.become = "true"
-  end
-
-
   config.vm.provider "virtualbox" do |v|
-	  v.memory = 256
+      v.memory = 256
   end
+  config.vm.provision "shell", inline: "mkdir /root/.ssh/ && cat /vagrant/ansible.pub >> /root/.ssh/authorized_keys && cat /vagrant/ansible.pub >> /home/vagrant/.ssh/authorized_keys"
+  # vagrant_ssh_username
+  config.ssh.username = "vagrant"
+
   config.vm.define "ipr01" do |ipr01|
     ipr01.vm.network "private_network", ip: '192.168.255.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "sw_inet255"
     ipr01.vm.hostname = "ipr01"
@@ -34,6 +31,19 @@ Vagrant.configure(2) do |config|
   config.vm.define "centralServer" do |centralServer|
     centralServer.vm.network "private_network", ip: '192.168.0.2', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "sw_web01"
     centralServer.vm.hostname = "centralServer"
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "vvv"
+    ansible.playbook = "Start.yml"
+    # Ansible_ssh_user
+    ansible.force_remote_user = "vagrant"
+    ansible.become = "true"
+    ansible.inventory_path = "./hosts"
+    ansible.raw_arguments  = [
+  "--connection=paramiko",
+  "--private-key=~/.ssh/ansible"
+]
   end
 
 end

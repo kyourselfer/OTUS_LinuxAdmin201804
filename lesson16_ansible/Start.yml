@@ -1,5 +1,6 @@
 ---
 - hosts: ipr01
+  become: yes
   tasks:
 
   - name: Copy rules of port knocking and MASQUERADE on eth1
@@ -8,9 +9,11 @@
   - name: Enabled if. forwarding and applied rules of iptables.conf
     shell: |
             echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            /sbin/iptables-restore < /etc/iptables.conf
+            echo "/sbin/iptables-restore < /etc/iptables.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
 
 - hosts: ipr02
+  become: yes
   tasks:
 
   - name: Copy rules of DNAT and SNAT on eth0(ext_if)
@@ -19,9 +22,11 @@
   - name: Enabled if. forwarding and applied rules of iptables.conf
     shell: |
             echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            /sbin/iptables-restore < /etc/iptables.conf
+            echo "/sbin/iptables-restore < /etc/iptables.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
     
 - hosts: centralRouter
+  become: yes
   tasks:
 
   - name: Upped nf_tables MASQUERADE on eth1
@@ -30,13 +35,15 @@
   - name: Enabled if. forwarding and particulared default route
     shell: |
             echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+            /sbin/iptables-restore < /etc/iptables.conf
+            echo "/sbin/iptables-restore < /etc/iptables.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
             echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
             echo "192.168.0.0/30 via 192.168.0.1" > /etc/sysconfig/network-scripts/route-eth3
             systemctl restart network
 
 - hosts: centralServer
+  become: yes
   tasks:
 
   - name: Enabled if. forwarding and particulared default route

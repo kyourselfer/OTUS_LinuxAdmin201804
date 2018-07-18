@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/rootadmin/vagrant/OTUS_git/OTUS_LinuxAdmin201804/lesson16_ansible","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
