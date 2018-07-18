@@ -27,5 +27,14 @@ centralServer ansible_ssh_host=127.0.0.1 ansible_port=2204
 * в рамках ДЗ создать свою роль
 
 [roles/nginx](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/tree/master/lesson16_ansible/roles)
-
-
+```
+- hosts: centralServer
+  become: yes
+  tasks:
+  
+  ...
+  
+  # install nginx
+  roles:
+    - { role: nginx }
+```
