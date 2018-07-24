@@ -1,57 +1,22 @@
 ---
-- hosts: ipr01
+- hosts: web01
+  vars:
+    name: [ 'net.core.somaxconn', 'net.core.rmem_max' ]
+    value: [ 1024, 8388608 ]
+    alpha: [ 'a', 'b', 'c', 'd' ]
+    numbers: [ 1, 2, 3, 4 ]
+
   become: yes
   tasks:
 
-  - name: Copy rules of port knocking and MASQUERADE on eth1
-    copy: src=provisioning/iptables_ipr01.conf dest=/etc/iptables.conf owner=root group=root mode=0640
-
-  - name: Enabled if. forwarding and applied rules of iptables.conf
-    shell: |
-            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            /sbin/iptables-restore < /etc/iptables.conf
-            echo "/sbin/iptables-restore < /etc/iptables.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
-
-- hosts: ipr02
-  become: yes
-  tasks:
-
-  - name: Copy rules of DNAT and SNAT on eth0(ext_if)
-    copy: src=provisioning/iptables_ipr02.conf dest=/etc/iptables.conf owner=root group=root mode=0640
-
-  - name: Enabled if. forwarding and applied rules of iptables.conf
-    shell: |
-            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            /sbin/iptables-restore < /etc/iptables.conf
-            echo "/sbin/iptables-restore < /etc/iptables.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
-    
-- hosts: centralRouter
-  become: yes
-  tasks:
-
-  - name: Upped nf_tables MASQUERADE on eth1
-    copy: src=provisioning/iptables_centralRouter.conf dest=/etc/iptables.conf owner=root group=root mode=0640
-
-  - name: Enabled if. forwarding and particulared default route
-    shell: |
-            echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
-            /sbin/iptables-restore < /etc/iptables.conf
-            echo "/sbin/iptables-restore < /etc/iptables.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
-            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-            echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-            echo "192.168.0.0/30 via 192.168.0.1" > /etc/sysconfig/network-scripts/route-eth3
-            systemctl restart network
-
-- hosts: centralServer
-  become: yes
-  tasks:
-
-  - name: Enabled if. forwarding and particulared default route
-    shell: |
-            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-            echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-            systemctl restart network
-  
-  # install nginx
+          #  - name: Enabled if. forwarding and particulared default route
+          #    shell: |
+          #            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+          #            echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+          #            systemctl restart network
+          #
+          #  dependencies:
+          #    - { role: CentOS_Srv } 
   roles:
+    - { role: CentOS_Srv }
     - { role: nginx }
