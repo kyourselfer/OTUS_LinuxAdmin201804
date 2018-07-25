@@ -1,22 +1,24 @@
 ---
-- hosts: web01
-  vars:
-    name: [ 'net.core.somaxconn', 'net.core.rmem_max' ]
-    value: [ 1024, 8388608 ]
-    alpha: [ 'a', 'b', 'c', 'd' ]
-    numbers: [ 1, 2, 3, 4 ]
+- hosts: WebServers
+  become: yes
+  roles:
+    - { role: CentOS_Srv }
 
+- hosts: web01
   become: yes
   tasks:
-
           #  - name: Enabled if. forwarding and particulared default route
           #    shell: |
           #            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
           #            echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
           #            systemctl restart network
-          #
-          #  dependencies:
-          #    - { role: CentOS_Srv } 
   roles:
-    - { role: CentOS_Srv }
+          #    - { role: CentOS_Srv }
+    - { role: ntpd }
     - { role: nginx }
+
+- hosts: web02
+  become: yes
+  roles:
+          #    - { role: CentOS_Srv }
+    - { role: ntpd }

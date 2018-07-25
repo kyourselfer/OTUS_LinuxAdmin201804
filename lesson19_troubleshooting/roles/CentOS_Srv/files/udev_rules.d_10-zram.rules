@@ -1,0 +1,4 @@
+KERNEL=="zram0", SUBSYSTEM=="block", DRIVER=="", ACTION=="add", ATTR{disksize}=="0", ATTR{disksize}="256M", RUN+="/sbin/mkswap $env{DEVNAME}"
+KERNEL=="zram1", SUBSYSTEM=="block", DRIVER=="", ACTION=="add", ATTR{disksize}=="0", ATTR{disksize}="256M", RUN+="/sbin/mkswap $env{DEVNAME}"
+#KERNEL=="zram3", SUBSYSTEM=="block", DRIVER=="", ACTION=="add", ATTR{initstate}=="0", ATTR{comp_algorithm}="lz4", ATTR{disksize}="256M", RUN+="/sbin/mkfs.ext4 -O ^has_journal -L $name $env{DEVNAME}"
+#KERNEL=="zram4", SUBSYSTEM=="block", DRIVER=="", ACTION=="add", ATTR{initstate}=="0", ATTR{comp_algorithm}="lz4", ATTR{disksize}="256M", RUN+="/sbin/mkfs.ext4 -O ^has_journal -L $name $env{DEVNAME}"
