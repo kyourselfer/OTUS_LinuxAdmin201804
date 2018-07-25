@@ -33,6 +33,7 @@
     - nc
     - atop
     - iftop
+    - unzip
 
 - name: Changed values of sysctl
   sysctl: name="{{ item.name }}" value="{{ item.value }}" sysctl_set=yes state=present
@@ -48,15 +49,22 @@
     - { name: 'vm.swappiness', value: 1 }
 
 - name: Disabled units of SystemD
-  service: name=NetworkManager.service state=stopped enabled=no
+  service: name="{{ item }}" state=stopped enabled=no masked=yes
+  with_items:
+    - NetworkManager.service
+    - NetworkManager-wait-online.service
 
-- name: Enabled zram
+- name: Restarted network.service
+  service: name=network.service
+
+- name: Loaded module zram.ko
   modprobe:
     name: zram
     state: present
     params: 'num_devices=2'
-  
-- shell: for i in 0 1; do /bin/echo 268435456 > /sys/block/zram$i/disksize && mkswap /dev/zram$i && swapon /dev/zram$i -p 10 && /bin/grep zram$i /etc/fstab || /bin/echo -e "/dev/zram$i\t\t\tswap\t\t\tswap\tpri=10 0 0" >> /etc/fstab; done
+
+- name: Enabled zram
+  shell: for i in 0 1; do /bin/echo 268435456 > /sys/block/zram$i/disksize && mkswap /dev/zram$i && swapon /dev/zram$i -p 10 && /bin/grep zram$i /etc/fstab || /bin/echo -e "/dev/zram$i\t\t\tswap\t\t\tswap\tpri=10 0 0" >> /etc/fstab; done
 
 - name: Inserted modules-load.d/zram.conf
   copy: src=modules-load.d_zram.conf dest=/etc/modules-load.d/zram.conf
@@ -65,4 +73,5 @@
 - name: Inserted udev/rules.d/10-zram.rules
   copy: src=udev_rules.d_10-zram.rules dest=/etc/udev/rules.d/10-zram.rules
 
-
+  #- name: Compiled kernel
+  #  include: kernel.yml

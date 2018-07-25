@@ -1,0 +1,37 @@
+#cd /usr/src/
+#wget https://drive.google.com/file/d/1AonZi4TIFeLXEnhm47-Z2pJHghJdPoQ5/view?usp=sharing
+#wget https://cdn.kernel.org/pub/linux/kernel/v3.x/linux-3.16.57.tar.xz
+#ln -s linux-3.16.57 linux && cd linux
+#cp /boot/config-3.10.0-693.21.1.el7.x86_64 .config
+#make -j4
+#make modules_install
+#make install
+#grub2-set-default 0
+
+- name: Download Kernel.tar.gz
+  get_url:
+    url: http://skcpk.ru/tmp/kernel3.16CompiledVagrant.tar.gz
+    dest: /usr/src/Kernel.tar.gz
+
+- name: Extract Kernel.tar.gz
+  unarchive: src=/usr/src/Kernel.tar.gz dest=/ remote_src=yes
+
+# It needs Fix
+- name: soft link to linux /usr/src/linux
+  file:
+    src: /usr/src/linux-3.16.57
+    dest: /usr/src/linux
+    owner: root
+    group: root
+    state: link
+
+    #- name: Compiled kernel & modules then installed
+    #  shell: |
+    #    make -j4
+    #    make modules_install
+    #    make install
+    #    grub2-set-default 0
+
+- name: Installed modules
+  shell: cd /usr/src/linux && make modules_install && make install && grub2-set-default 0
+
