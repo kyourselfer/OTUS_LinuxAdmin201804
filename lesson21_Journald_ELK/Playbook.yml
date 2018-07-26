@@ -1,5 +1,5 @@
 ---
-- hosts: WebServers
+- hosts: WebServers logsrv 
   become: yes
   roles:
     - { role: CentOS_Srv }
@@ -7,18 +7,14 @@
 - hosts: web01
   become: yes
   tasks:
-          #  - name: Enabled if. forwarding and particulared default route
-          #    shell: |
-          #            echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-          #            echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-          #            systemctl restart network
+
   roles:
-          #    - { role: CentOS_Srv }
-    - { role: ntpd }
     - { role: nginx }
 
-- hosts: web02
+- hosts: logsrv
   become: yes
+  tasks:
+
   roles:
-          #    - { role: CentOS_Srv }
     - { role: ntpd }
+

@@ -17,5 +17,5 @@
   copy: src=firewall.conf dest=/etc/
   
 - name: Loaded nftables rules
-  shell: echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
+  shell: /sbin/iptables-restore < /etc/firewall.conf && echo "/sbin/iptables-restore < /etc/firewall.conf" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local
 

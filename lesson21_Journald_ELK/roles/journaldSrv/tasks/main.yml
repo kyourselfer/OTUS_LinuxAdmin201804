@@ -1,0 +1,20 @@
+---
+
+#systemd-journal-remote
+
+mkdir /etc/systemd/journald.conf.d
+
+- name: Added server journald.conf
+  copy: src=server_journald.conf dest=/etc/systemd/journald.conf.d/server.conf
+
+- name: Install package systemd-journal-gateway
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - systemd-journal-gateway
+
+      #- name: ensure nginx is running and enabled
+      #  service: name=nginx state=restarted enabled=yes
+ 
+#systemd-journal-upload
+#
+#
