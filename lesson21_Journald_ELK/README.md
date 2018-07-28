@@ -8,12 +8,12 @@
 - journald
 - rsyslog
 - elk 
+
 настраиваем аудит следящий за изменением конфигов нжинкса 
 
 все критичные логи с web должны собираться и локально и удаленно
 все логи с nginx должны уходить на удаленный сервер (локально только критичные)
 логи аудита уходят ТОЛЬКО на удаленную систему
-
 
 * развернуть еще машину elk
 и таким образом настроить 2 центральных лог системы elk И какую либо еще
@@ -22,12 +22,14 @@
 
 ### Разворачиваем три сервера при помощи Vagrant+Ansible:
 
+Реализация отправки дублированных логов с systemd-journal(web01) через systemd-journal-upload.service на systemd-journal-remote(logsrv(/var/log/journal/remote/)):
+
 web01
-- навешиваем роль journaldClient
+- навешиваем роль journaldClient(Сервер)
   - systemd-journal-upload (для дублирования бинарных логов SystemD)
   
 logsrv
  - навешиваем роль journaldSrv
    - systemd-journal-remote (пасивный режим - без опроса клиентов)
    
-logweb (ELK)
+![journald](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/journald.gif)
