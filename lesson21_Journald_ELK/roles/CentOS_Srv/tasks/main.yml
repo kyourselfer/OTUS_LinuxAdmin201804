@@ -47,6 +47,8 @@
     - { name: 'net.ipv4.tcp_wmem', value: 4096 65536 8388608 }
     - { name: 'net.ipv4.tcp_mem', value: 8388608 8388608 8388608 }
     - { name: 'vm.swappiness', value: 1 }
+    - { name: 'net.ipv6.conf.all.disable_ipv6', value: 1 }
+    - { name: 'net.ipv6.conf.default.disable_ipv6', value: 1 }
 
 - name: Disabled units of SystemD
   service: name="{{ item }}" state=stopped enabled=no masked=yes

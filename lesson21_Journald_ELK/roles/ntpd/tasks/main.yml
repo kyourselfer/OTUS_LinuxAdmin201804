@@ -1,6 +1,7 @@
 ---
 - name: Add timezone Moscow
   shell: echo yes | cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+  #  shell: timedatectl set-timezone Europe/Moscow
 
 - name: Install packages
   yum: pkg={{ item }} state=latest

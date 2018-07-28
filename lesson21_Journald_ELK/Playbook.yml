@@ -6,15 +6,12 @@
 
 - hosts: web01
   become: yes
-  tasks:
-
   roles:
     - { role: nginx }
+    - { role: journaldClient }
 
 - hosts: logsrv
   become: yes
-  tasks:
-
   roles:
     - { role: ntpd }
-
+    - { role: journaldSrv }

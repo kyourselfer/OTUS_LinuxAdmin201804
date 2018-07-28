@@ -3,5 +3,5 @@
 [Routers_forefront]
 # LEMP
 [WebServers]
-web01 ansible_ssh_host=127.0.0.1 ansible_port=2222
-logsrv ansible_ssh_host=127.0.0.1 ansible_port=2200
+web01 ansible_ssh_host=127.0.0.1 ansible_port=2200
+logsrv ansible_ssh_host=127.0.0.1 ansible_port=2222
