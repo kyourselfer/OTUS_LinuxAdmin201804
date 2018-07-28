@@ -31,4 +31,3 @@ logsrv
    - systemd-journal-remote (пасивный режим - без опроса клиентов)
    
 logweb (ELK)
- - 
