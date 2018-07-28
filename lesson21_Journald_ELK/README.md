@@ -25,8 +25,10 @@
 web01
 - навешиваем роль journaldClient
   - systemd-journal-upload (для дублирования бинарных логов SystemD)
-logsrv 
+  
+logsrv
  - навешиваем роль journaldSrv
    - systemd-journal-remote (пасивный режим - без опроса клиентов)
+   
 logweb (ELK)
  - 
