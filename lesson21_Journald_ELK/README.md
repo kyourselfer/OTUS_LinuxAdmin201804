@@ -23,9 +23,10 @@
 ### Разворачиваем три сервера при помощи Vagrant+Ansible:
 
 web01
-- nginx
-logsrv
- - отключаем rsyslog и навешиваем роль journald
+- навешиваем роль journaldClient
+  - systemd-journal-upload (для дублирования бинарных логов SystemD)
+logsrv 
+ - навешиваем роль journaldSrv
    - systemd-journal-remote (пасивный режим - без опроса клиентов)
 logweb (ELK)
  - 
