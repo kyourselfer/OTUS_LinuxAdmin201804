@@ -58,3 +58,5 @@ logsrv
     - { role: journaldSrv }
 ```
 ![journald](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/journald.gif)
+
+##### 2. [rsyslogd]()
