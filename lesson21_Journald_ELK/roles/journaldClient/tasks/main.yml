@@ -9,9 +9,14 @@
     - systemd-journal-gateway
     - ntpdate
 
-- name: Add timezone Moscow
-  shell: echo yes | cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-  #  shell: timedatectl set-timezone Europe/Moscow
+- name: Set timezone to Moscow
+  timezone: name='Europe/Moscow'
+
+- name: set sync. time in cron
+  cron:
+    name: "sync. time"
+    minute: 1
+    job: "/usr/sbin/ntpdate -u 192.168.168.111 >/dev/null 2>&1"
 
 - name: Made etc/journald.conf.d and journald-upload.d/
   file:
