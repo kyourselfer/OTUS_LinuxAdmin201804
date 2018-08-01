@@ -9,3 +9,19 @@
 
 - name: ensure nginx is running and enabled
   service: name=nginx state=restarted enabled=yes
+
+### rsyslog ###
+
+- name: syslog of nginx to srvlog
+  copy: src=nginx_syslog.conf dest=/etc/rsyslog.d/nginx.conf
+
+- name: Ensure rsyslog is running and enabled
+  service: name=rsyslog state=restarted enabled=yes
+
+### auditd ###
+
+- name: Enabled audit of nginx.configs
+  copy: src=nginx.rules dest=/etc/audit/rules.d/nginx.rules
+
+- name: Ensure auditd is running and enabled
+  service: name=auditd state=restarted enabled=yes

@@ -4,4 +4,7 @@
 # LEMP
 [WebServers]
 web01 ansible_ssh_host=127.0.0.1 ansible_port=2200
+[IntranetMonitoring]
 logsrv ansible_ssh_host=127.0.0.1 ansible_port=2222
+[WebMonitoring]
+logweb ansible_ssh_host=127.0.0.1 ansible_port=2201

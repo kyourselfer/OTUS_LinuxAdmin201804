@@ -11,7 +11,7 @@
 - name: Added server journald.conf
   copy: src=server_journald.conf dest=/etc/systemd/journald.conf.d/server.conf
 
-- name: systemd-journald.service restarted and enabled
+- name: systemd-journald.service restarted
   service: name=systemd-journald.service state=restarted
 
 #
@@ -41,11 +41,8 @@
 - name: sysD daemon_reload
   systemd: daemon_reload=yes
 
+- name: Inserted systemd/journal-remote.conf
+  copy: src=serverpassive_journal-remote.conf dest=/etc/systemd/journal-remote.conf
+
 - name: systemd-journal-remote.service restarted and enabled
-  service: name=systemd-journal-remote.service state=restarted enabled=yes
-
-# 
-#systemd-journal-upload
-#
-
-
+  systemd: name=systemd-journal-remote state=restarted enabled=yes

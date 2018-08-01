@@ -1,5 +1,6 @@
 ---
-# tools wget and etc.
+
+### tools wget and etc. ###
 
 - name: Upgraded all packages
   yum:
@@ -35,6 +36,8 @@
     - iftop
     - unzip
 
+### sysctl ###
+
 - name: Changed values of sysctl
   sysctl: name="{{ item.name }}" value="{{ item.value }}" sysctl_set=yes state=present
   with_items:
@@ -57,7 +60,9 @@
     - NetworkManager-wait-online.service
 
 - name: Restarted network.service
-  service: name=network.service
+  service: name=network.service state=restarted
+
+### zram ###
 
 - name: Loaded module zram.ko
   modprobe:
@@ -77,3 +82,31 @@
 
   #- name: Compiled kernel
   #  include: kernel.yml
+
+### auditd ###
+
+- name: Replaced auditd.conf
+  copy: src=auditd.conf dest=/etc/audit/auditd.conf
+
+- name: Enabled audit of common things
+  copy: src={{ item }} dest=/etc/audit/rules.d/{{ item }}
+  with_items:
+    - audit.rules
+    - pam.rules
+    - sshd.rules 
+
+- name: Enabled audit of common things
+  copy: src=/lib/systemd/system/auditd.service dest=/etc/systemd/system/auditd.service remote_src=yes
+
+- name: regex in SysD unit auditd.service parameter RefuseManualStop
+  replace:
+    dest: /etc/systemd/system/auditd.service
+    regexp: '(RefuseManualStop=yes)'
+    replace: 'RefuseManualStop=no'
+    #    backup: yes
+
+- name: SysD daemon-reload
+  systemd: daemon-reload=yes
+
+- name: Changed value of auditd(SysD unit)
+  systemd: name=auditd.service state=restarted

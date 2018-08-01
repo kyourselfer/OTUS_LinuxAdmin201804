@@ -1,17 +1,27 @@
 ---
-- hosts: WebServers logsrv 
+- hosts: IntranetMonitoring WebServers WebMonitoring
   become: yes
   roles:
     - { role: CentOS_Srv }
 
-- hosts: web01
+- hosts: WebServers
   become: yes
   roles:
     - { role: nginx }
     - { role: journaldClient }
+    - { role: rsyslogClient }
 
-- hosts: logsrv
+- hosts: IntranetMonitoring
   become: yes
   roles:
     - { role: ntpd }
     - { role: journaldSrv }
+    - { role: rsyslogSrv }
+
+- hosts: WebMonitoring 
+  become: yes
+  roles:
+    - { role: nginx }
+    - { role: journaldClient }
+    - { role: rsyslogClient }
+
