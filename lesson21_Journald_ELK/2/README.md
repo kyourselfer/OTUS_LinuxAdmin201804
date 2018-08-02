@@ -1,8 +1,13 @@
-### Домашнее задание
-Настраиваем центральный сервер для сбора логов rsyslog
+### Настраиваем центральный сервер для сбора логов rsyslog
 --------
 ##### rsyslog
 ![rsyslogd](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/rsyslogd.gif)
+Роль [rsyslogSrv](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/rsyslogSrv/tasks/main.yml)
+добавляем /etc/rsyslog.d/nginx_logs.conf (принимаем сообщения по шаблону и складываем в директорию ), roles/rsyslogSrv/files/server_rsyslog.conf
+```
+
+```
+
 ```
 Опции для rsyslogd /etc/sysconfig/rsyslog
 В системе запускаются два демона протоколирования - rsyslogd и klogd
