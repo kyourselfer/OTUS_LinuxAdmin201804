@@ -19,7 +19,11 @@
 
 Роль [nginx](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/nginx/tasks/main.yml)
 
-#Следим за файлами логов nginx и отправляем от оборудывания(Facility) используя local6(на стороне клиента) и важности(Facility) на сервер логов logsrv
+#Следим за файлами логов nginx и отправляем от оборудывания(Facility) используя local6 и template `$template simple, "<174> %msg%", \n local6.* @@192.168.168.111;simple`, а точнее `PRI = (facility * 2^3) + severity` (на стороне клиента) и важности(Facility) на сервер логов logsrv
+
+#Также следим за audit.log и кидаем по local4 используя шаблон и формулу PRI `$template simple2, "<166> %msg%"` и template `local4.* @@192.168.168.111;simple2` PRI=`20(local4) * 8(2^3) + 6(Info)`
+
+[facility,serivity](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/2/table.txt)
 
 Добавляем конфиг для отправки событий
 /etc/rsyslog.d/[nginx.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/nginx/files/nginx_syslog.conf)
@@ -50,11 +54,8 @@ $template simple, "<174> %msg%"
 
 local6.* @@192.168.168.111;simple
 ```
-```
-Опции для rsyslogd /etc/sysconfig/rsyslog
-В системе запускаются два демона протоколирования - rsyslogd и klogd (для событий ядра)
-```
-
+Проверим отправку событий по local4.info или PRI=166
+![audit_syslog](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/audit_syslog.gif)
 
 ##### auditd
 #Изменим конфиг демона auditd
@@ -90,7 +91,11 @@ web01:
 
 ![rsyslogd_client](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/rsyslog_client.gif)
 ```
+
 # Comments
+Опции для rsyslogd /etc/sysconfig/rsyslog
+В системе запускаются два демона протоколирования - rsyslogd и klogd (для событий ядра)
+
 /etc/audit/auditd.conf - настройки поведения auditd;
 /etc/audit/rules.d/audit.rules - правила аудита
 autrace - аудит событий, порождаемых указанным процессом (like a strace);
