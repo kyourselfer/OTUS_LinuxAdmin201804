@@ -1,8 +1,6 @@
 ### Настраиваем центральный сервер для сбора логов rsyslog
 --------
 ##### rsyslog
-![rsyslogd](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/rsyslogd.gif)
-
 Роль [rsyslogSrv](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/rsyslogSrv/tasks/main.yml)
 
 Заменяем конфиг /etc/[rsyslog.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/rsyslogSrv/files/server_rsyslog.conf)
@@ -79,6 +77,11 @@ rules.d\[nginx.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/
 -w /etc/pam.d -p rwxa -k pam
 -w /etc/ssh/sshd_config -p wa -k sshd
 ```
+logsrv:
+![rsyslogd_srv](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/rsyslog_srv.gif)
+
+web01:
+![rsyslogd_client](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/rsyslog_client.gif)
 ```
 # Comments
 /etc/audit/auditd.conf - настройки поведения auditd;
