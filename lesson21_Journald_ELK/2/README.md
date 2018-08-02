@@ -65,6 +65,7 @@ rules.d\[sshd.rules]()
 #Слежение за конфигами nginx
 rules.d\[nginx.rules]()
 ```
+# Comments
 /etc/audit/auditd.conf - настройки поведения auditd;
 /etc/audit/rules.d/audit.rules - правила аудита
 autrace - аудит событий, порождаемых указанным процессом (like a strace);
