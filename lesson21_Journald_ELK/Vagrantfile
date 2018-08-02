@@ -21,11 +21,17 @@ Vagrant.configure(2) do |config|
 
 
   config.vm.define "logsrv" do |logsrv|
+    logsrv.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "256"]
+    end
     logsrv.vm.network "private_network", ip: '192.168.168.111', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw01"
     logsrv.vm.hostname = "logsrv"
   end
 
   config.vm.define "logweb" do |logweb|
+    logweb.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "768"]
+    end
     logweb.vm.network "private_network", ip: '192.168.168.110', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw01"
     logweb.vm.hostname = "logweb"
   end

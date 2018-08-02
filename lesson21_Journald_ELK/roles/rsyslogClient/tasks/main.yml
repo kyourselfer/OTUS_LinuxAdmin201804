@@ -1,0 +1,12 @@
+---
+#
+# rsyslog as a client
+#
+- name: Added rsyslog.d/crit.conf
+  copy: src=crit.conf dest=/etc/rsyslog.d/crit.conf
+
+- name: Replace rsyslog.conf
+  copy: src=client_rsyslog.conf dest=/etc/rsyslog.conf
+
+- name: rsyslog.service restarted
+  service: name=rsyslog.service state=restarted

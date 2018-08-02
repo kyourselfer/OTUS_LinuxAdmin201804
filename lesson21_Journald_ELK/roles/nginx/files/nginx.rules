@@ -1,0 +1,2 @@
+-w /etc/nginx/nginx.conf -p wa -k nginx
+-w /etc/nginx/conf.d/default.conf -p wa -k nginx
