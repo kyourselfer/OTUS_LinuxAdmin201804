@@ -10,6 +10,7 @@
 
 Добавляем /etc/rsyslog.d/[nginx_logs.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/rsyslogSrv/files/server_rsyslog_nginx.conf) (принимаем сообщения по шаблону и складываем в директорию /var/log/remote/$ip)
 
+Добавляем audit_logs.conf в /etc/rsyslog.d/[audit_logs.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/rsyslogSrv/files/server_rsyslog_audit.conf)
 Роль [rsyslogClient](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/rsyslogClient/tasks/main.yml)
 
 Добавляем конфиг для отправки критических событий на сервер и локально
