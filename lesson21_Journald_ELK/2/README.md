@@ -23,6 +23,8 @@
 
 Добавляем конфиг для отправки событий
 /etc/rsyslog.d/[nginx.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/nginx/files/nginx_syslog.conf)
+
+Также Nginx c версии 1.7.1 умеет отправлять в syslog
 ```
 $ModLoad imfile
 
