@@ -1,0 +1,4 @@
+$template FILENAME_audit,"/var/log/remote/%fromhost-ip%/audit.log"
+template(name="remoteSimple" type="string" string="%msg:2:$%\n")
+
+local4.* ?FILENAME_audit;remoteSimple
