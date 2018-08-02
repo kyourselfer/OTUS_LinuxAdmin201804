@@ -12,12 +12,15 @@
 ```
 
 web01
-- навешиваем роль journaldClient(Сервер)
+- навешиваем роль journaldClient
   - systemd-journal-upload (для дублирования бинарных логов SystemD) [journal-upload.conf.d/client.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/journaldClient/files/client_journald_upload.conf)
-  
+```
+# Меняем в unit systemd-journal-remote.socket необходимый порт для прослушки
+# и в unit systemd-journal-remote.service https на http
+```
 logsrv
  - навешиваем роль journaldSrv
-   - systemd-journal-remote (пасивный режим - без опроса клиентов)
+ - systemd-journal-remote (пасивный режим - без опроса клиентов)
 ```
 ---
 - hosts: WebServers logsrv 
@@ -37,4 +40,5 @@ logsrv
     - { role: ntpd }
     - { role: journaldSrv }
 ```
+Проверяем:
 ![journald](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/journald.gif)
