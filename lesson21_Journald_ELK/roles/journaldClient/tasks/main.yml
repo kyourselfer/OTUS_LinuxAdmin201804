@@ -14,9 +14,9 @@
 
 - name: set sync. time in cron
   cron:
-    name: "sync. time"
+    name: sync. time
     minute: 1
-    job: "/usr/sbin/ntpdate -u 192.168.168.111 >/dev/null 2>&1"
+    job: /usr/sbin/ntpdate -u 192.168.168.111 >/dev/null 2>&1
 
 - name: Made etc/journald.conf.d and journald-upload.d/
   file:
@@ -41,6 +41,3 @@
 
 - name: systemd-journal-upload.service restarted
   systemd: name=systemd-journal-upload.service state=restarted enabled=yes
-
-- name: reboot
-  shell: shutdown -r now
