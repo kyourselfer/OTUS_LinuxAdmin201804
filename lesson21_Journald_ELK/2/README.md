@@ -68,12 +68,14 @@ rules.d\[sshd.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/m
 #Слежение за конфигами nginx
 rules.d\[nginx.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/nginx/files/nginx.rules)
 
-`auditctl -l`
 ```
+[root@web01 vagrant]# auditctl -l
 -w /etc/audit/auditd.conf -p wa -k auditd
 -w /etc/audit/audit.rules -p wa -k auditd
 -w /etc/libaudit.conf -p wa -k auditd
 -w /etc/audit/rules.d -p wxa -k auditd
+-w /etc/nginx/nginx.conf -p wa -k nginx
+-w /etc/nginx/conf.d/default.conf -p wa -k nginx
 -w /etc/pam.d -p rwxa -k pam
 -w /etc/ssh/sshd_config -p wa -k sshd
 ```
