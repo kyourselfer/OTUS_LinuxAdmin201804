@@ -78,9 +78,11 @@ rules.d\[nginx.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/
 -w /etc/ssh/sshd_config -p wa -k sshd
 ```
 logsrv:
+
 ![rsyslogd_srv](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/rsyslog_srv.gif)
 
 web01:
+
 ![rsyslogd_client](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/rsyslog_client.gif)
 ```
 # Comments
