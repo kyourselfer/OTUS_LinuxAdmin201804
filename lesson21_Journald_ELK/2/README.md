@@ -55,15 +55,28 @@ local6.* @@192.168.168.111;simple
 
 ##### auditd
 #Изменим конфиг демона auditd
-auditd.conf
+[auditd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/CentOS_Srv/files/auditd.conf)
 
 #Cлежение за конфигами
-rules.d\[audit.rules]()
-rules.d\[pam.rules]()
-rules.d\[sshd.rules]()
+
+rules.d\[audit.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/CentOS_Srv/files/audit.rules)
+
+rules.d\[pam.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/CentOS_Srv/files/pam.rules)
+
+rules.d\[sshd.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/CentOS_Srv/files/sshd.rules)
 
 #Слежение за конфигами nginx
-rules.d\[nginx.rules]()
+rules.d\[nginx.rules](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/nginx/files/nginx.rules)
+
+`auditctl -l`
+```
+-w /etc/audit/auditd.conf -p wa -k auditd
+-w /etc/audit/audit.rules -p wa -k auditd
+-w /etc/libaudit.conf -p wa -k auditd
+-w /etc/audit/rules.d -p wxa -k auditd
+-w /etc/pam.d -p rwxa -k pam
+-w /etc/ssh/sshd_config -p wa -k sshd
+```
 ```
 # Comments
 /etc/audit/auditd.conf - настройки поведения auditd;
