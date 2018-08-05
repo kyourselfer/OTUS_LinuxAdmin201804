@@ -11,3 +11,5 @@ Metricbeat - Ship метрики для Elasticsearch.
 #Filebeat передаёт логи в logstash
 #
 
+#Распишем tcp порты на localhost
+#9200,9300 - elasticsearch, 5601 - kibana
