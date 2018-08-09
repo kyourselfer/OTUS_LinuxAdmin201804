@@ -26,7 +26,7 @@ Metricbeat - Ship метрики для Elasticsearch.
 #Подгрузим шаблоны beats-dashboards`curl -L -O http://download.elastic.co/beats/dashboards/beats-dashboards-1.3.1.zip`
 
 #tcp порты для прослушки на loopback
-#9200 - elasticsearch, logstash - 5044, 5601 - kibana
+#9200 - elasticsearch, logstash - 5044, kibana - 5601
 
 ##### Troubleshouting
 ```
