@@ -18,8 +18,8 @@
 - name: java.conf was inserted
   copy: src=java.conf dest=/etc/java/java.conf
 
-- name: sysconfig/elasticsearch was changed
-  copy: src=sysconfig_elasticsearch dest=/etc/sysconfig/elasticsearch
+  #- name: sysconfig/elasticsearch was changed
+  #  copy: src=sysconfig_elasticsearch dest=/etc/sysconfig/elasticsearch
 
 - name: limits.conf was replaced
   copy: src=limits.conf dest=/etc/security/limits.conf
@@ -38,8 +38,8 @@
 
 # Configs of elasticsearch
 
-- name: elasticsearch.yml was inserted
-  copy: src=elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
+  #- name: elasticsearch.yml was inserted
+  #  copy: src=elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
 
 - name: elasticsearch.service was restarted
   service: name=elasticsearch.service state=restarted enabled=yes

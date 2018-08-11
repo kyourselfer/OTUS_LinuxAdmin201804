@@ -5,14 +5,6 @@
   roles:
     - { role: CentOS_Srv }
 
-# Web server
-- hosts: web01
-  become: yes
-  roles:
-    - { role: nginx }
-    - { role: journaldClient }
-    - { role: rsyslogClient }
-
 # Servers of logs
 - hosts: logsrv 
   become: yes
@@ -29,3 +21,10 @@
     - { role: rsyslogClient }
     - { role: ELK }
 
+# Web server
+- hosts: web01
+  become: yes
+  roles:
+    - { role: nginx }
+    - { role: journaldClient }
+    - { role: rsyslogClient }
