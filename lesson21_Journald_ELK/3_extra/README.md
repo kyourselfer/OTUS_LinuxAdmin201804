@@ -28,7 +28,9 @@ Metricbeat - Ship метрики для Elasticsearch.
 #Останется только зайти на kibana:5601 и поставить filebeat* шаблон по умолчанию
 ![kibana](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/kibana1.gif)
 
-#Проверка методом GET на 80/tcp порт через попадания в лог nginx error.log и access.log `for i in 100/snbjsbjnbsj.error.php 100/ ; do curl -X GET http://192.168.168.$i ; done` и отправка через [filebeat](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/nginx/files/filebeat.yml) также на стороне клиента
+#Проверка методом GET на 80/tcp порт через попадания в лог nginx error.log и access.log `for i in 100/snbjsbjnbsj.error.php 100/ ; do curl -X GET http://192.168.168.$i ; done`
+![kibana2](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/img/kibana2.gif)
+и отправка через [filebeat](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson21_Journald_ELK/roles/nginx/files/filebeat.yml) также на стороне клиента
 ```
 filebeat.prospectors:
 - input_type: log
