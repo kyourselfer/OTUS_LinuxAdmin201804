@@ -35,6 +35,7 @@
     - atop
     - iftop
     - unzip
+    - policycoreutils-python 
 
 ### sysctl ###
 

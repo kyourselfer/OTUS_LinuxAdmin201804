@@ -1,10 +1,9 @@
 #
-# Routers nftables
-[Routers_forefront]
-# LEMP
+# logs(syslog,journal,nginx) send to servers
+#
 [WebServers]
-web01 ansible_ssh_host=127.0.0.1 ansible_port=2200
+web01 ansible_ssh_host=127.0.0.1 ansible_port=2201
 [IntranetMonitoring]
-logsrv ansible_ssh_host=127.0.0.1 ansible_port=2222
+logsrv ansible_ssh_host=127.0.0.1 ansible_port=2202
 [WebMonitoring]
-logweb ansible_ssh_host=127.0.0.1 ansible_port=2201
+logweb ansible_ssh_host=127.0.0.1 ansible_port=2203

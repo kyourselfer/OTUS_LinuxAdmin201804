@@ -13,9 +13,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "web01" do |web01|
     web01.vm.provider :virtualbox do |vb| 
-      vb.customize ["modifyvm", :id, "--memory", "256"] 
+      vb.customize ["modifyvm", :id, "--memory", "256"]
     end 
     web01.vm.network "private_network", ip: '192.168.168.100', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw01"
+    web01.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
     web01.vm.hostname = "web01"
   end
 
@@ -25,16 +26,26 @@ Vagrant.configure(2) do |config|
       vb.customize ["modifyvm", :id, "--memory", "256"]
     end
     logsrv.vm.network "private_network", ip: '192.168.168.111', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw01"
+    logsrv.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
     logsrv.vm.hostname = "logsrv"
   end
 
   config.vm.define "logweb" do |logweb|
     logweb.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "768"]
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
     logweb.vm.network "private_network", ip: '192.168.168.110', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw01"
+    logweb.vm.network :forwarded_port, guest: 22, host: 2203, id: "ssh"
     logweb.vm.hostname = "logweb"
   end
+  
+#  config.vm.define "logweb2" do |logweb2|
+#    logweb2.vm.provider :virtualbox do |vb|
+#      vb.customize ["modifyvm", :id, "--memory", "2048"]
+#    end
+#    logweb2.vm.network "private_network", ip: '192.168.168.112', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw01"
+#    logweb2.vm.hostname = "logweb2"
+#  end
 
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "vvv"
