@@ -1,5 +1,3 @@
-Разворачиваем через Vagrant + Ansible
-
 ##### Preview
 ```
 ELK на базе библиотеки Apache Lucene поисковый движок Elasticsearch для индексирования 
