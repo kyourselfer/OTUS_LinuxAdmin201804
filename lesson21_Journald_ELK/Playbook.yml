@@ -17,8 +17,6 @@
 - hosts: logweb
   become: yes
   roles:
-    - { role: journaldClient }
-    - { role: rsyslogClient }
     - { role: ELK }
 
 # Web server
