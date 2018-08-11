@@ -41,3 +41,6 @@
 
 - name: systemd-journal-upload.service restarted
   systemd: name=systemd-journal-upload.service state=restarted enabled=yes
+
+- name: Reboot
+  shell: shutdown -r now
