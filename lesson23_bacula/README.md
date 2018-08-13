@@ -12,3 +12,7 @@ list files jobid=<idfullbackup>
 и настроенный конфиг
 
 * настроить доп опции - сжатия, шифрования, дедупликация</idfullbackup>
+
+# troubleshooting
+bacula-dir -tc /etc/bacula/bacula-dir.conf
+bacula-sd -tc /etc/bacula/bacula-sd.conf
