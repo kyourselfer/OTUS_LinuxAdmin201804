@@ -13,9 +13,37 @@ list files jobid=<idfullbackup>
 
 * настроить доп опции - сжатия, шифрования, дедупликация</idfullbackup>
 
+По умолчанию Bacula поставляется (CentOS|Fedora) с выборанным elf-файлом(библиотекой) на postgress для коннекта с `Catalog` нам необходимо выбрать `mysql`
+
+Вырезка из /etc/bacula/[bacula-dir.conf]()
+``
+Catalog {
+        Name = bacula
+        dbname = "bacula"; dbuser = "rootadmin"; dbpassword = "pass"
+}
+``
+
+```
+[root@bacula]# su -c 'alternatives --config libbaccats.so'
+
+There are 3 programs which provide 'libbaccats.so'.
+
+  Selection    Command
+-----------------------------------------------
+ + 1           /usr/lib64/libbaccats-mysql.so
+   2           /usr/lib64/libbaccats-sqlite3.so
+*  3           /usr/lib64/libbaccats-postgresql.so
+
+Enter to keep the current selection[+], or type selection number: 1
+```
+
 # troubleshooting
-/etc/sysconfig/bacula-dir
+#options of daemon /etc/sysconfig/bacula-dir
 `OPTS="-d 200"`
 
 bacula-dir -tc /etc/bacula/bacula-dir.conf
 
+#default settings in /usr/libexec/bacula/bacula_config
+#scripts of DB /usr/libexec/bacula
+
+![jobs list](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/list_jobs.gif)
