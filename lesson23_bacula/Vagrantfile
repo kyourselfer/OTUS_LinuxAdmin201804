@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+
+  config.vm.provider "virtualbox" do |v|
+      v.memory = 256
+      v.cpus = 2
+  end
+  config.vm.provision "shell", inline: "mkdir /root/.ssh/ && cat /vagrant/ansible.pub >> /root/.ssh/authorized_keys && cat /vagrant/ansible.pub >> /home/vagrant/.ssh/authorized_keys"
+  config.ssh.username = "vagrant"
+
+  config.vm.define "bacula" do |bacula|
+    bacula.vm.provider :virtualbox do |vb| 
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+    end 
+    bacula.vm.network "private_network", ip: '192.168.10.200', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw23"
+    bacula.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
+    bacula.vm.hostname = "bacula"
+  end
+
+  config.vm.define "web01" do |web01|
+    web01.vm.network "private_network", ip: '192.168.10.101', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw23"
+    web01.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
+    web01.vm.hostname = "web01"
+  end
+
+  config.vm.define "web02" do |web02|
+    web02.vm.network "private_network", ip: '192.168.10.102', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw23"
+    web02.vm.network :forwarded_port, guest: 22, host: 2203, id: "ssh"
+    web02.vm.hostname = "web02"
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "vvv"
+    ansible.playbook = "Playbook.yml"
+    # Ansible_ssh_user
+    ansible.force_remote_user = "vagrant"
+    ansible.become = "true"
+    ansible.inventory_path = "./hosts"
+    ansible.raw_arguments = [
+      "--connection=paramiko",
+      "--private-key=./ansible"
+    ]
+  end
+
+end

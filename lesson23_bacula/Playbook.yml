@@ -1,0 +1,18 @@
+---
+
+- hosts: BackupServers WebServers
+  become: yes
+  roles:
+    - { role: CentOS_Srv }
+
+  ## Servers of backup
+  #- hosts: bacula
+  #  become: yes
+  #  roles:
+  #    - { role: bacula }
+
+# Web servers
+- hosts:  WebServers 
+  become: yes
+  roles:
+    - { role: nginx }
