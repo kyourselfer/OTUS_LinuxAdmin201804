@@ -15,7 +15,7 @@ list files jobid=<idfullbackup>
 
 По умолчанию Bacula поставляется (CentOS|Fedora) с выборанным elf-файлом(библиотекой) на postgress для коннекта с `Catalog` нам необходимо выбрать `mysql`
 
-Вырезка из /etc/bacula/[bacula-dir.conf]()
+Вырезка из /etc/bacula/[bacula-dir.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/bacula-dir.conf)
 ``
 Catalog {
         Name = bacula
@@ -36,8 +36,30 @@ There are 3 programs which provide 'libbaccats.so'.
 
 Enter to keep the current selection[+], or type selection number: 1
 ```
+##### Configs
+```
+/etc/bacula/
+├── bacula-dir.conf
+├── bacula-fd.conf
+├── bacula-sd.conf
+├── bconsole.conf
+├── clients
+│   ├── web01-fd.conf
+│   └── web02-fd.conf
+└── query.sql
+```
+[bacula-dir.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/bacula-dir.conf)
 
-# troubleshooting
+[bacula-fd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/bacula-fd.conf)
+
+[bacula-sd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/bacula-sd.conf)
+
+[bconsole.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/bconsole.conf)
+
+clients/[web01-fd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/clients/web01-fd.conf)
+
+clients/[web02-fd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/clients/web02-fd.conf)
+##### troubleshooting
 #options of daemon /etc/sysconfig/bacula-dir
 `OPTS="-d 200"`
 
