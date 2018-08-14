@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+  config.vm.provider "virtualbox" do |v|
+      v.memory = 256
+      v.cpus = 1
+  end
+
+  config.vm.define "web01" do |web01|
+    web01.vm.network "private_network", ip: '192.168.11.10', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw24"
+    web01.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh"
+    web01.vm.hostname = "web01"
+  end
+
+  config.vm.define "client" do |client|
+    client.vm.network "private_network", ip: '192.168.11.101', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw24"
+    client.vm.network :forwarded_port, guest: 22, host: 2223, id: "ssh"
+    client.vm.hostname = "client"
+  end
+
+end
