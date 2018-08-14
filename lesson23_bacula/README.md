@@ -60,7 +60,7 @@ clients/[web01-fd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blo
 
 clients/[web02-fd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/clients/web02-fd.conf)
 
-list jobs
+`list jobs`
 
 ![jobs list](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/list_jobs.gif)
 
