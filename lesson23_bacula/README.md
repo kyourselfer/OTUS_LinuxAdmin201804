@@ -11,9 +11,9 @@ list jobs
 list files jobid=<idfullbackup>
 и настроенный конфиг
 
-* настроить доп опции - сжатия, шифрования, дедупликация</idfullbackup>
+* настроить доп опции - сжатия, шифрования, дедупликация
 
-По умолчанию Bacula поставляется (CentOS|Fedora) с выборанным elf-файлом(библиотекой) на postgress для коннекта с `Catalog` нам необходимо выбрать `mysql`
+Bacula поставляется (CentOS|Fedora) по умолчанию с настройкой на postgresql elf-файлом(библиотекой) для коннекта с `Catalog` нам необходимо изменить если хотим использовать `mysql`
 
 Вырезка из /etc/bacula/[bacula-dir.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/bacula-dir.conf)
 ``
@@ -59,6 +59,16 @@ Enter to keep the current selection[+], or type selection number: 1
 clients/[web01-fd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/clients/web01-fd.conf)
 
 clients/[web02-fd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/bacula/clients/web02-fd.conf)
+
+list jobs
+
+![jobs list](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/list_jobs.gif)
+
+[list files jobid=84](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/jobid84.out) (Full)
+
+[list files jobid=85](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/jobid84.out) (Full)
+
+
 ##### troubleshooting
 #options of daemon /etc/sysconfig/bacula-dir
 `OPTS="-d 200"`
@@ -67,5 +77,3 @@ bacula-dir -tc /etc/bacula/bacula-dir.conf
 
 #default settings in /usr/libexec/bacula/bacula_config
 #scripts of DB /usr/libexec/bacula
-
-![jobs list](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson23_bacula/list_jobs.gif)
