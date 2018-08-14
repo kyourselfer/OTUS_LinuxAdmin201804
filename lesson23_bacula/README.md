@@ -19,3 +19,4 @@ list files jobid=<idfullbackup>
 
 bacula-dir -tc /etc/bacula/bacula-dir.conf
 
+![jobs list]()
