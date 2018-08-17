@@ -10,6 +10,7 @@ https://nginx.org/ru/docs/http/ngx_http_headers_module.html
 
 
 
-/etc/[nginx.conf]()
-/etc/conf.d/[default.conf]()
+/etc/[nginx.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson24_websrv/nginx.conf)
+
+/etc/conf.d/[default.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson24_websrv/default.conf)
 
