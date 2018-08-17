@@ -10,3 +10,6 @@ https://nginx.org/ru/docs/http/ngx_http_headers_module.html
 
 
 
+/etc/[nginx.conf]()
+/etc/conf.d/[default.conf]()
+
