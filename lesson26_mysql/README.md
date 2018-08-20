@@ -20,3 +20,4 @@
 
 #### Решение
 
+Берем готовый Vagrantfile от автора chrisleekr по созданию [MySQLServer5.5 связки Master-Slave](https://github.com/chrisleekr/vagrant-mysql-master-slave-replication) и правим под соответствие ДЗ 
