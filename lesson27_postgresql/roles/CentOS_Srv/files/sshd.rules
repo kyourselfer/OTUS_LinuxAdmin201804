@@ -1,0 +1,1 @@
+-w /etc/ssh/sshd_config -p wa -k sshd

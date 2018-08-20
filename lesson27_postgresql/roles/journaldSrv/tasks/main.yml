@@ -1,0 +1,48 @@
+---
+#
+# journald.conf as a server
+#
+- name: Made etc/journald.conf.d/ 
+  file:
+    path: /etc/systemd/journald.conf.d 
+    state: directory
+    mode: 0755
+
+- name: Added server journald.conf
+  copy: src=server_journald.conf dest=/etc/systemd/journald.conf.d/server.conf
+
+- name: systemd-journald.service restarted
+  service: name=systemd-journald.service state=restarted
+
+#
+# Installed systemd-journal-gateway and changed https to http
+#
+
+- name: Install package systemd-journal-gateway
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - systemd-journal-gateway
+
+- name: Made log/journal/remote/
+  file:
+    path: /var/log/journal/remote
+    state: directory
+    mode: 0755
+    owner: systemd-journal-remote
+    group: systemd-journal-remote
+
+- name: Change https to http systemd-journal-remote.service
+  replace:
+    dest: /lib/systemd/system/systemd-journal-remote.service
+    regexp: '(https)'
+    replace: 'http'
+    #    backup: yes
+
+- name: sysD daemon_reload
+  systemd: daemon_reload=yes
+
+- name: Inserted systemd/journal-remote.conf
+  copy: src=serverpassive_journal-remote.conf dest=/etc/systemd/journal-remote.conf
+
+- name: systemd-journal-remote.service restarted and enabled
+  systemd: name=systemd-journal-remote state=restarted enabled=yes

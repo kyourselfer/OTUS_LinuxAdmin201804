@@ -1,0 +1,46 @@
+---
+#
+# systemd-journal-upload
+#
+
+- name: Install package systemd-journal-gateway
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - systemd-journal-gateway
+    - ntpdate
+
+- name: Set timezone to Moscow
+  timezone: name='Europe/Moscow'
+
+- name: set sync. time in cron
+  cron:
+    name: sync. time
+    minute: 1
+    job: /usr/sbin/ntpdate -u 192.168.168.111 >/dev/null 2>&1
+
+- name: Made etc/journald.conf.d and journald-upload.d/
+  file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    mode: 0755
+
+- name: Made etc/journald.conf.d and journald-upload.d/
+  file:
+    path: /etc/systemd/journal-upload.conf.d
+    state: directory
+    mode: 0755
+
+- name: Inserted journald.conf
+  copy: src=client_journald.conf dest=/etc/systemd/journald.conf.d/client.conf
+
+- name: Inserted journal-upload.d/client.conf
+  copy: src=client_journald_upload.conf dest=/etc/systemd/journal-upload.conf.d/client.conf
+
+- name: systemd-journald.service restarted
+  systemd: name=systemd-journald.service state=restarted enabled=yes
+
+- name: systemd-journal-upload.service restarted
+  systemd: name=systemd-journal-upload.service state=restarted enabled=yes
+
+- name: Reboot
+  shell: shutdown -r now

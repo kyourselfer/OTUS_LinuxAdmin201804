@@ -1,0 +1,16 @@
+---
+#
+# rsyslog as a client
+#
+- name: Added rsyslog.d/crit.conf
+  copy: src=crit.conf dest=/etc/rsyslog.d/crit.conf
+
+- name: Replace rsyslog.conf
+  copy: src=client_rsyslog.conf dest=/etc/rsyslog.conf
+
+# imfile(input module of rsyslog doesn't get access by /var/log/audit/)
+- name: Change selinux mode by syslogd_t on permissive
+  shell: semanage permissive -a syslogd_t
+
+- name: rsyslog.service restarted
+  service: name=rsyslog.service state=restarted

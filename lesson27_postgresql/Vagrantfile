@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+
+  config.vm.provider "virtualbox" do |v|
+      v.memory = 512
+      v.cpus = 2
+  end
+  config.vm.provision "shell", inline: "mkdir /root/.ssh/ && cat /vagrant/ansible.pub >> /root/.ssh/authorized_keys && cat /vagrant/ansible.pub >> /home/vagrant/.ssh/authorized_keys"
+  config.ssh.username = "vagrant"
+
+  config.vm.define "pssrv01" do |pssrv01|
+#    pssrv01.vm.provider :virtualbox do |vb|
+#      vb.customize ["modifyvm", :id, "--memory", "256"]
+#    end
+    pssrv01.vm.network "private_network", ip: '192.168.10.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw27"
+    pssrv01.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
+    pssrv01.vm.hostname = "pssrv01.local"
+  end
+
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "vvv"
+    ansible.playbook = "Playbook.yml"
+    # Ansible_ssh_user
+    ansible.force_remote_user = "vagrant"
+    ansible.become = "true"
+    ansible.inventory_path = "./hosts"
+    ansible.raw_arguments = [
+      "--connection=paramiko",
+      "--private-key=./ansible"
+    ]
+  end
+
+end

@@ -1,0 +1,100 @@
+---
+
+# Packages
+
+- name: repo=elastic was added
+  copy: src=elastic.repo dest=/etc/yum.repos.d/elastic.repo
+
+- name: Install packages ELK stack 
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - java-1.8.0-openjdk
+    - elasticsearch
+    - logstash
+    - kibana
+
+# Configs of jdk
+
+- name: java.conf was inserted
+  copy: src=java.conf dest=/etc/java/java.conf
+
+  #- name: sysconfig/elasticsearch was changed
+  #  copy: src=sysconfig_elasticsearch dest=/etc/sysconfig/elasticsearch
+
+- name: limits.conf was replaced
+  copy: src=limits.conf dest=/etc/security/limits.conf
+
+- name: regex in SysD unit elasticsearch.service parameter LimitMEMLOCK=infinity
+  replace:
+    path: /usr/lib/systemd/system/elasticsearch.service 
+    regexp: '(LimitNOFILE=65536)'
+    replace: 'LimitNOFILE=65536\n#MemLock was disabled\nLimitMEMLOCK=infinity'
+
+- name: limits.conf was replaced
+  copy: src=/usr/lib/systemd/system/elasticsearch.service dest=/etc/systemd/system/elasticsearch.service remote_src=yes
+
+- name: SysD daemon-reload
+  systemd: daemon-reload=yes
+
+# Configs of elasticsearch
+
+  #- name: elasticsearch.yml was inserted
+  #  copy: src=elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
+
+- name: elasticsearch.service was restarted
+  service: name=elasticsearch.service state=restarted enabled=yes
+
+- name: Beats-dashboards was downloaded
+  get_url:
+    url: http://download.elastic.co/beats/dashboards/beats-dashboards-1.3.1.zip
+    dest: /tmp/beats-dashboards-1.3.1.zip
+
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: /tmp/beats-dashboards-1.3.1.zip
+    dest: /tmp/
+    remote_src: yes
+
+- name: Wait 60 seconds for port 9200 of 127.0.0.1 to upload Beats-dashboards
+  wait_for:
+    timeout: 60
+    host: 127.0.0.1
+    port: 9200
+    delay: 1
+
+- name: Beats-dashboards was uploaded
+  shell: ./load.sh
+  args:
+    chdir: /tmp/beats-dashboards-1.3.1
+    executable: /bin/bash
+
+    #- name: GeoIP was downloaded
+    #  get_url:
+    #    url: http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+    #    dest: /tmp/GeoLite2-City.mmdb.gz
+
+    #- name: Unarchive a file that is already on the remote machine
+    #  unarchive:
+    #    src: /tmp/GeoLite2-City.mmdb.gz
+    #    dest: /etc/logstash/GeoLite2-City.mmdb
+    #    remote_src: yes
+
+# Congigs of logstash
+
+- name: logstash.yml was inserted
+  copy: src=logstash.yml dest=/etc/logstash/logstash.yml
+
+- name: conf.d\pipeline.yml was inserted
+  copy: src=logstash_pipeline.yml dest=/etc/logstash/conf.d/pipeline.yml
+
+- name: logstash.service was restarted
+  service: name=logstash.service state=restarted enabled=yes
+
+# Configs of kibana
+
+- name: kibana.yml was inserted
+  copy: src=kibana.yml dest=/etc/kibana/kibana.yml
+
+- name: kibana.service was restarted
+  service: name=kibana.service state=restarted enabled=yes
+

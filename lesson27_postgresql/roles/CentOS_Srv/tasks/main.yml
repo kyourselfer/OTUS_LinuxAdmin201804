@@ -1,0 +1,113 @@
+---
+
+### tools wget and etc. ###
+
+- name: Upgraded all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Delete packages
+  yum: pkg={{ item }} state=removed
+  with_items:
+    - cronie-anacron
+
+- name: Installed repo=epel
+  yum:
+    pkg: epel-release
+    state: latest
+  
+- name: Install packages to compile kernel and trouble shooting tools
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - gcc
+    - ncurses-devel
+    - bc
+    - perl
+    - cronie-noanacron
+    - wget
+    - net-tools
+    - strace
+    - psmisc
+    - lsof
+    - bind-utils
+    - nc
+    - atop
+    - iftop
+    - unzip
+    - policycoreutils-python 
+
+### sysctl ###
+
+- name: Changed values of sysctl
+  sysctl: name="{{ item.name }}" value="{{ item.value }}" sysctl_set=yes state=present
+  with_items:
+    - { name: 'net.core.somaxconn', value: 1024 }
+    - { name: 'net.core.rmem_max', value: 8388608 }
+    - { name: 'net.core.wmem_max', value: 8388608 }
+    - { name: 'net.core.rmem_default', value: 65536 }
+    - { name: 'net.core.wmem_default', value: 65536 }
+    - { name: 'net.ipv4.tcp_rmem', value: 4096 87380 8388608 }
+    - { name: 'net.ipv4.tcp_wmem', value: 4096 65536 8388608 }
+    - { name: 'net.ipv4.tcp_mem', value: 8388608 8388608 8388608 }
+    - { name: 'vm.swappiness', value: 1 }
+    - { name: 'net.ipv6.conf.all.disable_ipv6', value: 1 }
+    - { name: 'net.ipv6.conf.default.disable_ipv6', value: 1 }
+
+- name: Disabled units of SystemD
+  service: name="{{ item }}" state=stopped enabled=no masked=yes
+  with_items:
+    - NetworkManager.service
+    - NetworkManager-wait-online.service
+
+- name: Restarted network.service
+  service: name=network.service state=restarted
+
+### zram ###
+
+- name: Loaded module zram.ko
+  modprobe:
+    name: zram
+    state: present
+    params: 'num_devices=2'
+
+- name: Enabled zram
+  shell: for i in 0 1; do /bin/echo 268435456 > /sys/block/zram$i/disksize && mkswap /dev/zram$i && swapon /dev/zram$i -p 10 && /bin/grep zram$i /etc/fstab || /bin/echo -e "/dev/zram$i\t\t\tswap\t\t\tswap\tpri=10 0 0" >> /etc/fstab; done
+
+- name: Inserted modules-load.d/zram.conf
+  copy: src=modules-load.d_zram.conf dest=/etc/modules-load.d/zram.conf
+- name: Inserted modprobe.d/zram.conf
+  copy: src=modprobe.d_zram.conf dest=/etc/modprobe.d/zram.conf
+- name: Inserted udev/rules.d/10-zram.rules
+  copy: src=udev_rules.d_10-zram.rules dest=/etc/udev/rules.d/10-zram.rules
+
+  #- name: Compiled kernel
+  #  include: kernel.yml
+
+### auditd ###
+
+- name: Replaced auditd.conf
+  copy: src=auditd.conf dest=/etc/audit/auditd.conf
+
+- name: Enabled audit of common things
+  copy: src={{ item }} dest=/etc/audit/rules.d/{{ item }}
+  with_items:
+    - audit.rules
+    - pam.rules
+    - sshd.rules 
+
+- name: Enabled audit of common things
+  copy: src=/lib/systemd/system/auditd.service dest=/etc/systemd/system/auditd.service remote_src=yes
+
+- name: regex in SysD unit auditd.service parameter RefuseManualStop
+  replace:
+    dest: /etc/systemd/system/auditd.service
+    regexp: '(RefuseManualStop=yes)'
+    replace: 'RefuseManualStop=no'
+    #    backup: yes
+
+- name: SysD daemon-reload
+  systemd: daemon-reload=yes
+
+- name: Changed value of auditd(SysD unit)
+  systemd: name=auditd.service state=restarted

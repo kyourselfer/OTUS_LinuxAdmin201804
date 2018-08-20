@@ -1,0 +1,16 @@
+---
+#
+# rsyslog as a server
+#
+- name: Added rsyslog.d/nginx_logs.conf
+  copy: src=server_rsyslog_nginx.conf dest=/etc/rsyslog.d/nginx_logs.conf
+
+- name: Added rsyslog.d/audit_logs.conf
+  copy: src=server_rsyslog_audit.conf dest=/etc/rsyslog.d/audit_logs.conf
+
+- name: Replace rsyslog.conf
+  copy: src=server_rsyslog.conf dest=/etc/rsyslog.conf
+
+- name: rsyslog.service restarted
+  service: name=rsyslog.service state=restarted
+
