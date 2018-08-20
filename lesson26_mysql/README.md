@@ -31,9 +31,6 @@ server-id              	= 1
 log_bin            		= /var/log/mysql/mysql-bin.log
 binlog_do_db			= bet
 #replicate-wild-do-table         = bet.%
-replicate-ignore-table          = bet.events_on_demand
-replicate-ignore-table          = bet.v_same_event
-datadir  				= /var/lib/mysql_vagrant
 ```
 ##### slave
 ./[bootstrap-slave.sh](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson26_mysql/bootstrap-slave.sh)
