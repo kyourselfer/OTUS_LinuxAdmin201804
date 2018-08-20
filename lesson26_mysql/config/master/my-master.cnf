@@ -8,8 +8,11 @@ server-id              	= 1
 log_bin            		= /var/log/mysql/mysql-bin.log
 binlog_do_db			= bet
 #replicate-wild-do-table         = bet.%
+<<<<<<< HEAD
 #replicate-ignore-table          = bet.events_on_demand
 #replicate-ignore-table          = bet.v_same_event
+=======
+>>>>>>> bedd1bb3c22c66dd26257c4e6663f8838d4aac3a
 datadir  				= /var/lib/mysql_vagrant
 
 character-set-client-handshake=false
