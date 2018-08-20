@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Variables
-DBNAME=sample
+DBNAME=bet
 DBUSER=root
 DBPASSWD=root
 DBDIRPATH=/var/lib/mysql_vagrant
@@ -75,7 +75,8 @@ then
 	echo -e "--- Setting up MySQL user and db ---"
 	sudo mysql -uroot -p$DBPASSWD -e "CREATE DATABASE IF NOT EXISTS $DBNAME" 
 	sudo mysql -uroot -p$DBPASSWD -e "GRANT ALL PRIVILEGES ON $DBNAME.* TO '$DBUSER'@'localhost' IDENTIFIED BY '$DBPASSWD'"
-
+	# restore DB bet from Dump bet-4560-4974c3.dmp
+        mysql -uroot -p$DBPASSWD $DBNAME < /vagrant/bet-4560-4974c3.dmp
 
 	# Set up root user's host to be accessible from any remote
 	echo -e "--- Set up root user's host to be accessible from any remote ---"
@@ -141,8 +142,8 @@ then
 	
 	
 	# Get database dump
-	echo -e "---- Dump sample database to SQL"
-	mysqldump -uroot -p$DBPASSWD --opt sample > /vagrant/config/sample.sql
+	echo -e "---- Dump bet database to SQL"
+	mysqldump -uroot -p$DBPASSWD --opt $DBNAME > /vagrant/config/$DBNAME.dmp
 
 	# Get log file and position from master machine
 	CURRENT_LOGINFO=$(mysql -uroot -p$DBPASSWD --execute='SHOW MASTER STATUS' -AN)
@@ -154,7 +155,7 @@ then
 
 	# Import database dump to slave machine
 	echo -e "---- Import database dump to slave machine"
-	sshpass -p "$REPLICA_SSH_PASS" ssh -o StrictHostKeyChecking=no $REPLICA_SSH_USER@$REPLICA_IP "mysql -uroot -p$DBPASSWD sample < /vagrant/config/sample.sql"
+	sshpass -p "$REPLICA_SSH_PASS" ssh -o StrictHostKeyChecking=no $REPLICA_SSH_USER@$REPLICA_IP "mysql -uroot -p$DBPASSWD $DBNAME < /vagrant/config/$DBNAME.sql"
 
 	# Change master host to slave log file and position in slave machine
 	echo -e "---- Change master host to slave log file and position in slave machine"
@@ -168,7 +169,7 @@ fi
 if [ ! -f /var/log/setup_replication_test ]
 then
 	echo -e "---- Testing replication"
-	mysql -uroot -p$DBPASSWD -e "USE sample;CREATE TABLE users(id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), username VARCHAR(30) NOT NULL);INSERT INTO users (username) VALUES ('foo');INSERT INTO users (username) VALUES ('bar');"
+#	mysql -uroot -p$DBPASSWD -e "USE bet;CREATE TABLE market(id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), username VARCHAR(30) NOT NULL);INSERT INTO market (username) VALUES ('foo1');INSERT INTO market (username) VALUES ('bar1');"
 
 	touch /var/log/setup_replication_test
 fi

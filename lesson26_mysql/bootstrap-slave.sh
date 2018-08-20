@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Variables
-DBNAME=sample
+DBNAME=bet
 DBUSER=root
 DBPASSWD=root
 DBDIRPATH=/var/lib/mysql_vagrant
@@ -15,7 +15,7 @@ DBCONFIG_FILE=/vagrant/config/slave/my-slave.cnf
 if [ ! -f /var/log/setup_timezone ]
 then
 	echo -e "--- Setting timezone ---"
-	echo "Australia/Melbourne" > /etc/timezone
+	echo "Europe/Moscow" > /etc/timezone
 	sudo dpkg-reconfigure -f noninteractive tzdata
 
 	touch /var/log/setup_timezone
@@ -71,7 +71,9 @@ then
 	echo -e "--- Setting up MySQL user and db ---"
 	sudo mysql -uroot -p$DBPASSWD -e "CREATE DATABASE IF NOT EXISTS $DBNAME"
 	sudo mysql -uroot -p$DBPASSWD -e "GRANT ALL PRIVILEGES ON $DBNAME.* TO '$DBUSER'@'localhost' IDENTIFIED BY '$DBPASSWD'"
-
+        # restore DB bet from Dump bet-4560-4974c3.dmp
+        mysql -uroot -p$DBPASSWD $DBNAME < /vagrant/bet-4560-4974c3.dmp
+	
 	# Set up root user's host to be accessible from any remote
 	echo -e "--- Set up root user's host to be accessible from any remote ---"
 	sudo mysql -uroot -p$DBPASSWD -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
