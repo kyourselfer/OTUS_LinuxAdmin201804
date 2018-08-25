@@ -5,21 +5,27 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
 
   config.vm.provider "virtualbox" do |v|
-      v.memory = 512
+      v.memory = 768
       v.cpus = 2
   end
   config.vm.provision "shell", inline: "mkdir /root/.ssh/ && cat /vagrant/ansible.pub >> /root/.ssh/authorized_keys && cat /vagrant/ansible.pub >> /home/vagrant/.ssh/authorized_keys"
   config.ssh.username = "vagrant"
 
-  config.vm.define "pssrv01" do |pssrv01|
-#    pssrv01.vm.provider :virtualbox do |vb|
-#      vb.customize ["modifyvm", :id, "--memory", "256"]
-#    end
-    pssrv01.vm.network "private_network", ip: '192.168.10.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw27"
-    pssrv01.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
-    pssrv01.vm.hostname = "pssrv01.local"
+  config.vm.define "pgsrv01" do |pgsrv01|
+    pgsrv01.vm.network "private_network", ip: '192.168.10.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw27"
+    pgsrv01.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
+    pgsrv01.vm.hostname = "pgsrv01.local"
   end
 
+  config.vm.define "pgsrv02slave" do |pgsrv02slave|
+    pgsrv02slave.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+      vb.cpus = 1
+    end
+    pgsrv02slave.vm.network "private_network", ip: '192.168.10.67', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw27"
+    pgsrv02slave.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
+    pgsrv02slave.vm.hostname = "pgsrv02slave.local"
+  end
 
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "vvv"

@@ -1,9 +1,7 @@
 #
-# logs(syslog,journal,nginx) send to servers
+# PostgrSQL DB
 #
-[IntranetMonitoring]
-logsrv ansible_ssh_host=127.0.0.1 ansible_port=2201
-[WebMonitoring]
-logweb ansible_ssh_host=127.0.0.1 ansible_port=2202
-[WebServers]
-web01 ansible_ssh_host=127.0.0.1 ansible_port=2203
+[PGServersMaster]
+pgsrv01 ansible_ssh_host=127.0.0.1 ansible_port=2201
+[PGServersSlave]
+pgsrv02slave ansible_ssh_host=127.0.0.1 ansible_port=2202

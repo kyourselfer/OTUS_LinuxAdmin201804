@@ -1,0 +1,14 @@
+---
+
+# postgresql version
+postgresql_default_version: 9.6
+
+# postgresql replication server1
+repl_server1: 192.168.10.66/32
+
+# replication user
+replication_user: repl
+replication_pass: repl
+
+# recovery.conf
+pgdata_create_recovery_file: True

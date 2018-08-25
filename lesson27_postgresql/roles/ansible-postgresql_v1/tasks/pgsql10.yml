@@ -1,0 +1,10 @@
+---
+
+- name: Initialize database (RedHat >= 7)
+  command: /usr/pgsql-{{ postgresql_version }}/bin/postgresql-{{ postgresql_version | replace('.', '') }}-setup initdb
+  when: ansible_distribution_major_version | int >= 7 and (pgdata_stat.stat.isdir is not defined or not pgdata_stat.stat.isdir)
+
+- name: show value of 777
+  debug: msg={{ postgresql_version }}
+
+

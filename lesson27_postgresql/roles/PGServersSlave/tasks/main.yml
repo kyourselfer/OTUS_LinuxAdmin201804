@@ -1,0 +1,41 @@
+---
+
+- include_vars: redhat.yml
+
+# For RedHat we use the value from defaults/main.yml
+- name: Set version fact
+  set_fact: postgresql_version={{ postgresql_default_version }}
+  when: postgresql_version is not defined
+
+- name: Set pgdata fact
+  set_fact: postgresql_pgdata={{ postgresql_pgdata_default }}
+  when: postgresql_pgdata is not defined
+
+- name: Set conf dir fact
+  set_fact: postgresql_conf_dir={{ postgresql_conf_dir_default }}
+  when: postgresql_conf_dir is not defined
+
+- name: Create conf.d
+  file: path={{ postgresql_conf_dir }}/conf.d state=directory owner=postgres group=postgres
+
+- name: Set conf.d include in postgresql.conf
+  lineinfile: line="include_dir 'conf.d'" dest={{ postgresql_conf_dir }}/postgresql.conf backup=yes
+  notify: Reload PostgreSQL
+  when: "{{ postgresql_version | version_compare('9.3', '>=') }}"
+
+- name: Replace pg_hba.conf
+  template: src=pg_hba.conf.{{ ansible_os_family | lower }}.j2 dest={{ postgresql_conf_dir }}/pg_hba.conf owner=postgres group=postgres mode=0400 backup=yes
+  notify: Reload PostgreSQL
+
+# Change Master to Slave
+- name: Enter into pg_basebackup.yml to change Master to Slave
+  include: pg_basebackup.yml
+
+- name: Turn on 'hot_standby' in conf.d/25ansible_postgresql.conf
+  lineinfile: dest={{ postgresql_conf_dir }}/conf.d/25ansible_postgresql.conf insertafter="^/\n" line="hot_standby = on"
+
+- name: Restart PostgreSQL-Server unit
+  service: name={{ postgresql_service_name }} state=restarted
+
+- name: Ensure PostgreSQL is running
+  service: name={{ postgresql_service_name }} enabled=yes state=started

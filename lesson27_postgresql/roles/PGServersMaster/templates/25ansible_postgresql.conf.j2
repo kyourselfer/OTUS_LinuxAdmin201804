@@ -1,0 +1,50 @@
+##
+## This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+##
+
+{% if postgresql_conf_dir is defined %}
+
+listen_addresses = '*'
+port = 5432
+
+max_connections = 100
+shared_buffers = 128MB #1/8 до 1/2 всей памяти
+work_mem = 8MB
+maintenance_work_mem = 128MB
+effective_cache_size = 4GB #На какой объем системного кеша может рассчитывать планировщик запросов RAM - work_mem * max_connections - shared_buffers
+autovacuum_work_mem = -1
+
+temp_file_limit = -1
+max_files_per_process = 1000
+
+wal_level = replica
+
+fsync = on
+full_page_writes = on
+
+max_wal_senders = 3
+
+wal_keep_segments = 128
+wal_sender_timeout = 60s
+
+log_timezone = 'Europe/Moscow'
+
+autovacuum = on
+datestyle = 'iso, mdy'
+timezone = 'Europe/Moscow'
+
+lc_messages = 'ru_RU.UTF-8'             # locale for system error message
+                                        # strings
+lc_monetary = 'ru_RU.UTF-8'             # locale for monetary formatting
+lc_numeric = 'ru_RU.UTF-8'              # locale for number formatting
+lc_time = 'ru_RU.UTF-8'                 # locale for time formatting
+
+# default configuration for text search
+default_text_search_config = 'pg_catalog.russian'
+
+{% if postgresql_conf is defined %}
+{% for opt in postgresql_conf %}
+{{ opt }} = {{ postgresql_conf[opt] }}
+{% endfor %}
+{% endif %}
+{% endif %}

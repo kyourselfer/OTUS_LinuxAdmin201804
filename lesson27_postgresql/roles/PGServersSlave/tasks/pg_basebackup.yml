@@ -1,0 +1,28 @@
+---
+
+- name: Stop PostgreSQL-Server unit
+  service: name={{ postgresql_service_name }} state=stopped
+
+- name: Clean data of slave
+  file:
+    state: "{{ item }}"
+    path: "{{ postgresql_conf_dir }}/"
+    owner: postgres
+    group: postgres
+    mode: '0700'
+  with_items:
+    - absent
+    - directory
+
+- name: Run pg_basebackup, backing up pgMaster to pgMaster
+  command: pg_basebackup -P -R -X stream -c fast -h {{ repl_server1 | replace('/32', '') }} -D {{ postgresql_conf_dir }} -U {{ replication_user }}
+  become_user: postgres
+
+- name: Replace recovery.conf file uses template
+  template:
+      src: recovery.conf.j2
+      dest: "{{ postgresql_conf_dir }}/recovery.conf"
+      owner: postgres
+      group: postgres
+      mode: 0600
+  when: pgdata_create_recovery_file 

@@ -1,28 +1,22 @@
 ---
 
-- hosts: IntranetMonitoring WebServers WebMonitoring
-  become: yes
-  roles:
-    - { role: CentOS_Srv }
+#- hosts: PGServersMaster 
+  #  become: yes
+  #  roles:
+          #    - { role: CentOS_Srv }
 
-# Servers of logs
-- hosts: logsrv 
+# Servers of PGSQL Masters
+- hosts: PGServersMaster 
   become: yes
   roles:
-    - { role: ntpd }
-    - { role: journaldSrv }
-    - { role: rsyslogSrv }
+          #    - { role: PGMaster }
+          #    - { role: CentOS_Srv }
+          - { role: PGServersMaster,postgresql_default_version: 9.6 }
 
-# Servers of ELK stack
-- hosts: logweb
+# Servers of PGSQL Slaves
+- hosts: PGServersSlave
   become: yes
   roles:
-    - { role: ELK }
-
-# Web server
-- hosts: web01
-  become: yes
-  roles:
-    - { role: nginx }
-    - { role: journaldClient }
-    - { role: rsyslogClient }
+          #    - { role: CentOS_Srv }
+          - { role: PGServersMaster,postgresql_default_version: 9.6 }
+          - { role: PGServersSlave,postgresql_default_version: 9.6 }
