@@ -1,5 +1,8 @@
 ---
 
+# set TZ
+timedatectl_timezone: "Europe/Moscow"
+
 # postgresql version
 postgresql_default_version: 9.6
 

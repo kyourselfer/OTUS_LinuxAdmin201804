@@ -1,5 +1,16 @@
 ---
 
+# TZ and locale
+- name: set TZ
+  timezone: name={{ timedatectl_timezone }}
+  when: ansible_service_mgr == "systemd"
+
+- name: Compile locale ru_RU.UTF8
+  command: localedef ru_RU.UTF-8 -i ru_RU -f UTF-8
+
+- name: Set locale ru_RU.UTF8
+  command: localectl set-locale LANG=ru_RU.utf8
+
 - include_vars: redhat.yml
 
 # For RedHat we use the value from defaults/main.yml
@@ -30,12 +41,11 @@
 # Change Master to Slave
 - name: Enter into pg_basebackup.yml to change Master to Slave
   include: pg_basebackup.yml
+  notify: Reload PostgreSQL
 
 - name: Turn on 'hot_standby' in conf.d/25ansible_postgresql.conf
   lineinfile: dest={{ postgresql_conf_dir }}/conf.d/25ansible_postgresql.conf insertafter="^/\n" line="hot_standby = on"
-
-- name: Restart PostgreSQL-Server unit
-  service: name={{ postgresql_service_name }} state=restarted
+  notify: Reload PostgreSQL
 
 - name: Ensure PostgreSQL is running
   service: name={{ postgresql_service_name }} enabled=yes state=started

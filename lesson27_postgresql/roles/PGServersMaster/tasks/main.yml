@@ -2,6 +2,18 @@
 
 # Convenient ordering - debian.yml sets postgresql_version if it is unset,
 # which is needed by the include_vars files.
+
+# TZ and locale
+- name: set TZ
+  timezone: name={{ timedatectl_timezone }}
+  when: ansible_service_mgr == "systemd"
+
+- name: Compile locale ru_RU.UTF8
+  command: localedef ru_RU.UTF-8 -i ru_RU -f UTF-8
+
+- name: Set locale ru_RU.UTF8
+  command: localectl set-locale LANG=ru_RU.utf8
+
 - include: debian.yml
   when: ansible_os_family == "Debian"
 
@@ -44,6 +56,14 @@
 
 - name: Install pg_hba.conf
   template: src=pg_hba.conf.{{ ansible_os_family | lower }}.j2 dest={{ postgresql_conf_dir }}/pg_hba.conf owner=postgres group=postgres mode=0400 backup=yes
+  notify: Reload PostgreSQL
+
+- name: STrat PostG
+  service: name={{ postgresql_service_name }} enabled=yes state=started
+
+- name: psql CREATE USER replication function
+  shell: psql -c "CREATE USER repl REPLICATION LOGIN CONNECTION LIMIT 2 ENCRYPTED PASSWORD 'repl';"
+  become_user: postgres
   notify: Reload PostgreSQL
 
 - include: backup.yml

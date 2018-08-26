@@ -14,6 +14,9 @@ postgresql_pgdg_families:
 postgresql_pgdg_shortfamilies:
   Fedora: fedora
 
+# set TZ
+timedatectl_timezone: "Europe/Moscow"
+
 # postgresql version
 postgresql_default_version: 9.6
 
@@ -21,3 +24,7 @@ postgresql_default_version: 9.6
 repl_client1: 192.168.10.67/32
 # postgresql replication server1
 repl_server1: 192.168.10.66/32
+
+# replication user
+replication_user: repl
+replication_pass: repl

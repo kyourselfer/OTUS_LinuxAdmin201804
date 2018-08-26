@@ -1,3 +1,6 @@
+##
+## This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+##
 standby_mode = 'on'
 primary_conninfo = 'user={{ replication_user }} host={{ repl_server1 | replace('/32', '') }} port=5432 sslmode=prefer sslcompression=1 krbsrvname=postgres'
 trigger_file = '{{ postgresql_conf_dir }}/trigger_file'
