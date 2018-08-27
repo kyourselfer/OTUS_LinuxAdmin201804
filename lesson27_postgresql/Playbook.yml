@@ -1,22 +1,16 @@
 ---
 
-#- hosts: PGServersMaster 
-  #  become: yes
-  #  roles:
-          #    - { role: CentOS_Srv }
-
 # Servers of PGSQL Masters
 - hosts: PGServersMaster 
   become: yes
   roles:
-          #    - { role: PGMaster }
           #    - { role: CentOS_Srv }
-          - { role: PGServersMaster,postgresql_default_version: 9.6 }
+          - { role: PGServersMaster,postgresql_default_version: 10 }
 
 # Servers of PGSQL Slaves
 - hosts: PGServersSlave
   become: yes
   roles:
           #    - { role: CentOS_Srv }
-          - { role: PGServersMaster,postgresql_default_version: 9.6 }
-          - { role: PGServersSlave,postgresql_default_version: 9.6 }
+          - { role: PGServersMaster,postgresql_default_version: 10 }
+          - { role: PGServersSlave,postgresql_default_version: 10 }

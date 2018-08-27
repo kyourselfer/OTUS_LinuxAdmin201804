@@ -7,11 +7,14 @@
 listen_addresses = '*'
 port = 5432
 
-max_connections = 100
-shared_buffers = 128MB #1/8 до 1/2 всей памяти
-work_mem = 8MB
-maintenance_work_mem = 128MB
-effective_cache_size = 4GB #На какой объем системного кеша может рассчитывать планировщик запросов RAM - work_mem * max_connections - shared_buffers
+shared_buffers = {{ shared_buffers }}MB
+max_connections = {{ max_connections }}
+effective_cache_size = {{ effective_cache_size }}MB
+maintenance_work_mem = {{ maintenance_work_mem }}MB
+temp_buffers = {{ temp_buffers }}MB
+work_mem = {{ work_mem }}MB
+effective_io_concurrency = {{ effective_io_concurrency }}
+
 autovacuum_work_mem = -1
 
 temp_file_limit = -1

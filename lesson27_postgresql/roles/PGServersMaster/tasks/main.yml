@@ -37,6 +37,9 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
+- name: Start PostgreSQL
+  service: name={{ postgresql_service_name }} enabled=yes state=started
+
 - name: Create conf.d
   file: path={{ postgresql_conf_dir }}/conf.d state=directory owner=postgres group=postgres
 
@@ -58,16 +61,12 @@
   template: src=pg_hba.conf.{{ ansible_os_family | lower }}.j2 dest={{ postgresql_conf_dir }}/pg_hba.conf owner=postgres group=postgres mode=0400 backup=yes
   notify: Reload PostgreSQL
 
-- name: STrat PostG
-  service: name={{ postgresql_service_name }} enabled=yes state=started
-
 - name: psql CREATE USER replication function
   shell: psql -c "CREATE USER repl REPLICATION LOGIN CONNECTION LIMIT 2 ENCRYPTED PASSWORD 'repl';"
   become_user: postgres
-  notify: Reload PostgreSQL
 
 - include: backup.yml
   when: postgresql_backup_dir is defined
 
-- name: Ensure PostgreSQL is running
-  service: name={{ postgresql_service_name }} enabled=yes state=started
+- name: PostgreSQL restart
+  service: name={{ postgresql_service_name }} enabled=yes state=restarted

@@ -28,3 +28,29 @@ repl_server1: 192.168.10.66/32
 # replication user
 replication_user: repl
 replication_pass: repl
+
+#
+# Allocation of RAM
+#
+#shared_buffers От 1/8 до 1/2 всей памяти
+#effective_cache_size - На какой объем системного кеша может
+#рассчитывать планировщик запросов.
+#RAM - work_mem * max_connections - shared_buffers
+#max_connections - максимальное число подключений, каждое из которых
+#может расходовать
+#work_mem - память для сессии, 32..128M. Это рекомендательное значение для
+#планировщика, а не жесткое ограничение.
+#maintenance_work_mem - память для checkpointer, autovacuum, etc. 1/32..1/16
+#RAM или 256MB..4GB
+#temp_buffers - для каждой сессии под временные таблицы, 32Mb
+#efective_io_concurrency - 1 - один диск, 2 - RAID10
+#random_page_cost - 1.5..2 для RAID10, 1.1..1.3 - для SSD
+#
+work_mem: "32"
+temp_buffers: "32"
+effective_io_concurrency: 1
+#random_page_cost: 2
+shared_buffers: "{{ (ansible_memtotal_mb / 6 )|int }}"
+effective_cache_size: "{{ (ansible_memtotal_mb|int - work_mem|int) * max_connections|int - shared_buffers|int }}"
+max_connections: "{{ ansible_memtotal_mb // work_mem|int }}"
+maintenance_work_mem: "{{ ansible_memtotal_mb // 30 }}"
