@@ -32,4 +32,16 @@ template [pg_hba.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob
 Подменяем recovery.conf по template [recovery.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson27_postgresql/roles/PGServersSlave/templates/recovery.conf.j2)
 
 ### PrintScreens of avidence
+Опрос памяти хостов `ansible all -i hosts -m setup -a 'filter=ansible_memtotal_mb'`
 
+![mem](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson27_postgresql/img/mem.gif)
+
+conf.d/25postgresql.conf
+
+![postgresql.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson27_postgresql/img/postgres_conf.gif)
+
+Развернутая среда Master-Slave
+
+![check1](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson27_postgresql/img/check1.gif)
+
+![check2](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson27_postgresql/img/check2.gif)
