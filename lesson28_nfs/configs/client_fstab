@@ -1,0 +1,2 @@
+192.168.10.70:/srv/nfs/share/upload /mnt/nfs-share/upload nfs	rsize=8192,wsize=8192,timeo=14,_netdev	0 0
+192.168.10.70:/srv/nfs/share /mnt/nfs-share nfs   rsize=8192,wsize=8192,timeo=14,_netdev  0 0

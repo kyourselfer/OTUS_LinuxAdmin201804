@@ -1,0 +1,7 @@
+#
+# PostgrSQL DB
+#
+[nfssrv]
+nfssrv01 ansible_ssh_host=127.0.0.1 ansible_port=2201
+[nfsclient]
+nfsclient01 ansible_ssh_host=127.0.0.1 ansible_port=2202

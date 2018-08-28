@@ -1,0 +1,15 @@
+---
+
+# Servers of PGSQL Masters
+- hosts: nfssrv
+  become: yes
+  roles:
+          #    - { role: CentOS_Srv }
+          #    - { role: PGServersMaster }
+
+# Servers of PGSQL Slaves
+- hosts: nfsclient
+  become: yes
+  roles:
+          #    - { role: CentOS_Srv }
+          #    - { role: PGServersSlave }

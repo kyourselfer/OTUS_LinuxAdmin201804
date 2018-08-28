@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+
+  config.vm.provider "virtualbox" do |v|
+      v.memory = 256
+      v.cpus = 2
+  end
+  config.vm.provision "shell", inline: "mkdir /root/.ssh/ && cat /vagrant/ansible.pub >> /root/.ssh/authorized_keys && cat /vagrant/ansible.pub >> /home/vagrant/.ssh/authorized_keys"
+  config.ssh.username = "vagrant"
+
+  config.vm.define "nfssrv01" do |nfssrv01|
+    nfssrv01.vm.network "private_network", ip: '192.168.10.70', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw28"
+    nfssrv01.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
+    nfssrv01.vm.hostname = "nfssrv01.local"
+  end
+
+  config.vm.define "nfsclient01" do |nfsclient01|
+    nfsclient01.vm.network "private_network", ip: '192.168.10.71', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "sw28"
+    nfsclient01.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
+    nfsclient01.vm.hostname = "nfsclient01.local"
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "vvv"
+    ansible.playbook = "Playbook.yml"
+    # Ansible_ssh_user
+    ansible.force_remote_user = "vagrant"
+    ansible.become = "true"
+    ansible.inventory_path = "./hosts"
+    ansible.raw_arguments = [
+      "--connection=paramiko",
+      "--private-key=./ansible"
+    ]
+  end
+
+end
