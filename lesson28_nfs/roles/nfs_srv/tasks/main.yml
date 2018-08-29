@@ -23,7 +23,7 @@
   copy: src=nfs.conf dest=/etc/nfs.conf backup=yes
 
 - name: replace nfs
-  copy: src=nfs.conf dest=/etc/sysconfig/nfs backup=yes 
+  copy: src=sysconfig_nfs dest=/etc/sysconfig/nfs backup=yes 
 
 - name: restart nfs-config, rpcbind, rpc-statd, nfs-server
   systemd: name="{{ item }}" state=restarted enabled=yes
