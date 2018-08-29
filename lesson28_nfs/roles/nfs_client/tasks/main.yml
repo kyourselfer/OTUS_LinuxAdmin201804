@@ -1,0 +1,28 @@
+---
+
+- name: Install nfs-utils
+  yum: name=nfs-utils state=latest
+
+- name: Make directory by mount
+  file:
+    path: /mnt/nfs-share/upload
+    state: directory
+
+- name: Mount up nfs
+  mount:
+    path: /mnt/nfs-share/upload
+    src: 192.168.10.70:/srv/nfs/share/upload
+    fstype: nfs
+    opts: rsize=8192,wsize=8192,timeo=14,_netdev
+    state: mounted
+
+- name: Mount2 up nfs
+  mount:
+    path: /mnt/nfs-share
+    src: 192.168.10.70:/srv/nfs/share
+    fstype: nfs
+    opts: rsize=8192,wsize=8192,timeo=14,_netdev
+    state: mounted
+
+    #- name: Load fstab.rules
+    #  shell: mount -a

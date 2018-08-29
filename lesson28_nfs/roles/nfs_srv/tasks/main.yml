@@ -1,0 +1,41 @@
+---
+
+- name: Install nfs-utils
+  yum: name=nfs-utils state=latest
+
+- name: Make directories by /srv/nfs/share/upload
+  file:
+    path: /srv/nfs/share/upload
+    state: directory
+    owner: nfsnobody
+    group: nfsnobody
+    mode: 0700
+
+    #- name: replace file etc/exports
+    #  copy: src=exports dest=/etc/exports
+- name: Make etc/exports
+  template: src=exports.j2 dest=/etc/exports
+
+- name: load exports
+  shell: exportfs -r
+
+- name: replace nfs.conf
+  copy: src=nfs.conf dest=/etc/nfs.conf backup=yes
+
+- name: replace nfs
+  copy: src=nfs.conf dest=/etc/sysconfig/nfs backup=yes 
+
+- name: restart nfs-config, rpcbind, rpc-statd, nfs-server
+  systemd: name="{{ item }}" state=restarted enabled=yes
+  with_items:
+    - nfs-config
+    - rpcbind
+    - rpc-statd
+    - nfs-server
+
+- name: Insert firewall.rules
+  copy: src=firewall.rules dest=/etc/firewall.rules
+
+- name: Autorun firewall.rules
+  shell: '/sbin/iptables-restore < /etc/firewall.rules && echo "/sbin/iptables-restore < /etc/firewall.rules" >> /etc/rc.d/rc.local && chmod +x /etc/rc.d/rc.local'
+

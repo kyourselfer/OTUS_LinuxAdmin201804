@@ -5,11 +5,11 @@
   become: yes
   roles:
           #    - { role: CentOS_Srv }
-          #    - { role: PGServersMaster }
+          - { role: nfs_srv }
 
 # Servers of PGSQL Slaves
 - hosts: nfsclient
   become: yes
   roles:
           #    - { role: CentOS_Srv }
-          #    - { role: PGServersSlave }
+          - { role: nfs_client }
