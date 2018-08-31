@@ -17,8 +17,10 @@
 - список возможных систем был приведен в презентации
 
 в качестве результата прислать скриншот экрана - дашборд должен содержать в названии имя приславшего
+### Execution:
+`/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/var/lib/prometheus --log.level=debug`
 
-### PrintScreens of avidence
+### PrintScreens of avidence:
 Grafana
 
 ![Grafana](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson22_zabbix_propetheus/grafana.gif)
