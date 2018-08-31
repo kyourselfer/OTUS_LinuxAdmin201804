@@ -18,9 +18,13 @@
 
 в качестве результата прислать скриншот экрана - дашборд должен содержать в названии имя приславшего
 ### Execution:
+etc/[prometheus.yml](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson22_zabbix_propetheus/configs/prometheus.yml)
+
+etc/[grafana.ini](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson22_zabbix_propetheus/configs/gravana.ini)
+
 `/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/var/lib/prometheus --log.level=debug`
 
 ### PrintScreens of avidence:
-Grafana
+Grafana:3000
 
 ![Grafana](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson22_zabbix_propetheus/grafana.gif)
