@@ -17,6 +17,8 @@
 - список возможных систем был приведен в презентации
 
 в качестве результата прислать скриншот экрана - дашборд должен содержать в названии имя приславшего
-### Выполнение:
 
 ### PrintScreens of avidence
+Grafana
+
+![Grafana](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson22_zabbix_propetheus/grafana.gif)
