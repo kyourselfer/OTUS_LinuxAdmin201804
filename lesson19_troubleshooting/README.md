@@ -8,7 +8,7 @@ Linux Troubleshooting
 2. Опубликовать ссылку на плейбук в общем чатике
 3. Взять любой опубликованный плейбук, прокомментировать.
 
-Создаем роли:
+##### Создаем роли:
  * CentOS_Srv
   - Пересобираем ядро по конфигу
   - Меняем sysctl (net.core.somaxconn=1024 net.core.rmem_max=8388608 net.core.wmem_max=8388608 net.core.rmem_default=65536 net.core.wmem_default=65536 net.ipv4.tcp_rmem='4096 87380 8388608' net.ipv4.tcp_wmem='4096 65536 8388608' net.ipv4.tcp_mem='8388608 8388608 8388608' vm.swappiness=1)
@@ -17,7 +17,4 @@ Linux Troubleshooting
   - Создаем набор пакетов (-sar, -cronie-anacron, +cronie-noanacron, +wget, +epel-release, +ntp, +net-tools, +strace, +lsof, +psmisc, +bind-utils, +nc, +atop, +iftop)
   - files(ntp.conf,firewall.conf)
  * nginx
-  - Создаем набор пакетов (+nginx(listen deferred), +mariadb, +php-fpm, +curl)
- * httpd
-  - Создаем набор пакетов (+apache24(AcceptFilter), +mariadb, +php-fpm, +curl)
-
+  - Создаем набор пакетов (+nginx, +mariadb, +php-fpm, +curl)
