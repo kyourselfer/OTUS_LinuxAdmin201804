@@ -1,6 +1,7 @@
 - Поднять три виртуалки
 
 - Объединить их разными vlan
+![Схема сети](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/ospf_one_area.jpg)
 
 ### 1. Поднять OSPF между машинами на базе Quagga
 ##### вывод ip a
