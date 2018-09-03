@@ -1,6 +1,7 @@
 [Unit]
 Description=Spawns FastCGI processes
 After=network.target remote-fs.target nss-lookup.target httpd.service
+Requires=httpd.service
 Documentation=man:spawn-fcgi(1)
 [Service]
 User=apache
