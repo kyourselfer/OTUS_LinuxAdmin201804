@@ -16,5 +16,6 @@ Linux Troubleshooting
   - Включяем zram
   - Создаем набор пакетов (-sar, -cronie-anacron, +cronie-noanacron, +wget, +epel-release, +ntp, +net-tools, +strace, +lsof, +psmisc, +bind-utils, +nc, +atop, +iftop)
   - files(ntp.conf,firewall.conf)
+
 [nginx](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson19_troubleshooting/roles/nginx/tasks/main.yml)
   - Создаем набор пакетов (+nginx, +httpd-tools)
