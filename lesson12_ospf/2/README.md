@@ -1,7 +1,7 @@
 - Поднять три виртуалки
 
 - Объединить их разными vlan
-![Схема сети](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/ospf_one_area.jpg)
+![Схема сети](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/2/ospf_one_area.jpg)
 
 ### Поднять OSPF между машинами на базе Quagga
 ## Изобразить ассиметричный роутинг
