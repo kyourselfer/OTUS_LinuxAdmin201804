@@ -38,3 +38,6 @@ RestartSec=1s
 [Install]
 WantedBy=multi-user.target
 ```
+Проверяем
+
+![spawn-fcgi](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson6_SystemD/SCRIPTS/spawn-fcgi/spawn-fcgi.gif)
