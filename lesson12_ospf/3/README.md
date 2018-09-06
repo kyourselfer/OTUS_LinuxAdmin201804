@@ -1,30 +1,15 @@
 - Поднять три виртуалки
 
 - Объединить их разными vlan
-![Схема сети](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/ospf_one_area.jpg)
+![Схема сети](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/3/ospf_one_area%20.jpg)
 
-### 1. Поднять OSPF между машинами на базе Quagga
-##### вывод ip a
-![ip](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerA1/routerA1_ip.gif)
+### Поднять OSPF между машинами на базе Quagga
+## Сделать один из линков "дорогим", но что бы при этом роутинг был симметричным
+Устанавливаем cost 1000 на routerA1(eth2.10) и на routerB1(eth2.10)
+##### вывод `tracepath` и `vtysh -c 'show ip route 10.0.1.1/30'`
+![simetric](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/3/simetric.gif)
 ##### конфиги /etc/quagga/*
-[routerA1/ospfd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerA1/ospfd.conf)
+[routerA1/ospfd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/3/configs/ospfd.conf)
 
-[routerA1/zebra.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerA1/zebra.conf)
-##### вывод tracepath для каждого из трёх случаев
-![path](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerA1/routerA1_path.gif)
-##### вывод ip a
-![ip](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerB1/routerB1_ip.gif)
-##### конфиги /etc/quagga/*
-[routerB1/ospfd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerB1/ospfd.conf)
+[routerB1/ofpfd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/2/configs/ospfd.conf)
 
-[routerB1/zebra.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerB1/zebra.conf)
-##### вывод tracepath для каждого из трёх случаев
-![path](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerB1/routerB1_path.gif)
-##### вывод ip a
-![ip](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerC1/routerC1_ip.gif)
-##### конфиги /etc/quagga/*
-[routerC1/ospfd.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerC1/ospfd.conf)
-
-[routerC1/zebra.conf](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerC1/zebra.conf)
-##### вывод tracepath для каждого из трёх случаев
-![path](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson12_ospf/1/routerC1/routerC1_path.gif)
