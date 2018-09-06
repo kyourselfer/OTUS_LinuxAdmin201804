@@ -3,7 +3,7 @@
 #####
 Правим фаил окружения юнита
 
-/etc/sysconfig/spawn-fcgi
+/etc/sysconfig/[spawn-fcgi](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson6_SystemD/SCRIPTS/spawn-fcgi/sysconfig_spawn)
 ```
 SOCKET=/var/tmp/php-fcgi.sock
 OPTIONS="-u apache -g apache -s /var/tmp/php-fcgi.sock -S -M 0600 -C 6 -P /var/tmp/spawn-fcgi.pid -- /usr/bin/php-cgi"
@@ -11,7 +11,7 @@ OPTIONS="-u apache -g apache -s /var/tmp/php-fcgi.sock -S -M 0600 -C 6 -P /var/t
 
 Правим сам юнит c типом "форкирования"
 
-/etc/systemd/system/spawn-fcgi.service
+/etc/systemd/system/[spawn-fcgi.service](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson6_SystemD/SCRIPTS/spawn-fcgi/spawn-fcgi.service)
 ```
 [Unit]
 Description=Spawns FastCGI processes
