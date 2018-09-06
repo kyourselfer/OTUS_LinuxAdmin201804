@@ -6,6 +6,7 @@
   yum: pkg={{ item }} state=latest
   with_items:
     - nginx
+    - httpd-tools
 
 - name: ensure nginx is running and enabled
   service: name=nginx state=restarted enabled=yes

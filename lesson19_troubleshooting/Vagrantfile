@@ -17,10 +17,10 @@ Vagrant.configure(2) do |config|
     web01.vm.hostname = "web01"
   end
 
-  config.vm.define "web02" do |web02|
-    web02.vm.network "private_network", ip: '10.10.253.98', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "isp_pool01"
-    web02.vm.hostname = "web02"
-  end
+#  config.vm.define "web02" do |web02|
+#    web02.vm.network "private_network", ip: '10.10.253.98', adapter: 2, netmask: "255.255.255.248", virtualbox__intnet: "isp_pool01"
+#    web02.vm.hostname = "web02"
+#  end
 
 
   config.vm.provision "ansible" do |ansible|

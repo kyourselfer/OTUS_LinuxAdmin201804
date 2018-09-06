@@ -1,0 +1,24 @@
+[Unit]
+Description=Spawns FastCGI processes
+After=network.target remote-fs.target nss-lookup.target httpd.service
+Requires=httpd.service
+Documentation=man:spawn-fcgi(1)
+
+[Service]
+Type=forking
+PIDFile=/var/tmp/spawn-fcgi.pid
+#WorkingDirectory=/var/run/
+
+User=root
+Group=apache
+
+EnvironmentFile=/etc/sysconfig/spawn-fcgi
+ExecStart=/bin/spawn-fcgi $OPTIONS 
+ExecStop=/bin/kill -TERM ${MAINPID}
+TimeoutStopSec=3s
+#ExecReload=/bin/kill -HUP ${MAINPID}
+KillMode=control-group
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
