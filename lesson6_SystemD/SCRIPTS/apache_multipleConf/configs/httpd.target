@@ -1,0 +1,2 @@
+[Unit]
+Wants=httpd@site1.service httpd@site2.service
