@@ -5,6 +5,9 @@
 
 Создаем конфиг на каждый экземпляр(instance)
 /etc/httpd/conf/[httpd_site1.conf]()
+/etc/httpd/conf/[httpd_site2.conf]()
 
-Добавим в конфиг доп для одновременной работу
-PidFile /var/run/httpd/httpd_site1.pid
+Добавим в конфиг [httpd_site1.conf]() и [httpd_site2.conf]() путь к PidFile по каждому экземпляру для одновременной работы экземпляров
+`PidFile /var/run/httpd/httpd_siteX.pid`
+
+Также созданим цель(Target) для юнитов экземаляров [httpd.target]()
