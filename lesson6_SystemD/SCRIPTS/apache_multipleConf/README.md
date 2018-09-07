@@ -15,3 +15,7 @@
 Указываем в Wants стартовать когда основной юнит стартует. Если сервис упал или не может стартовать, это не влияет на основной сервис. Если основной сервис выключается/перезапускается, то зависимые сервисы остаются незатронутыми.
 `PartOf=httpd.target`
 PartOf - Если httpd.target выключается/перезапускается, то основной сервис так же выключется/перезапускается.
+
+![target](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson6_SystemD/SCRIPTS/apache_multipleConf/img/target.gif)
+
+![pids](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson6_SystemD/SCRIPTS/apache_multipleConf/img/pids.gif)
