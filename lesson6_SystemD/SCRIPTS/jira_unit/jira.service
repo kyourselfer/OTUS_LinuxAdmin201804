@@ -1,0 +1,32 @@
+[Unit]
+Description=Jira unit - as a service
+After=network.target syslog.target
+#Requires=
+Documentation=https://community.atlassian.com
+
+[Service]
+Type=forking
+User=jira
+Group=jira
+
+PIDFile=/opt/atlassian/jira/work/catalina.pid
+
+Environment=CATALINA_HOME=/opt/atlassian/jira
+Environment=CATALINA_BASE=/opt/atlassian/jira
+Environment=CATALINA_TMPDIR=/opt/atlassian/jira/temp
+Environment=JIRA_HOME=/opt/atlassian/jira/atlassian-jira/
+Environment='CATALINA_OPTS=-Xms786M -Xmx786M -server -XX:+UseParallelGC -XX:MaxPermSize=192m'
+Environment=JRE_HOME=/opt/atlassian/jira/jre/
+Environment=CLASSPATH=/opt/atlassian/jira/bin/bootstrap.jar:/opt/atlassian/jira/bin/tomcat-juli.jar
+Environment=CATALINA_PID=/opt/atlassian/jira/work/catalina.pid
+
+ExecStart=/opt/atlassian/jira/bin/start-jira.sh
+ExecStop=/opt/atlassian/jira/bin/stop-jira.sh
+Restart=always
+RestartSec=60
+
+#StandardOutput=/opt/atlassian/jira/logs/out.log
+#StandardError=/opt/atlassian/jira/logs/error.log
+
+[Install]
+WantedBy=multi-user.target
