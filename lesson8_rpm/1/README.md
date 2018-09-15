@@ -41,7 +41,8 @@ SOURCES и SPECS - исходники и патчи должны лежать в
 %endif
 ```
 
-###### SPEC файл
+###### [SPEC файл](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson8_rpm/1/httpd.spec)
+
 ![file.spec](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson8_rpm/img/file.spec.gif)
 Source: - исходные тексты, тарболы и др. файлы.
 
