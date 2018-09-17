@@ -1,0 +1,6 @@
+[test-repo-centos]
+name=Test repo
+baseurl=http://repo.doreos.ru/$basearch
+enabled=1
+# not secure
+gpgcheck=0
