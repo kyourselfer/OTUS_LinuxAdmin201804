@@ -7,3 +7,7 @@ LDAP
 
 В git - результирующий playbook
 
+Решение:
+------
+Используется Vagrantfile: в котором provider = VirtualBox и provision = Ansible
+

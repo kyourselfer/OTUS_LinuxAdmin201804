@@ -1,0 +1,6 @@
+---
+- hosts: inet
+  become: yes
+  roles:
+    - { role: CentOS_Srv }
+
