@@ -1,4 +1,7 @@
 ---
+# - name: Set hostname
+#   hostname: name=centralrouter.otus.local
+
  - name: install epel-release
    yum: name={{ item }} state=latest 
    with_items:
@@ -10,10 +13,10 @@
     - ipa-server
     - ipa-server-dns
 
-- name: Modification /etc/hosts
-  copy:
-    src: hosts
-    dest: /etc/
+ - name: Modification /etc/hosts
+   copy:
+     src: hosts
+     dest: /etc/
 
  - name: dbus service restart
    systemd:

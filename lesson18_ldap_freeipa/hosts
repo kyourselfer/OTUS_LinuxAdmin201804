@@ -1,5 +1,5 @@
 [ipaservers]
-ipaserver.otus.local ansible_ssh_host=127.0.0.1 ansible_port=2203
+ipaserver ansible_ssh_host=127.0.0.1 ansible_port=2203
 
 [ipaclients]
 centralrouter ansible_ssh_host=127.0.0.1 ansible_port=2202

@@ -5,10 +5,17 @@
     src: hosts
     dest: /etc/
 
- - name: install FreeIPA-Client 
-   yum: name={{ item }} state=latest 
-   with_items:
+- name: install FreeIPA-Client 
+  yum: name={{ item }} state=latest 
+  with_items:
     - ipa-client
 
- - name: add client to domain
-   shell: ipa-client-install -U --mkhomedir --force-ntpd --domain={{ domain }} --server={{ server }} --realm={{ realm }} --principal={{ admin }} --password={{ password }}
+- name: add client to domain
+  ignore_errors: True
+  register: result
+  shell: ipa-client-install -U --mkhomedir --force-ntpd --domain={{ domain }} --server={{ server }} --realm={{ realm }} --principal={{ admin }} --password={{ password }}
+
+- name: try of connect to IPA-Server
+  when: result is failed
+  shell: hostnamectl set-hostname `hostname`.{{ domain }} && ipa-client-install -U --mkhomedir --force-ntpd --domain={{ domain }} --server={{ server }} --realm={{ realm }} --principal={{ admin }} --password={{ password }}
+
