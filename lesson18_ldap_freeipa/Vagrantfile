@@ -2,13 +2,13 @@
 # vim: set ft=ruby :
 
 MACHINES = {
-  :inetRouter => {
+  :inetrouter => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.255.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
                 ]
   },
-  :centralRouter => {
+  :centralrouter => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.255.2', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
@@ -19,39 +19,39 @@ MACHINES = {
 		   {ip: '192.168.255.9', adapter: 7, netmask: "255.255.255.252", virtualbox__intnet: "router-net"}
                 ]
   },
-  :centralServer => {
+  :centralserver => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.0.2', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"},
                 ]
   },
-  :"IPAServer.otus.local" => {
+  :"ipaserver.otus.local" => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.0.3', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"},
                 ]
   },
-  :office1Router => {
+  :office1router => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.2.1', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "office1-net"},
                    {ip: '192.168.255.6', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
                 ]
   },
-  :office1Server => {
+  :office1server => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.2.66', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "office1-net"}
                 ]
   },
-  :office2Router => {
+  :office2router => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.1.1', adapter: 2, netmask: "255.255.255.128", virtualbox__intnet: "office2-net"},
                    {ip: '192.168.255.10', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "router-net"}
                 ]
   },
-  :office2Server => {
+  :office2server => {
         :box_name => "centos/7",
         :net => [
                    {ip: '192.168.1.130', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "office2-net"}
@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
         end
 
         case boxname.to_s
-        when "inetRouter"
+        when "inetrouter"
 	  box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
@@ -95,7 +95,7 @@ Vagrant.configure("2") do |config|
             echo net.ipv4.conf.all.forwarding=1 >> /etc/sysctl.d/99-sysctl.conf && sysctl -p
             SHELL
           box.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
-        when "centralRouter"
+        when "centralrouter"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end 
@@ -111,9 +111,9 @@ Vagrant.configure("2") do |config|
             systemctl restart network
           SHELL
           box.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
-        when "IPAServer.otus.local"
+        when "ipaserver.otus.local"
 	  box.vm.provider :virtualbox do |vb|
-            vb.customize ["modifyvm", :id, "--memory", "512"]
+            vb.customize ["modifyvm", :id, "--memory", "1280"]
           end
           box.vm.provision "shell", run: "always", inline: <<-SHELL
             echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
@@ -121,7 +121,7 @@ Vagrant.configure("2") do |config|
             systemctl restart network
             SHELL
           box.vm.network :forwarded_port, guest: 22, host: 2203, id: "ssh"
-        when "centralServer"
+        when "centralserver"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
@@ -131,7 +131,7 @@ Vagrant.configure("2") do |config|
             systemctl restart network
             SHELL
           box.vm.network :forwarded_port, guest: 22, host: 2204, id: "ssh"
-	when "office1Router"
+	when "office1router"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
@@ -148,7 +148,7 @@ Vagrant.configure("2") do |config|
             systemctl restart network
           SHELL
           box.vm.network :forwarded_port, guest: 22, host: 2205, id: "ssh"
-	when "office1Server"
+	when "office1server"
 	  box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
 	  end
@@ -158,7 +158,7 @@ Vagrant.configure("2") do |config|
             systemctl restart network
           SHELL
           box.vm.network :forwarded_port, guest: 22, host: 2206, id: "ssh"
-	when "office2Router"
+	when "office2router"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
@@ -174,7 +174,7 @@ Vagrant.configure("2") do |config|
             systemctl restart network
           SHELL
           box.vm.network :forwarded_port, guest: 22, host: 2207, id: "ssh"
-	when "office2Server"
+	when "office2server"
           box.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--memory", "256"]
           end
@@ -193,7 +193,7 @@ Vagrant.configure("2") do |config|
     # Ansible_ssh_user
     ansible.force_remote_user = "vagrant"
     ansible.become = "true"
-    ansible.inventory_path = "./hosts"
+    ansible.inventory_path = "hosts"
     ansible.raw_arguments = [
       "--connection=paramiko",
       "--private-key=./ansible"

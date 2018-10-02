@@ -1,0 +1,14 @@
+---
+
+- name: Modification /etc/hosts
+  copy:
+    src: hosts
+    dest: /etc/
+
+ - name: install FreeIPA-Client 
+   yum: name={{ item }} state=latest 
+   with_items:
+    - ipa-client
+
+ - name: add client to domain
+   shell: ipa-client-install -U --mkhomedir --force-ntpd --domain={{ domain }} --server={{ server }} --realm={{ realm }} --principal={{ admin }} --password={{ password }}

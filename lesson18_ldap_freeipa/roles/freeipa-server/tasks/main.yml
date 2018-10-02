@@ -1,0 +1,31 @@
+---
+ - name: install epel-release
+   yum: name={{ item }} state=latest 
+   with_items:
+    - epel-release
+
+ - name: install ipa-server
+   yum: name={{ item }} state=latest 
+   with_items:
+    - ipa-server
+    - ipa-server-dns
+
+- name: Modification /etc/hosts
+  copy:
+    src: hosts
+    dest: /etc/
+
+ - name: dbus service restart
+   systemd:
+     name: dbus.service
+     state: restarted
+     enabled: yes
+
+ - name: IPA-Server install
+   ignore_errors: True
+   register: result
+   shell: ipa-server-install -U --setup-dns --mkhomedir --hostname={{ server }} --domain={{ domain }} --realm={{ realm }} --ds-password={{ dbpassword }} --admin-password={{ password }} --setup-dns --no-forwarders --no-reverse
+
+ - name: IPA-Server reinstall
+   when: result is failed
+   shell: systemctl restart dbus.service && ipa-server-install --uninstall -U && ipa-server-install -U --setup-dns --mkhomedir --hostname={{ server }} --domain={{ domain }} --realm={{ realm }} --ds-password={{ dbpassword }} --admin-password={{ password }} --no-forwarders --no-reverse -U

@@ -1,6 +1,20 @@
 ---
-- hosts: inet
+- hosts: all
+  become: yes
+  tasks:
+  - name: disable selinux
+    shell: setenforce 0
+
+- hosts: ipaserver.otus.local
   become: yes
   roles:
-    - { role: CentOS_Srv }
+   - freeipa-server
+     
+- hosts: centralrouter 
+  become: yes
+  tasks:
+  - name: Set hostname
+    hostname: name=centralrouter.otus.local
+  roles:
+   - freeipa-client
 

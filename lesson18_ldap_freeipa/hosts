@@ -1,10 +1,22 @@
-#
-[inet]
-inetRouter ansible_ssh_host=127.0.0.1 ansible_port=2201
-centralRouter ansible_ssh_host=127.0.0.1 ansible_port=2202
-IPAServer.otus.local ansible_ssh_host=127.0.0.1 ansible_port=2203
-centralServer ansible_ssh_host=127.0.0.1 ansible_port=2204
-office1Router ansible_ssh_host=127.0.0.1 ansible_port=2205
-office1Server ansible_ssh_host=127.0.0.1 ansible_port=2206
-office2Router ansible_ssh_host=127.0.0.1 ansible_port=2207
-office2Server ansible_ssh_host=127.0.0.1 ansible_port=2208
+[ipaservers]
+ipaserver.otus.local ansible_ssh_host=127.0.0.1 ansible_port=2203
+
+[ipaclients]
+centralrouter ansible_ssh_host=127.0.0.1 ansible_port=2202
+
+[ipaclients:vars]
+domain=otus.local
+server=ipaserver.otus.local
+realm=OTUS.LOCAL
+admin=admin
+password=12345678
+
+[ipaservers:vars]
+domain=otus.local
+server=ipaserver.otus.local
+realm=OTUS.LOCAL
+admin=admin
+password=12345678
+dbpassword=db12345678
+#dnssrv1=77.88.8.8
+#dnssrv2=8.8.4.4
