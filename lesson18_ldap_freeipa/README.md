@@ -19,6 +19,6 @@ for i in "inetrouter centralrouter ipaserver"; do vagrant up $i; done
 ansible-playbook -i hosts -vvv -l ipaclients Playbook.yml
 ```
 
-Подключимся для проверки к FreeIPA - WebUI
+Подключимся для проверки к FreeIPA - WebUI, создадим пользователя и запросим его group и user ID:
 
-![check_of]()
+![check_of](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson18_ldap_freeipa/ldap_auth.gif)
