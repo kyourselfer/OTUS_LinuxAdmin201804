@@ -1,5 +1,5 @@
 ### 2. Установить систему с LVM, после чего переименовать VG 2
-
+```
 ##### slicing
 parted -s /dev/sdb print
 parted -s /dev/sdb mklabel msdos
@@ -60,6 +60,6 @@ sed 's/rhgb quiet/ /g' /etc/default/grub.tmp > /etc/default/grub
 sed 's/VolGroup00/VGnew/g' /etc/fstab > /etc/fstab.tmp && echo y | cp /etc/fstab.tmp /etc/fstab
 grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda && exit
 reboot
-
+```
 ![centos7_vgrename](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/vgrename/vgrename.png)
 ![centos7_bgrename_done](https://github.com/kyourselfer/OTUS_LinuxAdmin201804/blob/master/lesson4_boot/vgrename/bgrename_done.jpeg)
