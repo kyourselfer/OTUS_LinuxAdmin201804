@@ -1,0 +1,10 @@
+---
+# Configure MariaDB and Galera clustering
+
+- name: DEB | Galera configuration file
+  template: src=cluster.cnf.j2 dest=/etc/mysql/conf.d/cluster.cnf owner=root group=root mode=0640
+  notify: restart mysql
+
+- name: DEB | MariaDB configuration file
+  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
+  notify: restart mysql

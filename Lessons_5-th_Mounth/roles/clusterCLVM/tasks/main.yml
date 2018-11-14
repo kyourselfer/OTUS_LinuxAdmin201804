@@ -1,0 +1,57 @@
+---
+
+- selinux:
+    policy: targeted
+    state: permissive
+
+# Connect to sharedstorage
+- name: Install packages to use Pacemaker+corosync+pcs,lvm2-cluster+gfs2
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - corosync
+    - pacemaker
+    - pcs
+    - gfs2-utils
+    - lvm2-cluster
+
+- name: lvm mode cluster
+  shell: lvmconf --enable-cluster
+
+- name: Create user to authentication nodes
+  user:
+    name: hacluster
+    comment: HACluster
+    uid: 1100
+    shell: /sbin/nologin
+    state: present
+    password: '{{ sha512Password }}' 
+
+- name: regex in hosts 
+  replace:
+    path: /etc/hosts
+    regexp: 'localdomain6'
+    replace: 'localdomain6\n192.168.210.102 web01.local\n192.168.210.106 web02.local\n'
+
+- name: Start pcsd
+  service: name=pcsd state=started enabled=yes
+
+- name: Wait 600 seconds for port 2224 of '{{ Node02 }}' to authentication Nodes
+  wait_for:
+    timeout: 600
+    host: '{{ Node02 }}'
+    port: 2224
+    delay: '{{ delay_to_continue_job }}'
+
+# looking for created cluster
+- name: cluster | looking for created cluster
+  command: "pcs status"
+  register: _pcs_status
+  #  changed_when: false
+  ignore_errors: yes
+
+- name: Ensure existence of cluster
+  include: auth_cluster.yml
+  when: _pcs_status.stdout == ""
+  #  when: >
+  #    ('cluster is not currently running on this node' in _pcs_status['stderr'])
+

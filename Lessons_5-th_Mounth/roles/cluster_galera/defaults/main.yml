@@ -1,0 +1,14 @@
+---
+
+galera_root_password: root
+galera_maintenance_password: galera
+galera_cluster_user: galera
+galera_cluster_password: galera
+galera_cluster_name: galera
+galera_cluster_master: 127.0.0.1
+galera_cluster_members: [127.0.0.1]
+galera_bootstrap: no
+galera_bind_address: 0.0.0.0
+galera_setup_repository: yes
+galera_install_packages: yes
+

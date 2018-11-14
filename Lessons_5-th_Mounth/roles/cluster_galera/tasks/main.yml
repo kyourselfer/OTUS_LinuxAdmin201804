@@ -1,0 +1,23 @@
+---
+
+- include: deb.yml
+  when: ansible_os_family == "Debian"
+
+- include: rhel.yml
+  when: ansible_os_family == "RedHat"
+
+- include: access.yml
+- include: secure.yml
+- include: config.yml
+
+  #- name: restart mysql for first run on master node
+  #  command: mysqld --wsrep-new-cluster
+  #  run_once: True
+
+  #- meta: flush_handlers
+
+- name: disable bootstrap mode cluster.cnf
+  include: cluster.yml
+  when: ( galera_bootstrap  == 1 )
+
+- meta: flush_handlers

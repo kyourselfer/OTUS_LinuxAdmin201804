@@ -1,0 +1,8 @@
+---
+# Setup installation repositories
+
+- name: DEB | Import repository key
+  apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
+
+- name: DEB | Add apt repository
+  apt_repository: repo="deb http://mirror.klaus-uwe.me/mariadb/repo/10.0/ubuntu {{ ansible_distribution_release }} main" state=present update_cache=yes

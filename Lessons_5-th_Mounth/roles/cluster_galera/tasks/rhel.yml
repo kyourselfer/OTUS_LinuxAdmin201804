@@ -1,0 +1,11 @@
+---
+
+- include: rhel_repository.yml
+  tags: repository
+
+- include: rhel_packages.yml
+  tags: packages
+
+- include: rhel_config.yml
+- include: rhel_access.yml
+

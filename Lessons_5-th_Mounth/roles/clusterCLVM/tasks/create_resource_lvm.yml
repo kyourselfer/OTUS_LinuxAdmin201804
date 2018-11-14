@@ -1,0 +1,53 @@
+#- name: ae
+#  shell: pcs resource create dlm systemd:dlm op monitor interval=30s on-fail=ignore clone interleave=true ordered=true
+#- name: af
+#  shell: pcs resource create clvmd ocf:heartbeat:clvm op monitor interval=30s on-fail=ignore clone interleave=true ordered=true
+#- name: ag
+#  shell: pcs constraint order start dlm-clone then clvmd-clone
+#- name: ak
+#  shell: pcs constraint colocation add clvmd-clone with dlm-clone
+
+- name: "Create GFS2 on CLVM"
+  shell: wipefs -a /dev/sdb
+  #  ignore_errors: yes
+  # warn: no
+  
+- name: Create a volume group on top of /dev/sdb(iSCSI)
+  lvg:
+    vg: cluster_vg
+    pvs: /dev/sdb
+    #    pesize: 32
+
+- name: Create a logical volume cluster_lv 1000M /dev/sdb
+  lvol:
+    vg: cluster_vg
+    lv: cluster_lv
+    size: 1024
+    pvs: /dev/sdb
+
+- name: ae
+  shell: pcs resource create dlm systemd:dlm op monitor interval=30s on-fail=ignore clone interleave=true ordered=true
+- name: af
+  shell: pcs resource create clvmd ocf:heartbeat:clvm op monitor interval=30s on-fail=ignore clone interleave=true ordered=true
+- name: ag
+  shell: pcs constraint order start dlm-clone then clvmd-clone
+- name: ak
+  shell: pcs constraint colocation add clvmd-clone with dlm-clone
+
+
+- name: create gfs2
+  shell: echo y | mkfs.gfs2 -j2 -p lock_dlm -t '{{ NameOfCluster }}':gfs2 /dev/cluster_vg/cluster_lv
+
+- name: e
+  shell: pcs resource create clusterfs Filesystem device="/dev/cluster_vg/cluster_lv" directory="/mnt/gfs2" fstype="gfs2" "options=noatime" op monitor interval=10s on-fail=ignore clone interleave=true
+
+- name: f
+  shell: pcs constraint order start clvmd-clone then clusterfs-clone
+
+- name: g
+  shell: pcs constraint colocation add clusterfs-clone with clvmd-clone
+
+- name: h
+  shell: gfs2_edit -p journals /dev/cluster_vg/cluster_lv
+
+

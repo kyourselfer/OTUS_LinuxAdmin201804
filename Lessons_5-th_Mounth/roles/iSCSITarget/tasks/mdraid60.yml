@@ -1,0 +1,12 @@
+---
+- name: Create MDraid60(8 devices)
+  shell: |
+    yum install mdadm -y
+    LetterOfException=`lsblk | grep sd | grep -E "sd(a|b|c|d|e|f|g|h|i)" | cut -c5 | sort | uniq`
+    LettersOfMDRaid=`lsblk | grep sd | grep -E "^sd(a|b|c|d|e|f|g|h|i)" | cut -c3 | grep -v $LetterOfException | sort | xargs echo | tr ' ' ,`
+    LettersOfMDRaid_mdr6_1=`echo $LettersOfMDRaid | cut -b1-7`
+    LettersOfMDRaid_mdr6_2=`echo $LettersOfMDRaid | cut -b9-15`
+    eval "echo y | mdadm --create /dev/md0 --level=6 --raid-devices=4 /dev/sd{$LettersOfMDRaid_mdr6_1}"
+    eval "echo y | mdadm --create /dev/md1 --level=6 --raid-devices=4 /dev/sd{$LettersOfMDRaid_mdr6_2}"
+    eval "echo y | mdadm --create /dev/md60 --level=0 --raid-devices=2 /dev/md{0,1}"
+    mdadm --detail --scan > /etc/mdadm.conf

@@ -1,0 +1,17 @@
+---
+# Install required packages
+
+- name: RHEL | Install required packages
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    enablerepo: mariadb
+  with_items:
+    - MySQL-python
+    - socat
+    - MariaDB-Galera-server
+    - MariaDB-client
+    - galera
+    - rsync
+

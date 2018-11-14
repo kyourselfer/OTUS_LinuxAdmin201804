@@ -1,0 +1,22 @@
+---
+
+- selinux:
+    policy: targeted
+    state: permissive
+
+- name: Start mysql
+  service: name=mysql state=started
+
+  #- name: make dir /var/run/mysqld/
+  #  file:
+  #    path: /var/run/mysqld/
+  #    state: directory
+  #    mode: 0755
+
+- name: Create symlink by socket
+  file:
+    src: /var/lib/mysql/mysql.sock
+    dest: /var/lib/mysql/mysqld.sock 
+    owner: mysql
+    group: mysql
+    state: link

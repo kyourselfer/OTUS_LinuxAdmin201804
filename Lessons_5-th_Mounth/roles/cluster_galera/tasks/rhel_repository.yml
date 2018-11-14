@@ -1,0 +1,30 @@
+---
+# Setup installation repositories
+
+- name: RHEL | Install redhat-lsb, or template will fail
+  yum: name=redhat-lsb-core state=present
+
+- name: RHEL | Regather facts to detect lsb info
+  action: setup
+
+- name: RHEL | Add yum repository for MariaDB for CENTOS
+  template: src=rhel/centos.j2
+            dest=/etc/yum.repos.d/mariadb.repo
+            owner=root
+            group=root
+            mode=0644
+  when: ansible_distribution == 'CentOS'
+
+- name: RHEL | Add yum repository for MariaDB for REDHAT
+  template: src=rhel/redhat.j2
+            dest=/etc/yum.repos.d/mariadb.repo
+            owner=root
+            group=root
+            mode=0644
+  when: ansible_distribution == 'RedHat'
+
+- name: RHEL | MariaDB repository enable
+  ini_file: dest=/etc/yum.repos.d/mariadb.repo
+            section=mariadb
+            option=enabled
+            value=1

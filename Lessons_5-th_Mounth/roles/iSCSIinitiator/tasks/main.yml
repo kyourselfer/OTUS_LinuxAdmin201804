@@ -1,0 +1,34 @@
+---
+# Connect initiator
+- name: Install packages to use iscsi-initiator
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - iscsi-initiator-utils
+
+- name: Configure iSCSI Initiator IQN
+  lineinfile:
+    dest:   /etc/iscsi/initiatorname.iscsi
+    regexp: '^InitiatorName=iqn'
+    line:   'InitiatorName={{ iscsi__initiator_name }}'
+    state:  present
+
+- name: Restart iSCSI service if initial configuration changed
+  service:
+    name:  iscsi
+    state: restarted
+
+    #- name: Restart iSCSI service to connect to Target
+    #  service:
+    #    name: iscsi
+    #    state: restarted
+    #    enabled: yes
+
+- name: Discovery of portal on "{{ target_ip_from_db }}"
+  shell: iscsiadm -m discovery -t st -p "{{ target_ip_from_db }}" && iscsiadm -m node
+
+- name: Restart iSCSI service to connect to Target
+  service:
+    name: iscsi
+    state: restarted
+    enabled: yes
+

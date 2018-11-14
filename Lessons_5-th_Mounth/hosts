@@ -1,0 +1,19 @@
+#
+# Routers nftables
+[routers_front]
+# HAProxy
+[haproxy]
+haproxydb01 ansible_ssh_host=127.0.0.1 ansible_port=2207
+# LAMP || LEMP
+[webservers]
+web01 ansible_ssh_host=127.0.0.1 ansible_port=2202
+web02 ansible_ssh_host=127.0.0.1 ansible_port=2203
+# MySQL || PostgreSQL
+[dbservers]
+db01 ansible_ssh_host=127.0.0.1 ansible_port=2204 galera_bootstrap=1
+db02 ansible_ssh_host=127.0.0.1 ansible_port=2205
+# SharedStorage
+[sharestorage]
+sharedstorage01 ansible_ssh_host=127.0.0.1 ansible_port=2206
+
+

@@ -1,0 +1,19 @@
+---
+
+- name: waiting for other nodes and change bootstrap option in cluster.cnf
+  wait_for:
+    host: 192.168.1.2
+    port: 4567
+    state: started
+    delay: 60
+    timeout: 600
+  register: result
+
+- name: cluster.cnf has changed
+  replace:
+    path: /etc/my.cnf.d/cluster.cnf
+    regexp: 'gcomm://'
+    replace: 'gcomm://192.168.1.1,192.168.1.2'
+  when: result is succeeded
+
+

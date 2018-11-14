@@ -1,0 +1,45 @@
+---
+# Create mdraid60
+- name: try to create MDraid60
+  include: mdraid60.yml
+
+# Create target of iSCSI device over MDraid60
+- name: Install packages to use iscsi
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - targetcli
+
+- name: clean config of iscsi
+  shell: targetcli clearconfig confirm=true
+
+- name: Started and enable target.service
+  service: name=target.service state=started enabled=yes
+
+- name: create block iscsi
+  shell: targetcli /backstores/block create disk01 /dev/md60
+
+- name: create block iqn
+  shell: targetcli /iscsi create iqn.2018-10.local.sharedstorage01:storage.target00
+
+- name: create lun
+  shell: targetcli /iscsi/iqn.2018-10.local.sharedstorage01:storage.target00/tpg1/luns create /backstores/block/disk01 lun=1
+
+- name: set tpg1 attribute 1
+  shell: targetcli /iscsi/iqn.2018-10.local.sharedstorage01:storage.target00/tpg1 set attribute authentication=0
+
+- name: set tpg1 attribute 2
+  shell: targetcli /iscsi/iqn.2018-10.local.sharedstorage01:storage.target00/tpg1 set auth userid=iscsiuser
+
+- name: set tpg1 attribute 3
+  shell: targetcli /iscsi/iqn.2018-10.local.sharedstorage01:storage.target00/tpg1 set auth password=iscsiuser
+
+- name: set acl for db01
+  shell: targetcli /iscsi/iqn.2018-10.local.sharedstorage01:storage.target00/tpg1/acls create {{ iscsi__initiator_name01 }}
+
+- name: set acl for db02
+  shell: targetcli /iscsi/iqn.2018-10.local.sharedstorage01:storage.target00/tpg1/acls create {{ iscsi__initiator_name02 }}
+
+- name: save config
+  shell: targetcli saveconfig
+
+

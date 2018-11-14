@@ -1,0 +1,10 @@
+---
+
+- include: deb_repository.yml
+  tags: repository
+
+- include: deb_packages.yml
+  tags: packages
+
+- include: deb_access.yml
+- include: deb_config.yml

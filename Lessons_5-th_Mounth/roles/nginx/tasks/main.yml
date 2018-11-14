@@ -1,0 +1,28 @@
+---
+
+- selinux:
+    policy: targeted
+    state: permissive
+
+- name: Add nginx repo
+  copy: src=nginx.repo dest=/etc/yum.repos.d/
+
+- name: Install packages
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - nginx
+    - httpd-tools
+
+- name: mkdir ../proxy_cache
+  file: path=/var/www/nginx/proxy_cache state=directory mode=0755
+
+- name: replace configs of nginx
+  copy: src={{ item }} dest=/etc/nginx/conf.d/
+  with_items:
+    - hasrv1804.conf
+    - default.conf
+  notify: restart nginx
+
+- name: replace configs of nginx
+  copy: src=nginx.conf dest=/etc/nginx/nginx.conf backup=yes
+  notify: restart nginx

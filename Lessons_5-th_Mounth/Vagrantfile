@@ -1,0 +1,119 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+
+  config.vm.provider "virtualbox" do |v|
+      v.memory = 256 
+      v.cpus = 2
+  end
+  config.vm.provision "shell", inline: "mkdir /root/.ssh/ && cat /vagrant/ansible.pub >> /root/.ssh/authorized_keys && cat /vagrant/ansible.pub >> /home/vagrant/.ssh/authorized_keys"
+  # vagrant_ssh_username
+  config.ssh.username = "vagrant"
+
+# switch01 | firewall | haproxy
+  config.vm.define "sw01" do |sw01|
+    sw01.vm.network "private_network", ip: '10.10.10.1', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to Web01
+    sw01.vm.network "private_network", ip: '10.10.110.1', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "db01" # to DB01
+    sw01.vm.network "private_network", ip: '10.10.111.1', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "db02" # to DB02
+    sw01.vm.network "private_network", ip: '192.168.50.51', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "syslog" # to Log
+    sw01.vm.hostname = "sw01"
+    sw01.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
+  end
+
+### cluster web
+# vip
+  config.vm.define "web01" do |web01|
+    web01.vm.network "private_network", ip: '192.168.10.101', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to sw01
+    web01.vm.network "private_network", ip: '192.168.210.102', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "clusterweb00" # to ClusterWeb00
+    web01.vm.network "private_network", ip: '192.168.212.102', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "sharstor01" # to SharedStorage01
+    web01.vm.hostname = "web01"
+    web01.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
+  end
+# vip
+  config.vm.define "web02" do |web02|
+    web02.vm.network "private_network", ip: '192.168.10.102', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to sw01
+    web02.vm.network "private_network", ip: '192.168.210.106', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "clusterweb00" # to ClusterWeb00
+    web02.vm.network "private_network", ip: '192.168.213.106', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "sharstor02" # to SharedStorage01
+    web02.vm.hostname = "web02"
+    web02.vm.network :forwarded_port, guest: 22, host: 2203, id: "ssh"
+  end
+# shared storage
+  config.vm.define "sharedstorage01" do |sharedstorage01|
+    sharedstorage01.vm.network "private_network", ip: '192.168.212.103', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sharstor01" # to Web01
+    sharedstorage01.vm.network "private_network", ip: '192.168.213.107', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sharstor02" # to Web02
+    sharedstorage01.vm.network "private_network", ip: '192.168.50.56', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "syslog" # to Log
+    sharedstorage01.vm.hostname = "sharedstorage01"
+    sharedstorage01.vm.network :forwarded_port, guest: 22, host: 2206, id: "ssh"
+    sharedstorage01.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+      vb.customize ["storagectl", :id, "--name", "SATA", "--add", "sata" ]
+      unless File.exist?('./storage/VM/hdd/mdr601.vdi')
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr601.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr602.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr603.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr604.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr605.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr606.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr607.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['createhd', '--filename', './storage/VM/hdd/mdr608.vdi', '--variant', 'Fixed', '--size', 1024]
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr601.vdi']
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr602.vdi']
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr603.vdi']
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 4, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr604.vdi']
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 5, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr605.vdi']
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 6, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr606.vdi']
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 7, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr607.vdi']
+        vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 8, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr608.vdi']
+      end
+    end
+  end
+
+# haproxy db
+  config.vm.define "haproxydb01" do |haproxydb01|
+    haproxydb01.vm.network "private_network", ip: '192.168.10.150', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to sw01
+    haproxydb01.vm.network "private_network", ip: '192.168.20.150', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw02" # to sw02
+    haproxydb01.vm.network "private_network", ip: '192.168.50.54', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "syslog" # to Log
+    haproxydb01.vm.hostname = "haproxydb01"
+    haproxydb01.vm.network :forwarded_port, guest: 22, host: 2207, id: "ssh"
+    haproxydb01.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "256"]
+    end
+  end
+### cluster db
+  config.vm.define "db01" do |db01|
+    db01.vm.network "private_network", ip: '192.168.20.101', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw02" # to sw02
+    db01.vm.network "private_network", ip: '192.168.1.1', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "db_crossover" # to db02
+    db01.vm.network "private_network", ip: '192.168.50.54', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "syslog" # to Log
+    db01.vm.hostname = "db01"
+    db01.vm.network :forwarded_port, guest: 22, host: 2204, id: "ssh"
+    db01.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+
+  config.vm.define "db02" do |db02|
+    db02.vm.network "private_network", ip: '192.168.20.102', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw02" # to sw02
+    db02.vm.network "private_network", ip: '192.168.1.2', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "db_crossover" # to db01
+    db02.vm.network "private_network", ip: '192.168.50.55', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "syslog" # to Log
+    db02.vm.hostname = "db02"
+    db02.vm.network :forwarded_port, guest: 22, host: 2205, id: "ssh"
+    db02.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "vvv"
+    ansible.playbook = "Playbook.yml"
+    # Ansible_ssh_user
+    ansible.force_remote_user = "vagrant"
+    ansible.become = "true"
+    ansible.inventory_path = "./hosts"
+    ansible.raw_arguments = [
+      "--connection=paramiko",
+      "--private-key=./ansible"
+    ]
+  end
+end

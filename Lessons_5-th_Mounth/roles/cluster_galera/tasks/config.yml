@@ -1,0 +1,6 @@
+---
+# Configure MariaDB and Galera clustering
+
+- name: Cluster check script
+  template: src=usr/local/bin/pyclustercheck.j2 dest=/usr/local/bin/pyclustercheck owner=root group=root mode=0700
+

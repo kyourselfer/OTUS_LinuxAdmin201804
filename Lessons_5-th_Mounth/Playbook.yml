@@ -1,0 +1,56 @@
+---
+##- hosts: webservers #dbservers 
+##  become: yes
+##  roles:
+##    - { role: CentOS_Srv }
+##
+      #- hosts: haproxy 
+      #  become: yes
+      #  roles:
+      #    - { role: haweb }
+
+# SharedStorage(web_storage)
+- hosts: sharedstorage01
+  become: yes
+  roles:
+    - { role: iSCSITarget,iscsi__initiator_name01: "iqn.2018-10.local.db:e6d8fc8ad9d7",iscsi__initiator_name02: "iqn.2018-10.local.db:e6d8fc8ad9d8" }
+
+# Node01
+- hosts: web01
+  become: yes
+  roles:
+    - { role: iSCSIinitiator,iscsi__initiator_name: "iqn.2018-10.local.db:e6d8fc8ad9d7",target_ip_from_db: "192.168.212.103" }
+    - { role: clusterCLVM, sha512Password: "$6$mysecretsalt$CkXyGo8lLwQproOTGnAcUOMeCTpOO2Eda3YVgEMWe7jvKAHeVy5rQUZz6bL3wpP48oZg8xrIwBPzCpDXr/nUf0",UserOfCluster: "hacluster",PasswordOfCluster: "hacluster",NameOfCluster: "ClusterWeb00",Node01: "web01.local",Node02: "web02.local",delay_to_continue_job: 1 }
+
+# Node02
+- hosts: web02
+  become: yes
+  roles:
+    - { role: iSCSIinitiator,iscsi__initiator_name: "iqn.2018-10.local.db:e6d8fc8ad9d8",target_ip_from_db: "192.168.213.107" }
+    - { role: clusterCLVM, sha512Password: "$6$mysecretsalt$CkXyGo8lLwQproOTGnAcUOMeCTpOO2Eda3YVgEMWe7jvKAHeVy5rQUZz6bL3wpP48oZg8xrIwBPzCpDXr/nUf0",UserOfCluster: "hacluster",PasswordOfCluster: "hacluster",NameOfCluster: "ClusterWeb00",Node01: "web01.local",Node02: "web02.local",delay_to_continue_job: 81 }
+ 
+- hosts: webservers
+  become: yes
+  roles:
+    - { role: nginx }
+
+# Create haproxy
+- hosts: haproxydb01 
+  become: yes
+  roles:
+    - { role: ansible-role-haproxy }
+
+# Create db_cluster
+- hosts: dbservers
+  become: yes
+  roles:
+    - { role: cluster_galera,galera_cluster_master: "192.168.1.1",galera_cluster_name: cluster_galera,galera_cluster_members: [192.168.1.1,192.168.1.2],galera_bind_address: 0.0.0.0,delay_to_switch_to_node_mode: 0 }
+
+      #- hosts: db01
+      #  become: yes
+      #   - { role: cluster_galera,delay_to_switch_to_node_mode: 60 }
+      #
+      #- hosts: db02
+      #  become: yes
+      #   - { role: cluster_galera,delay_to_switch_to_node_mode: 0 }
+

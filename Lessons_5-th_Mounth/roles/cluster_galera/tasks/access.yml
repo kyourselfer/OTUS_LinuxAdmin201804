@@ -1,0 +1,11 @@
+---
+
+# Configure system users access to MariaDB
+
+- name: Set MariaDB root password for local login
+  mysql_user: name=root password={{ galera_root_password }} host=localhost state=present
+  ignore_errors: yes
+
+- name: Configure MariaDB root defaults-file
+  template: src=root/my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0640 force=yes
+

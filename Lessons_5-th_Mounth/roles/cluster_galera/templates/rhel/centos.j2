@@ -1,0 +1,7 @@
+# MariaDB 10.0 {{ ansible_distribution }} repository list 
+# http://mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.0/{{ ansible_distribution|lower }}{{ ansible_lsb.major_release|int }}-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1

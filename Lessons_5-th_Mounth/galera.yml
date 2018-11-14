@@ -1,0 +1,11 @@
+- hosts: dbservers 
+  vars:
+    - galera_cluster_master: 192.168.1.1
+    - galera_cluster_name: cluster_galera
+    - galera_cluster_members: [192.168.1.1,192.168.1.2]
+    #- galera_cluster_members: [192.168.33.213]
+    - galera_bind_address: 0.0.0.0
+  roles:
+    #- role: alexeymedvedchikov.galera
+    - role: cluster_galera
+

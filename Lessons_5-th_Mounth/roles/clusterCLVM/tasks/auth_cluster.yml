@@ -1,0 +1,36 @@
+---
+
+- name: Auth of cluster's nodes and create cluster
+  shell: |
+    pcs cluster auth '{{ Node01 }}' '{{ Node02 }}' -u '{{ UserOfCluster }}' -p '{{ PasswordOfCluster }}'
+    pcs cluster setup --name '{{ NameOfCluster }}' '{{ Node01 }}' '{{ Node02 }}'
+
+- name: Start services of cluster
+  service: name={{ item }} state=restarted enabled=yes
+  with_items:
+    - pacemaker
+    - corosync
+
+- name: cluster enable & start without stonith, quorum and on-fail=ignore with order and colocation
+  shell: |
+    pcs cluster enable --all
+    pcs cluster start --all
+    pcs property set no-quorum-policy=ignore
+    pcs property set stonith-enabled=false
+
+- name: cluster | Capturing Cluster Resources
+  command: "pcs status resources"
+  become: true
+  register: "_pcs_resources_status"
+  changed_when: false
+
+- name: add resource dlm+clvm+gfs2
+  include: create_resource_lvm.yml
+  when: >
+    ('Clone Set: dlm-clone [dlm]' not in _pcs_resources_status['stdout'])
+
+#- name: add resource ipaddr2+nginx
+#  include: create_resource_web.yml
+#  when: >
+#    ('ClusterWeb00' not in _pcs_resources_status['stdout'])
+

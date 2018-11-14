@@ -1,0 +1,6 @@
+- name: add resource ClusterIP00 + ClusterWeb00
+  shell: |
+    pcs resource create ClusterIP00 ocf:heartbeat:IPaddr2 ip=10.10.10.100 cidr_netmask=32 op monitor interval=30s
+    pcs resource create ClusterWeb00 ocf:heartbeat:nginx configfile=/etc/nginx/nginx.conf op monitor timeout="5s" interval="5s"
+    pcs constraint colocation add ClusterWeb00 ClusterIP00 INFINITY
+    pcs constraint order ClusterIP00 then ClusterWeb00
