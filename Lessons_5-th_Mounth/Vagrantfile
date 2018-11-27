@@ -5,7 +5,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
 
   config.vm.provider "virtualbox" do |v|
-      v.memory = 256 
+      v.memory = 384 
       v.cpus = 2
   end
   config.vm.provision "shell", inline: "mkdir /root/.ssh/ && cat /vagrant/ansible.pub >> /root/.ssh/authorized_keys && cat /vagrant/ansible.pub >> /home/vagrant/.ssh/authorized_keys"
@@ -14,7 +14,7 @@ Vagrant.configure(2) do |config|
 
 # switch01 | firewall | haproxy
   config.vm.define "sw01" do |sw01|
-    sw01.vm.network "private_network", ip: '10.10.10.1', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to Web01
+    sw01.vm.network "private_network", ip: '10.10.10.1', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "fw" # to Web01
     sw01.vm.network "private_network", ip: '10.10.110.1', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "db01" # to DB01
     sw01.vm.network "private_network", ip: '10.10.111.1', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "db02" # to DB02
     sw01.vm.network "private_network", ip: '192.168.50.51', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "syslog" # to Log
@@ -23,22 +23,6 @@ Vagrant.configure(2) do |config|
   end
 
 ### cluster web
-# vip
-  config.vm.define "web01" do |web01|
-    web01.vm.network "private_network", ip: '192.168.10.101', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to sw01
-    web01.vm.network "private_network", ip: '192.168.210.102', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "clusterweb00" # to ClusterWeb00
-    web01.vm.network "private_network", ip: '192.168.212.102', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "sharstor01" # to SharedStorage01
-    web01.vm.hostname = "web01"
-    web01.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
-  end
-# vip
-  config.vm.define "web02" do |web02|
-    web02.vm.network "private_network", ip: '192.168.10.102', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to sw01
-    web02.vm.network "private_network", ip: '192.168.210.106', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "clusterweb00" # to ClusterWeb00
-    web02.vm.network "private_network", ip: '192.168.213.106', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "sharstor02" # to SharedStorage01
-    web02.vm.hostname = "web02"
-    web02.vm.network :forwarded_port, guest: 22, host: 2203, id: "ssh"
-  end
 # shared storage
   config.vm.define "sharedstorage01" do |sharedstorage01|
     sharedstorage01.vm.network "private_network", ip: '192.168.212.103', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sharstor01" # to Web01
@@ -67,6 +51,33 @@ Vagrant.configure(2) do |config|
         vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 7, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr607.vdi']
         vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 8, '--device', 0, '--type', 'hdd', '--medium', './storage/VM/hdd/mdr608.vdi']
       end
+    end
+  end
+# web01
+  config.vm.define "web01" do |web01|
+    web01.vm.network "private_network", ip: '192.168.10.101', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to haproxyweb
+    web01.vm.network "private_network", ip: '192.168.210.102', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "clusterweb00" # to ClusterWeb00
+    web01.vm.network "private_network", ip: '192.168.212.102', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "sharstor01" # to SharedStorage01
+    web01.vm.hostname = "web01"
+    web01.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
+  end
+# web02
+  config.vm.define "web02" do |web02|
+    web02.vm.network "private_network", ip: '192.168.10.102', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to haproxyweb
+    web02.vm.network "private_network", ip: '192.168.210.106', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "clusterweb00" # to ClusterWeb00
+    web02.vm.network "private_network", ip: '192.168.213.106', adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "sharstor02" # to SharedStorage01
+    web02.vm.hostname = "web02"
+    web02.vm.network :forwarded_port, guest: 22, host: 2203, id: "ssh"
+  end
+# haproxy web
+  config.vm.define "haproxyweb01" do |haproxyweb01|
+#############    haproxyweb01.vm.network "private_network", ip: '10.10.10.2', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "fw" # to 
+    haproxyweb01.vm.network "private_network", ip: '192.168.10.151', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw01" # to sw02
+    haproxyweb01.vm.network "private_network", ip: '192.168.50.54', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "syslog" # to Log
+    haproxyweb01.vm.hostname = "haproxyweb01"
+    haproxyweb01.vm.network :forwarded_port, guest: 22, host: 2208, id: "ssh"
+    haproxyweb01.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "256"]
     end
   end
 

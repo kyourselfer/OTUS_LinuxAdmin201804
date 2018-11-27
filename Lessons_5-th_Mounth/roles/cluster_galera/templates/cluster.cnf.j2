@@ -8,6 +8,7 @@ wsrep_cluster_name="{{ galera_cluster_name }}"
 wsrep_sst_method=rsync
 wsrep_sst_auth={{ galera_cluster_user }}:{{ galera_cluster_password }}
 wsrep_node_name="{{ ansible_fqdn }}"
+open_files_limit=4364
 
 {% if galera_bootstrap %}
 wsrep_cluster_address=gcomm://

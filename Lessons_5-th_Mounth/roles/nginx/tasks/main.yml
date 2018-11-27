@@ -12,6 +12,16 @@
   with_items:
     - nginx
     - httpd-tools
+    - php-fpm
+    - php-cli
+    - php-mysql
+    - php-gd
+    - php-pdo
+    - php-pear
+    - php-xml
+    - php-xmlrpc
+    - php-mbstring
+    - php-soap
 
 - name: mkdir ../proxy_cache
   file: path=/var/www/nginx/proxy_cache state=directory mode=0755
@@ -25,4 +35,6 @@
 
 - name: replace configs of nginx
   copy: src=nginx.conf dest=/etc/nginx/nginx.conf backup=yes
-  notify: restart nginx
+  notify:
+    - restart nginx
+    - restart php-fpm

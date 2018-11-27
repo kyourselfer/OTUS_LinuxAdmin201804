@@ -34,11 +34,16 @@
   roles:
     - { role: nginx }
 
-# Create haproxy
+# Create haproxys
+- hosts: haproxyweb01
+  become: yes
+  roles:
+    - { role: haproxy_web,noden1: web01, noden2: web02, node1ip: 192.168.10.101, node2ip: 192.168.10.102 }
+
 - hosts: haproxydb01 
   become: yes
   roles:
-    - { role: ansible-role-haproxy }
+    - { role: haproxy_db,noden1: db01, noden2: db02, node1ip: 192.168.20.101, node2ip: 192.168.20.102 }
 
 # Create db_cluster
 - hosts: dbservers

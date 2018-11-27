@@ -10,3 +10,6 @@
 - name: stop mysql
   service: name=mysql state=stopped
 
+- name: reload ulimit
+  service: name=mysql state=restarted 
+

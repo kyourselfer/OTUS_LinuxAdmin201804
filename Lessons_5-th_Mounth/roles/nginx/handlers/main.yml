@@ -2,11 +2,21 @@
 # Handlers for MariaDB
 
 - name: restart nginx
-  service: name=nginx state=restarted
+  service: name=nginx state=restarted enabled=yes
 
 - name: start nginx
   service: name=nginx state=started
 
 - name: stop nginx
   service: name=nginx state=stopped
+
+- name: restart php-fpm
+  service: name=php-fpm state=restarted enabled=yes
+
+- name: start php-fpm
+  service: name=php-fpm state=started
+
+- name: stop php-fpm
+  service: name=php-fpm state=stopped
+
 

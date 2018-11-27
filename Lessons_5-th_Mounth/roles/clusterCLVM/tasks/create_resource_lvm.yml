@@ -7,11 +7,12 @@
 #- name: ak
 #  shell: pcs constraint colocation add clvmd-clone with dlm-clone
 
-- name: "Create GFS2 on CLVM"
-  shell: wipefs -a /dev/sdb
+###- name: "Create GFS2 on CLVM"
+###  shell: wipefs -a /dev/sdb
   #  ignore_errors: yes
   # warn: no
   
+## Create clvm
 - name: Create a volume group on top of /dev/sdb(iSCSI)
   lvg:
     vg: cluster_vg
@@ -34,7 +35,7 @@
 - name: ak
   shell: pcs constraint colocation add clvmd-clone with dlm-clone
 
-
+## Make gfs2 with dlm_lock
 - name: create gfs2
   shell: echo y | mkfs.gfs2 -j2 -p lock_dlm -t '{{ NameOfCluster }}':gfs2 /dev/cluster_vg/cluster_lv
 

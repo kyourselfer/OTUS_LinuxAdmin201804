@@ -1,0 +1,5 @@
+---
+- name: ulimit mysql
+  copy: src=30-mysql.conf dest=/etc/security/limits.d/
+  notify:
+    - reload ulimit

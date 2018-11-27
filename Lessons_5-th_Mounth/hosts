@@ -4,6 +4,7 @@
 # HAProxy
 [haproxy]
 haproxydb01 ansible_ssh_host=127.0.0.1 ansible_port=2207
+haproxyweb01 ansible_ssh_host=127.0.0.1 ansible_port=2208
 # LAMP || LEMP
 [webservers]
 web01 ansible_ssh_host=127.0.0.1 ansible_port=2202

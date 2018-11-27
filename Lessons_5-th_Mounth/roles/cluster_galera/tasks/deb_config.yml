@@ -1,5 +1,6 @@
 ---
 # Configure MariaDB and Galera clustering
+- include: limits.yml
 
 - name: DEB | Galera configuration file
   template: src=cluster.cnf.j2 dest=/etc/mysql/conf.d/cluster.cnf owner=root group=root mode=0640
